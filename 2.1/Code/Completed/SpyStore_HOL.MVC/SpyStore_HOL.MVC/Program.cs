@@ -26,10 +26,13 @@ namespace SpyStore_HOL.MVC
 /*
     public static IWebHostBuilder CreateDefaultBuilder(string[] args)
     {
-      IWebHostBuilder hostBuilder = new WebHostBuilder().UseKestrel((Action<WebHostBuilderContext, KestrelServerOptions>) ((builderContext, options) => options.Configure((IConfiguration) builderContext.Configuration.GetSection("Kestrel")))).UseContentRoot(Directory.GetCurrentDirectory()).ConfigureAppConfiguration((Action<WebHostBuilderContext, IConfigurationBuilder>) ((hostingContext, config) =>
+      IWebHostBuilder hostBuilder = new WebHostBuilder()
+      .UseKestrel((Action<WebHostBuilderContext, KestrelServerOptions>) ((builderContext, options) => options.Configure((IConfiguration) builderContext.Configuration.GetSection("Kestrel")))).UseContentRoot(Directory.GetCurrentDirectory()).ConfigureAppConfiguration((Action<WebHostBuilderContext, IConfigurationBuilder>) ((hostingContext, config) =>
       {
         IHostingEnvironment hostingEnvironment = hostingContext.HostingEnvironment;
-        config.AddJsonFile("appsettings.json", true, true).AddJsonFile(string.Format("appsettings.{0}.json", (object) hostingEnvironment.EnvironmentName), true, true);
+        config
+        .AddJsonFile("appsettings.json", true, true)
+        .AddJsonFile(string.Format("appsettings.{0}.json", (object) hostingEnvironment.EnvironmentName), true, true);
         if (hostingEnvironment.IsDevelopment())
         {
           Assembly assembly = Assembly.Load(new AssemblyName(hostingEnvironment.ApplicationName));

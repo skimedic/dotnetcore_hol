@@ -54,7 +54,8 @@ namespace SpyStore_HOL.MVC
 
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        // This method gets called by the runtime.
+        // Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
@@ -76,6 +77,7 @@ namespace SpyStore_HOL.MVC
             app.UseStaticFiles();
             //app.UseCookiePolicy();
 
+            //app.UseMvcWithDefaultRoute();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
