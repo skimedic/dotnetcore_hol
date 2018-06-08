@@ -1,11 +1,11 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AutoMapper" Version="6.2.2" />
+    <PackageReference Include="AutoMapper" Version="7.0.0" />
     <PackageReference Include="LigerShark.WebOptimizer.Core" Version="1.0.215" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.Web.LibraryManager.Build" Version="1.0.20" />
@@ -14,15 +14,6 @@
   <ItemGroup>
     <ProjectReference Include="..\SpyStore_HOL.DAL\SpyStore_HOL.DAL.csproj" />
     <ProjectReference Include="..\SpyStore_HOL.Models\SpyStore_HOL.Models.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="wwwroot\lib\bootstrap\css\" />
-    <Folder Include="wwwroot\lib\bootstrap\fonts\" />
-    <Folder Include="wwwroot\lib\bootstrap\js\" />
-    <Folder Include="wwwroot\lib\jquery-validate\" />
-    <Folder Include="wwwroot\lib\jquery-validation-unobtrusive\" />
-    <Folder Include="wwwroot\lib\jquery\" />
   </ItemGroup>
 
 </Project>
