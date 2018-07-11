@@ -1,6 +1,6 @@
 ﻿@model CartRecordViewModel
-<form asp-controller="Cart" asp-action="Update"
-      asp-route-customerId="@Model.CustomerId" asp-route-id="@Model.Id" 
+<form asp-controller="Cart" asp-action="Update" 
+      asp-route-customerId="@Model.CustomerId" asp-route-id="@Model.Id"
       id="updateCartForm" method="post"
       data-ajax="true" data-ajax-mode="REPLACE-WITH" data-ajax-update="#row_@Model.Id"
       data-ajax-method="POST" data-ajax-success="success" data-ajax-failure="error" 

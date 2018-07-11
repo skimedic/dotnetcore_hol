@@ -87,7 +87,9 @@ namespace SpyStore_HOL.MVC.Controllers
         }
 
         [HttpPost("{id}"),ValidateAntiForgeryToken]
-        public IActionResult Update(int customerId, int id, string timeStampString, CartRecordViewModel item)
+        public IActionResult Update(int customerId, int id, 
+            string timeStampString, 
+            CartRecordViewModel item)
         {
             item.TimeStamp = JsonConvert.DeserializeObject<byte[]>($"\"{timeStampString}\"");
             if (!ModelState.IsValid) return PartialView(item);

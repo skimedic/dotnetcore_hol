@@ -15,9 +15,12 @@ namespace SpyStore_HOL.MVC
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        private IHostingEnvironment _env;
+
+        public Startup(IConfiguration configuration, IHostingEnvironment env)
         {
             Configuration = configuration;
+            _env = env;
         }
 
         public IConfiguration Configuration { get; }
@@ -45,13 +48,19 @@ namespace SpyStore_HOL.MVC
             services.AddScoped<IOrderRepo, OrderRepo>();
             services.AddScoped<IOrderDetailRepo, OrderDetailRepo>();
             services.Configure<CustomSettings>(Configuration.GetSection("CustomSettings"));
-            services.AddWebOptimizer(options =>
+            if (_env.IsDevelopment())
             {
-                options.MinifyCssFiles();
-                //options.MinifyJsFiles();
-                options.AddJavaScriptBundle("/js/validations/validationCode.js","/js/validations/*.js");
-            });
-
+                services.AddWebOptimizer();
+            }
+            else
+            {
+                services.AddWebOptimizer(options =>
+                {
+                    options.MinifyCssFiles();
+                    //options.MinifyJsFiles();
+                    options.AddJavaScriptBundle("/js/validations/validationCode.js", "/js/validations/*.js");
+                });
+            }
         }
 
         // This method gets called by the runtime.
@@ -72,8 +81,8 @@ namespace SpyStore_HOL.MVC
             {
                 app.UseExceptionHandler("/Products/Error");
             }
-
             app.UseWebOptimizer();
+
             app.UseStaticFiles();
             //app.UseCookiePolicy();
 

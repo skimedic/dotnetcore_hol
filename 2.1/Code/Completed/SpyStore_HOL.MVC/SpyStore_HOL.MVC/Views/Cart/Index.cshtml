@@ -1,4 +1,8 @@
-﻿@model CartViewModel
+﻿@using Microsoft.Extensions.Options
+@using SpyStore_HOL.DAL.Repos.Interfaces
+@using SpyStore_HOL.MVC.Support
+@model CartViewModel
+@inject IOptionsSnapshot<CustomSettings> settings
 @{
     ViewData["Title"] = "Index";
     var cartTotal = 0M;
