@@ -17,6 +17,11 @@ namespace SpyStore_HOL.Tests
             //runs after every test
         }
 
+        [Fact]
+        public void Foo()
+        {
+            Assert.Equal(1,1);
+        }
         [Theory]
         [InlineData(4,8,12)]
         [InlineData(-4,8,4)]
