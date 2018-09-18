@@ -10,6 +10,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpyStore_HOL.DAL", "SpyStore_HOL.DAL\SpyStore_HOL.DAL.csproj", "{C5E218F2-6488-4312-B115-A9900DFDAA6C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpyStore_HOL.Tests", "SpyStore_HOL.Tests\SpyStore_HOL.Tests.csproj", "{2D34AD69-ED0C-49DE-AE87-C4DA0842A8DC}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionItems", "{A6F4EA1A-F38E-43B0-B84F-71EF295F35A2}"
+	ProjectSection(SolutionItems) = preProject
+		Migrations.txt = Migrations.txt
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
