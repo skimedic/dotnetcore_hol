@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpyStore_HOL.DAL", "SpyStor
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpyStore_HOL.Tests", "SpyStore_HOL.Tests\SpyStore_HOL.Tests.csproj", "{2D34AD69-ED0C-49DE-AE87-C4DA0842A8DC}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionItems", "{7150E6D2-157B-4552-81AC-66E8FA98C801}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionItems", "{A6F4EA1A-F38E-43B0-B84F-71EF295F35A2}"
 	ProjectSection(SolutionItems) = preProject
 		Migrations.txt = Migrations.txt
 	EndProjectSection

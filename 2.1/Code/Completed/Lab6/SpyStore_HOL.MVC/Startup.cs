@@ -78,7 +78,7 @@ namespace SpyStore_HOL.MVC
             }
             else
             {
-                app.UseExceptionHandler("/Products/Error");
+                app.UseExceptionHandler("/Home/Error");
             }
 
             app.UseStaticFiles();
@@ -88,7 +88,7 @@ namespace SpyStore_HOL.MVC
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Products}/{action=Index}/{id?}");
+                    template: "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }

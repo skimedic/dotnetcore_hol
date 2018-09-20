@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using NUglify.Css;
 using SpyStore_HOL.DAL.EfStructures;
 using SpyStore_HOL.DAL.Initialization;
 using SpyStore_HOL.DAL.Repos;
@@ -38,6 +39,7 @@ namespace SpyStore_HOL.MVC
             //    options.MinimumSameSitePolicy = SameSiteMode.None;
             //});
 
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
 #if SQL2017
@@ -62,19 +64,23 @@ namespace SpyStore_HOL.MVC
             services.AddScoped<IOrderRepo, OrderRepo>();
             services.AddScoped<IOrderDetailRepo, OrderDetailRepo>();
             services.Configure<CustomSettings>(Configuration.GetSection("CustomSettings"));
-            //Globbing not working in the current released version, so this is a work around:
-            var fileArray = Directory.GetFiles(@"wwwroot\js\validations", "*.js", SearchOption.AllDirectories);
-            var jsAppFilenames = fileArray.Select(s => s.Replace(@"wwwroot\", "")).ToArray();
-
-            services.AddWebOptimizer(options =>
+            if (_env.IsDevelopment())
             {
-                //options.MinifyCssFiles(); //Minifies all CSS files
-                //options.MinifyJsFiles(); //Minifies all JS files
-                //options.MinifyJsFiles("js/validations/validators.js"); //Minifies one JS files
-                //options.AddJavaScriptBundle("js/validations/validationCode.js", "js/validations/*.js");
-                //options.AddJavaScriptBundle("js/validations/validationCode.js", "js/validations/validators.js", "js/validations/errorFormatting.js");
-                options.AddJavaScriptBundle("js/validations/validationCode.js", jsAppFilenames);
-            });
+                services.AddWebOptimizer(options =>
+                {
+                    options.MinifyCssFiles("foo.css");
+                    options.MinifyJsFiles("foo.js");
+                });
+            }
+            else
+            {
+                services.AddWebOptimizer(options =>
+                {
+                    options.MinifyCssFiles(); //Minifies all CSS files
+                    //options.MinifyJsFiles(); //Minifies all JS files
+                    options.MinifyJsFiles("js/site.js"); 
+                });
+            }
 
 
         }

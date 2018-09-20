@@ -3,15 +3,14 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28010.2016
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpyStore_HOL.MVC", "SpyStore_HOL.MVC\SpyStore_HOL.MVC.csproj", "{1AB23842-83A3-480C-97D4-4CBE1A555B64}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpyStore_HOL.MVC", "SpyStore_HOL.MVC\SpyStore_HOL.MVC.csproj", "{1AB23842-83A3-480C-97D4-4CBE1A555B64}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpyStore_HOL.Models", "SpyStore_HOL.Models\SpyStore_HOL.Models.csproj", "{56695933-32AB-436A-ADDB-36A47BAADDF4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpyStore_HOL.Models", "SpyStore_HOL.Models\SpyStore_HOL.Models.csproj", "{56695933-32AB-436A-ADDB-36A47BAADDF4}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpyStore_HOL.DAL", "SpyStore_HOL.DAL\SpyStore_HOL.DAL.csproj", "{C5E218F2-6488-4312-B115-A9900DFDAA6C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpyStore_HOL.DAL", "SpyStore_HOL.DAL\SpyStore_HOL.DAL.csproj", "{C5E218F2-6488-4312-B115-A9900DFDAA6C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpyStore_HOL.Tests", "SpyStore_HOL.Tests\SpyStore_HOL.Tests.csproj", "{2D34AD69-ED0C-49DE-AE87-C4DA0842A8DC}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionItems", "{7150E6D2-157B-4552-81AC-66E8FA98C801}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpyStore_HOL.Tests", "SpyStore_HOL.Tests\SpyStore_HOL.Tests.csproj", "{2D34AD69-ED0C-49DE-AE87-C4DA0842A8DC}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionItems", "{A6F4EA1A-F38E-43B0-B84F-71EF295F35A2}"
 	ProjectSection(SolutionItems) = preProject
 		Migrations.txt = Migrations.txt
 	EndProjectSection
