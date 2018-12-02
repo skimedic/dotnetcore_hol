@@ -25,6 +25,9 @@ namespace SpyStore_HOL.DAL.Repos.Base
             //This constructor is used for testing
             _disposeContext = true;
         }
+
+        public int Max => Table.Max(x => x.Id);
+        public int Min => Table.Min(x => x.Id);
         public int Count => Table.Count();
         public T Find(int id) => Table.Find(id);
         public virtual IList<T> GetAll() => Table.ToList();

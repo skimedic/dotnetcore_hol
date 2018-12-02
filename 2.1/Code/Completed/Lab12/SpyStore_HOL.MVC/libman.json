@@ -2,7 +2,7 @@
   //https://api.cdnjs.com/libraries/jquery?output=human
   //https://api.cdnjs.com/libraries?output=human
   "version": "1.0",
-  "defaultProvider": "cdnjs",
+  "defaultProvider": "cdnjs", 
   "libraries": [
     {
       "library": "jquery@3.3.1",

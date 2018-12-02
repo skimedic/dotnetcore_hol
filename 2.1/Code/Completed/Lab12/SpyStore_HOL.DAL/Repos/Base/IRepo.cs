@@ -6,6 +6,8 @@ namespace SpyStore_HOL.DAL.Repos.Base
     public interface IRepo<T> where T : EntityBase
     {
         int Count { get; }
+        int Max { get; }
+        int Min { get; }
         T Find(int id);
         IList<T> GetAll();
         int Add(T entity, bool persist = true);

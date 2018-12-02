@@ -29,7 +29,8 @@ namespace SpyStore_HOL.MVC
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
+        // This method gets called by the runtime.
+        // Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             //services.Configure<CookiePolicyOptions>(options =>
@@ -64,12 +65,22 @@ namespace SpyStore_HOL.MVC
             services.AddScoped<IOrderRepo, OrderRepo>();
             services.AddScoped<IOrderDetailRepo, OrderDetailRepo>();
             services.Configure<CustomSettings>(Configuration.GetSection("CustomSettings"));
-            if (_env.IsDevelopment())
+            if (_env.IsDevelopment() || _env.EnvironmentName == "Local")
             {
                 services.AddWebOptimizer(options =>
                 {
-                    options.MinifyCssFiles("foo.css");
-                    options.MinifyJsFiles("foo.js");
+                    //options.MinifyCssFiles("foo.css");
+                    //options.MinifyJsFiles("foo.js");
+
+                    var fileArray = Directory.GetFiles(@"wwwroot\js\validations", "*.js", SearchOption.AllDirectories);
+                    var jsAppFilenames = fileArray.Select(s => s.Replace(@"wwwroot\", "")).ToArray();
+
+                    options.MinifyCssFiles(); //Minifies all CSS files
+                    //options.MinifyJsFiles(); //Minifies all JS files
+                    options.MinifyJsFiles("js/site.js");
+                    //options.AddJavaScriptBundle("js/validations/validationCode.js", "js/validations/*.js");
+                    //options.AddJavaScriptBundle("js/validations/validationCode.js", "js/validations/validators.js", "js/validations/errorFormatting.js");
+                    options.AddJavaScriptBundle("js/validations/validationCode.js", jsAppFilenames);
                 });
             }
             else
