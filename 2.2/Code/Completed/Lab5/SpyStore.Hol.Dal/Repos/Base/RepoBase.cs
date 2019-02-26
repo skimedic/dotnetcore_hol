@@ -11,19 +11,19 @@ using SpyStore.Hol.Models.Entities.Base;
 
 namespace SpyStore.Hol.Dal.Repos.Base
 {
-    public class RepoBase<T> : IRepo<T> where T : EntityBase, new()
+    public abstract class RepoBase<T> : IRepo<T> where T : EntityBase, new()
     {
         public DbSet<T> Table { get; }
         public StoreContext Context { get; }
         private readonly bool _disposeContext;
 
-        public RepoBase(StoreContext context)
+        protected RepoBase(StoreContext context)
         {
             Context = context;
             Table = Context.Set<T>();
             _disposeContext = false;
         }
-        public RepoBase(DbContextOptions<StoreContext> options) : this(new StoreContext(options))
+        protected RepoBase(DbContextOptions<StoreContext> options) : this(new StoreContext(options))
         {
             _disposeContext = true;
         }

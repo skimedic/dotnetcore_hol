@@ -758,7 +758,9 @@ namespace SpyStore.Hol.Dal.Initialization
                     new ShoppingCartRecord
                     {
                         DateCreated = DateTime.Now,
-                        ProductNavigation = products[3], Quantity = 1
+                        ProductNavigation = products[3],
+                        Quantity = 1,
+                        LineItemTotal = products[3].CurrentPrice
                     }
                 }
             }

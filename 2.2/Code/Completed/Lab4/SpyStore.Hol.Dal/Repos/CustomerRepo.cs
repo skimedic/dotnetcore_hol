@@ -14,7 +14,7 @@ namespace SpyStore.Hol.Dal.Repos
         {
         }
 
-        public CustomerRepo(DbContextOptions<StoreContext> options) : base(options)
+        internal CustomerRepo(DbContextOptions<StoreContext> options) : base(options)
         {
         }
 

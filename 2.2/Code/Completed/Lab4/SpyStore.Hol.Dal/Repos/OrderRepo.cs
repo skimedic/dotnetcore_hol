@@ -20,7 +20,7 @@ namespace SpyStore.Hol.Dal.Repos
             _orderDetailRepo = orderDetailRepo;
         }
 
-        public OrderRepo(DbContextOptions<StoreContext> options,
+        internal OrderRepo(DbContextOptions<StoreContext> options,
             IOrderDetailRepo orderDetailRepo) : 
             this(new StoreContext(options),orderDetailRepo)
         {
@@ -31,7 +31,7 @@ namespace SpyStore.Hol.Dal.Repos
 
         public OrderWithDetailsAndProductInfo GetOneWithDetails(int orderId)
         {
-            var order = Table.Include(x=>x.CustomerNavigation)
+            var order = Table.IgnoreQueryFilters().Include(x=>x.CustomerNavigation)
                 .FirstOrDefault(x => x.Id == orderId);
             if (order == null)
             {

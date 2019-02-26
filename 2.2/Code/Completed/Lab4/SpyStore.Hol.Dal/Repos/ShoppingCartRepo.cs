@@ -17,7 +17,7 @@ namespace SpyStore.Hol.Dal.Repos
     {
         private readonly IProductRepo _productRepo;
         private readonly ICustomerRepo _customerRepo;
-        internal ShoppingCartRepo(StoreContext context, 
+        public ShoppingCartRepo(StoreContext context, 
             IProductRepo productRepo, 
             ICustomerRepo customerRepo) : base(context)
         {
@@ -25,7 +25,7 @@ namespace SpyStore.Hol.Dal.Repos
             _customerRepo = customerRepo;
         }
 
-        public ShoppingCartRepo(DbContextOptions<StoreContext> options, 
+        internal ShoppingCartRepo(DbContextOptions<StoreContext> options, 
             IProductRepo productRepo, 
             ICustomerRepo customerRepo) : this(new StoreContext(options),productRepo,customerRepo)
         {
@@ -56,15 +56,22 @@ namespace SpyStore.Hol.Dal.Repos
             };
 
         public override int Update(ShoppingCartRecord entity, bool persist = true)
-            => Update(entity, _productRepo.FindAsNoTracking(entity.ProductId)?.UnitsInStock, persist);
+        {
+            var product = _productRepo.FindAsNoTracking(entity.ProductId);
+            if (product == null)
+            {
+                throw new SpyStoreInvalidProductException("Unable to locate product");
+            }
+            return Update(entity, product, persist);
+        }
 
-        public int Update(ShoppingCartRecord entity, int? quantityInStock, bool persist = true)
+        public int Update(ShoppingCartRecord entity, Product product, bool persist = true)
         {
             if (entity.Quantity <= 0)
             {
                 return Delete(entity, persist);
             }
-            if (entity.Quantity > quantityInStock)
+            if (entity.Quantity > product.UnitsInStock)
             {
                 throw new SpyStoreInvalidQuantityException("Can't add more product than available in stock");
             }
@@ -73,6 +80,7 @@ namespace SpyStore.Hol.Dal.Repos
             if (entity.TimeStamp != null && dbRecord.TimeStamp.SequenceEqual(entity.TimeStamp))
             {
                 dbRecord.Quantity = entity.Quantity;
+                dbRecord.LineItemTotal = entity.Quantity * product.CurrentPrice;
                 return base.Update(dbRecord, persist);
             }
             throw new SpyStoreConcurrencyException("Record was changed since it was loaded");
@@ -84,28 +92,37 @@ namespace SpyStore.Hol.Dal.Repos
             foreach (var item in entities)
             {
                 var product = _productRepo.FindAsNoTracking(item.ProductId);
-                counter += Update(item, product?.UnitsInStock, false);
+                counter += Update(item, product, false);
             }
 
             return persist ? SaveChanges() : counter;
         }
 
         public override int Add(ShoppingCartRecord entity, bool persist = true)
-            => Add(entity, _productRepo.Find(entity.ProductId)?.UnitsInStock, persist);
+        {
+            var product = _productRepo.FindAsNoTracking(entity.ProductId);
+            if (product == null)
+            {
+                throw new SpyStoreInvalidProductException("Unable to locate the product");
+            }
+            return Add(entity, product, persist);
+        }
 
-        public int Add(ShoppingCartRecord entity, int? quantityInStock, bool persist = true)
+        public int Add(ShoppingCartRecord entity, Product product, bool persist = true)
         {
             var item = GetBy(entity.ProductId);
             if (item == null)
             {
-                if (quantityInStock != null && entity.Quantity > quantityInStock.Value)
+                if (entity.Quantity > product.UnitsInStock)
                 {
                     throw new SpyStoreInvalidQuantityException("Can't add more product than available in stock");
                 }
+
+                entity.LineItemTotal = entity.Quantity * product.CurrentPrice;
                 return base.Add(entity, persist);
             }
             item.Quantity += entity.Quantity;
-            return item.Quantity <= 0 ? Delete(item, persist) : Update(item, quantityInStock, persist);
+            return item.Quantity <= 0 ? Delete(item, persist) : Update(item, product, persist);
         }
 
         public override int AddRange(IEnumerable<ShoppingCartRecord> entities, bool persist = true)
@@ -114,7 +131,7 @@ namespace SpyStore.Hol.Dal.Repos
             foreach (var item in entities)
             {
                 var product = _productRepo.FindAsNoTracking(item.ProductId);
-                counter += Add(item, product?.UnitsInStock, false);
+                counter += Add(item, product, false);
             }
 
             return persist ? SaveChanges() : counter;

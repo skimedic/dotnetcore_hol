@@ -14,6 +14,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionItems", "{FFE916C7-DDBD-4113-94EE-BF2378AEFADA}"
 	ProjectSection(SolutionItems) = preProject
 		Migrations.txt = Migrations.txt
+		global.json = global.json
 	EndProjectSection
 EndProject
 Global

@@ -3,13 +3,18 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26124.0
 MinimumVisualStudioVersion = 15.0.26124.0
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpyStore.Hol.Mvc", "SpyStore.Hol.Mvc\SpyStore.Hol.Mvc.csproj", "{FE5FA16C-6C35-44D6-8A30-F31AFD10C5EC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpyStore.Hol.Mvc", "SpyStore.Hol.Mvc\SpyStore.Hol.Mvc.csproj", "{FE5FA16C-6C35-44D6-8A30-F31AFD10C5EC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpyStore.Hol.Dal", "SpyStore.Hol.Dal\SpyStore.Hol.Dal.csproj", "{9D143891-E5C1-49B1-BF22-1EB3AFC1371C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpyStore.Hol.Dal", "SpyStore.Hol.Dal\SpyStore.Hol.Dal.csproj", "{9D143891-E5C1-49B1-BF22-1EB3AFC1371C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpyStore.Hol.Models", "SpyStore.Hol.Models\SpyStore.Hol.Models.csproj", "{0C130D9B-3C9D-4879-8250-1AEEF0EFA386}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpyStore.Hol.Models", "SpyStore.Hol.Models\SpyStore.Hol.Models.csproj", "{0C130D9B-3C9D-4879-8250-1AEEF0EFA386}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpyStore.Hol.Dal.Tests", "SpyStore.Hol.Dal.Tests\SpyStore.Hol.Dal.Tests.csproj", "{023F3E9A-1854-4EBC-8C07-D6D09E67003A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpyStore.Hol.Dal.Tests", "SpyStore.Hol.Dal.Tests\SpyStore.Hol.Dal.Tests.csproj", "{023F3E9A-1854-4EBC-8C07-D6D09E67003A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionItems", "{14194F0B-8C63-4EF6-A18D-05F285F917FA}"
+	ProjectSection(SolutionItems) = preProject
+		global.json = global.json
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,9 +24,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 		Release|x64 = Release|x64
 		Release|x86 = Release|x86
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{FE5FA16C-6C35-44D6-8A30-F31AFD10C5EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -72,5 +74,11 @@ Global
 		{023F3E9A-1854-4EBC-8C07-D6D09E67003A}.Release|x64.Build.0 = Release|Any CPU
 		{023F3E9A-1854-4EBC-8C07-D6D09E67003A}.Release|x86.ActiveCfg = Release|Any CPU
 		{023F3E9A-1854-4EBC-8C07-D6D09E67003A}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A97190F5-9C78-414D-B6DB-6CAE0F39F3C8}
 	EndGlobalSection
 EndGlobal

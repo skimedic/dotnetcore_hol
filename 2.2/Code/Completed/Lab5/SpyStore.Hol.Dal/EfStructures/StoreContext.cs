@@ -32,6 +32,9 @@ namespace SpyStore.Hol.Dal.EfStructures
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Query<CartRecordWithProductInfo>().ToView("CartRecordWithProductInfo", "Store");
+            modelBuilder.Query<OrderDetailWithProductInfo>().ToView("OrderDetailWithProductInfo", "Store");
+
             modelBuilder.Entity<Customer>(entity =>
             {
                 entity.HasIndex(e => e.EmailAddress).HasName("IX_Customers").IsUnique();

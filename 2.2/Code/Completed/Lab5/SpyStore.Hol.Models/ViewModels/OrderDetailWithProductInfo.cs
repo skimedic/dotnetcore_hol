@@ -3,8 +3,8 @@ using SpyStore.Hol.Models.Entities.Base;
 
 namespace SpyStore.Hol.Models.ViewModels
 {
-public class OrderDetailWithProductInfo : OrderDetailBase
-{
+  public class OrderDetailWithProductInfo : OrderDetailBase
+  {
     public new int Id { get; set; }
     public string Description { get; set; }
     [Display(Name = "Model Number")]
@@ -21,7 +21,5 @@ public class OrderDetailWithProductInfo : OrderDetailBase
     public int CategoryId { get; set; }
     [Display(Name = "Category")]
     public string CategoryName { get; set; }
-
-
-}
+  }
 }

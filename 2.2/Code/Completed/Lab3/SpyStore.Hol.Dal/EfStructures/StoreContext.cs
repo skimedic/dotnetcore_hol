@@ -20,7 +20,6 @@ namespace SpyStore.Hol.Dal.EfStructures
             //code in here doesn’t matter since it never gets executed
             throw new Exception();
         }
-
         public DbQuery<CartRecordWithProductInfo> CartRecordWithProductInfos { get; set; }
         public DbQuery<OrderDetailWithProductInfo> OrderDetailWithProductInfos { get; set; }
 
@@ -33,6 +32,9 @@ namespace SpyStore.Hol.Dal.EfStructures
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Query<CartRecordWithProductInfo>().ToView("CartRecordWithProductInfo", "Store");
+            modelBuilder.Query<OrderDetailWithProductInfo>().ToView("OrderDetailWithProductInfo", "Store");
+
             modelBuilder.Entity<Customer>(entity =>
             {
                 entity.HasIndex(e => e.EmailAddress).HasName("IX_Customers").IsUnique();

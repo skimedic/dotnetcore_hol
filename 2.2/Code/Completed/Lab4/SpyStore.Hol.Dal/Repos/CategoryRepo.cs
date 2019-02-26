@@ -13,7 +13,7 @@ namespace SpyStore.Hol.Dal.Repos
         {
         }
 
-        public CategoryRepo(DbContextOptions<StoreContext> options) : base(options)
+        internal CategoryRepo(DbContextOptions<StoreContext> options) : base(options)
         {
         }
         public override IEnumerable<Category> GetAll() => base.GetAll(x => x.CategoryName);

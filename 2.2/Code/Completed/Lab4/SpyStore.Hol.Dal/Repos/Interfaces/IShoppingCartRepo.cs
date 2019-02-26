@@ -12,8 +12,8 @@ namespace SpyStore.Hol.Dal.Repos.Interfaces
         IEnumerable<CartRecordWithProductInfo> GetShoppingCartRecords(int customerId);
         CartWithCustomerInfo GetShoppingCartRecordsWithCustomer(int customerId);
         ShoppingCartRecord GetBy(int productId);
-        int Update(ShoppingCartRecord entity, int? quantityInStock, bool persist = true);
-        int Add(ShoppingCartRecord entity, int? quantityInStock, bool persist = true);
+        int Update(ShoppingCartRecord entity, Product product, bool persist = true);
+        int Add(ShoppingCartRecord entity, Product product, bool persist = true);
         int Purchase(int customerId);
 
     }
