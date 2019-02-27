@@ -13,19 +13,17 @@ using SpyStore.Hol.Mvc.Controllers.Base;
 
 namespace SpyStore.Hol.Mvc.Controllers
 {
-    public class CartController
+    public class CartController : BaseController
     {
         private readonly IShoppingCartRepo _shoppingCartRepo;
-        readonly MapperConfiguration _config = null;
         public CartController(IShoppingCartRepo shoppingCartRepo)
         {
             _shoppingCartRepo = shoppingCartRepo;
         }
-        public IActionResult Index([FromServices] ICustomerRepo customerRepo, int customerId)
+        public IActionResult Index([FromServices] ICustomerRepo customerRepo)
         {
             return null;
         }
-        [HttpGet("{productId}")]
         public IActionResult AddToCart([FromServices] IProductRepo productRepo,
             int productId, bool cameFromProducts = false)
         {
