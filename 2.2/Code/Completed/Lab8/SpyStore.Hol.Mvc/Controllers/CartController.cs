@@ -47,7 +47,7 @@ namespace SpyStore.Hol.Mvc.Controllers
         {
             ViewBag.Title = "Cart";
             ViewBag.Header = "Cart";
-            IEnumerable<CartRecordWithProductInfo> cartItems =
+            IEnumerable<CartRecordWithProductInfo> cartItems = 
                 _shoppingCartRepo.GetShoppingCartRecords(ViewBag.CustomerId);
             var customer = customerRepo.Find(ViewBag.CustomerId);
             var mapper = _config.CreateMapper();

@@ -57,9 +57,20 @@ namespace SpyStore.Hol.Mvc
             services.AddScoped<IOrderDetailRepo, OrderDetailRepo>();
             services.AddScoped<IShoppingCartRepo, ShoppingCartRepo>();
             services.Configure<CustomSettings>(Configuration.GetSection("CustomSettings"));
-
-
-
+            if (_env.IsDevelopment() || _env.EnvironmentName == "Local")
+            {
+                services.AddWebOptimizer(false,false);
+            }
+            else
+            {
+                services.AddWebOptimizer(options =>
+                {
+                    options.MinifyCssFiles(); //Minifies all CSS files
+                    //options.MinifyJsFiles(); //Minifies all JS files
+                    options.MinifyJsFiles("js/site.js");
+                    //options.AddJavaScriptBundle("js/validations/validationCode.js", "js/validations/**/*.js");
+                });
+            }
 
         }
 
@@ -81,9 +92,11 @@ namespace SpyStore.Hol.Mvc
                 app.UseExceptionHandler("/Home/Error");
             }
 
+            app.UseWebOptimizer();
             app.UseStaticFiles();
             //app.UseCookiePolicy();
 
+            //app.UseMvcWithDefaultRoute();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
