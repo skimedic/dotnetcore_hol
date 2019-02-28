@@ -21,11 +21,10 @@ namespace SpyStore.Hol.Mvc
     public class Startup
     {
         private readonly IHostingEnvironment _env;
-
         public Startup(IConfiguration configuration, IHostingEnvironment env)
         {
-            Configuration = configuration;
             _env = env;
+            Configuration = configuration;
         }
 
         public IConfiguration Configuration { get; }
@@ -46,7 +45,7 @@ namespace SpyStore.Hol.Mvc
             //use sqllocaldb to update/create localdb instances
             var path = Environment.GetEnvironmentVariable("APPDATA");
             connectionString =
-                $@"Data Source=(localdb)\mssqllocaldb2017;Initial Catalog=SpyStore2.2_2017;Trusted_Connection=True;MultipleActiveResultSets=true;AttachDbFileName={path}\SpyStore2.2_2017.mdf;";
+                $@"Data Source=(localdb)\mssqllocaldb;Initial Catalog=SpyStoreHOL;Trusted_Connection=True;MultipleActiveResultSets=true;AttachDbFileName={path}\SpyStoreHOL.mdf;";
 #endif
             services.AddDbContextPool<StoreContext>(options => options
                 .UseSqlServer(connectionString, o => o.EnableRetryOnFailure())
@@ -61,6 +60,11 @@ namespace SpyStore.Hol.Mvc
             if (_env.IsDevelopment() || _env.EnvironmentName == "Local")
             {
                 services.AddWebOptimizer(false,false);
+                //services.AddWebOptimizer(pipeline =>
+                //{
+                //    pipeline.AddScssBundle("css/spystore-bootstrap.css",
+                //        "scss/spystore-bootstrap.scss");
+                //});
             }
             else
             {

@@ -25,10 +25,17 @@ namespace SpyStore.Hol.Dal.Repos
             _customerRepo = customerRepo;
         }
 
-        internal ShoppingCartRepo(DbContextOptions<StoreContext> options, 
-            IProductRepo productRepo, 
-            ICustomerRepo customerRepo) : this(new StoreContext(options),productRepo,customerRepo)
+        internal ShoppingCartRepo(DbContextOptions<StoreContext> options): base(new StoreContext(options))
         {
+            _productRepo = new ProductRepo(Context);
+            _customerRepo = new CustomerRepo(Context);
+        }
+
+        public override void Dispose()
+        {
+            _productRepo.Dispose();
+            _customerRepo.Dispose();
+            base.Dispose();
         }
 
         public override IEnumerable<ShoppingCartRecord> GetAll()

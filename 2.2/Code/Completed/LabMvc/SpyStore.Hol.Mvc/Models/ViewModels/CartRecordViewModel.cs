@@ -1,7 +1,4 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 using SpyStore.Hol.Models.ViewModels;
 using SpyStore.Hol.Mvc.Validation;
 

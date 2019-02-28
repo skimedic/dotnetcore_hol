@@ -6,7 +6,6 @@ namespace SpyStore.Hol.Models.ViewModels
 public class CartRecordWithProductInfo : ShoppingCartRecordBase
 {
     public new int Id { get; set; }
-
     //Not supported at this time
     //public ProductDetails Details { get; set; }
     public string Description { get; set; }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -14,14 +15,12 @@ using SpyStore.Hol.Mvc.Models.ViewModels;
 namespace SpyStore.Hol.Mvc.Controllers
 {
     [Route("[controller]/[action]")]
-    //[Route("Cart/[action]/{customerId}")]
     public class CartController : BaseController
     {
         private readonly IShoppingCartRepo _shoppingCartRepo;
         readonly MapperConfiguration _config = null;
         public CartController(IShoppingCartRepo shoppingCartRepo)
         {
-
             _shoppingCartRepo = shoppingCartRepo;
             _config = new MapperConfiguration(
                 cfg =>
@@ -32,16 +31,16 @@ namespace SpyStore.Hol.Mvc.Controllers
                             t.Id = 0;
                             t.TimeStamp = null;
                         });
-                    //cfg.CreateMap<CartRecordViewModel, ShoppingCartRecord>();
                     cfg.CreateMap<CartRecordWithProductInfo, CartRecordViewModel>();
                     cfg.CreateMap<Product, AddToCartViewModel>()
-                        .ForMember(x=>x.Description,x=>x.MapFrom(src=>src.Details.Description))
-                        .ForMember(x=>x.ModelName,x=>x.MapFrom(src=>src.Details.ModelName))
-                        .ForMember(x=>x.ModelNumber,x=>x.MapFrom(src=>src.Details.ModelNumber))
-                        .ForMember(x=>x.ProductImage,x=>x.MapFrom(src=>src.Details.ProductImage))
-                        .ForMember(x=>x.ProductImageLarge,x=>x.MapFrom(src=>src.Details.ProductImageLarge))
-                        .ForMember(x=>x.ProductImageThumb,x=>x.MapFrom(src=>src.Details.ProductImageThumb));
+                        .ForMember(x => x.Description, x => x.MapFrom(src => src.Details.Description))
+                        .ForMember(x => x.ModelName, x => x.MapFrom(src => src.Details.ModelName))
+                        .ForMember(x => x.ModelNumber, x => x.MapFrom(src => src.Details.ModelNumber))
+                        .ForMember(x => x.ProductImage, x => x.MapFrom(src => src.Details.ProductImage))
+                        .ForMember(x => x.ProductImageLarge, x => x.MapFrom(src => src.Details.ProductImageLarge))
+                        .ForMember(x => x.ProductImageThumb, x => x.MapFrom(src => src.Details.ProductImageThumb));
                 });
+
         }
         [HttpGet]
         public IActionResult Index([FromServices] ICustomerRepo customerRepo)
@@ -61,7 +60,7 @@ namespace SpyStore.Hol.Mvc.Controllers
         }
         [HttpGet("{productId}")]
         public IActionResult AddToCart([FromServices] IProductRepo productRepo,
-            int customerId, int productId, bool cameFromProducts = false)
+            int productId, bool cameFromProducts = false)
         {
             ViewBag.CameFromProducts = cameFromProducts;
             ViewBag.Title = "Add to Cart";
@@ -70,12 +69,12 @@ namespace SpyStore.Hol.Mvc.Controllers
             var prod = productRepo.GetOneWithCategoryName(productId);
             if (prod == null) return NotFound();
             var mapper = _config.CreateMapper();
-            var cartRecord = mapper.Map<AddToCartViewModel>(prod);
+            AddToCartViewModel cartRecord = mapper.Map<AddToCartViewModel>(prod);
             cartRecord.Quantity = 1;
             return View(cartRecord);
         }
         [HttpPost("{productId}"), ValidateAntiForgeryToken]
-        public IActionResult AddToCart(int customerId, int productId, AddToCartViewModel item)
+        public IActionResult AddToCart(int productId, AddToCartViewModel item)
         {
             if (!ModelState.IsValid) return View(item);
             try
@@ -91,7 +90,7 @@ namespace SpyStore.Hol.Mvc.Controllers
                 ModelState.AddModelError(string.Empty, "There was an error adding the item to the cart.");
                 return View(item);
             }
-            return RedirectToAction(nameof(CartController.Index), new { customerId });
+            return RedirectToAction(nameof(CartController.Index));
         }
         [HttpPost("{id}"), ValidateAntiForgeryToken]
         public IActionResult Update(ShoppingCartRecordBase record)
@@ -107,20 +106,20 @@ namespace SpyStore.Hol.Mvc.Controllers
                 {
                     _shoppingCartRepo.Update(dbItem);
                     var updatedItem = _shoppingCartRepo.GetShoppingCartRecord(dbItem.Id);
-                    var newItem = mapper.Map<CartRecordViewModel>(updatedItem);
+                    CartRecordViewModel newItem = mapper.Map<CartRecordViewModel>(updatedItem);
                     return PartialView(newItem);
                 }
                 catch (Exception)
                 {
                     ModelState.AddModelError(string.Empty, "An error occurred updating the cart.  Please reload the page and try again.");
                     var updatedItem = _shoppingCartRepo.GetShoppingCartRecord(dbItem.ProductId);
-                    var newItem = mapper.Map<CartRecordViewModel>(updatedItem);
+                    CartRecordViewModel newItem = mapper.Map<CartRecordViewModel>(updatedItem);
                     return PartialView(newItem);
                 }
             }
-            ModelState.AddModelError("","Another user has updated the record.");
+            ModelState.AddModelError("", "Another user has updated the record.");
             var item = _shoppingCartRepo.GetShoppingCartRecord(dbItem.ProductId);
-            var vm = mapper.Map<CartRecordViewModel>(dbItem);
+            CartRecordViewModel vm = mapper.Map<CartRecordViewModel>(dbItem);
             return PartialView(vm);
 
         }
@@ -130,6 +129,16 @@ namespace SpyStore.Hol.Mvc.Controllers
             _shoppingCartRepo.Context.CustomerId = ViewBag.CustomerId;
             _shoppingCartRepo.Delete(item);
             return RedirectToAction(nameof(Index), new { customerId });
+        }
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public async Task<IActionResult> Buy()
+        {
+            int orderId = _shoppingCartRepo.Purchase(ViewBag.CustomerId);
+            return RedirectToAction(
+                nameof(OrdersController.Details),
+                nameof(OrdersController).Replace("Controller", ""),
+                new { orderId });
         }
 
     }

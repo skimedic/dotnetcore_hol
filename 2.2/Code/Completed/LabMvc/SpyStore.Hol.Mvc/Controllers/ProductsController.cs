@@ -23,10 +23,13 @@ namespace SpyStore.Hol.Mvc.Controllers
             Logger = logger;
         }
         [HttpGet]
-        public ActionResult Error()
+        public IActionResult Featured()
         {
-            var foo = _settings.MySetting1;
-            return View();
+            ViewBag.Title = "Featured Products";
+            ViewBag.Header = "Featured Products";
+            ViewBag.ShowCategory = true;
+            ViewBag.Featured = true;
+            return View("ProductList", _productRepo.GetFeaturedWithCategoryName());
         }
         [HttpGet]
         public ActionResult Index()
@@ -40,19 +43,9 @@ namespace SpyStore.Hol.Mvc.Controllers
                 nameof(CartController).Replace("Controller", ""),
                 new
                 {
-                    customerId = ViewBag.CustomerId,
                     productId = id,
                     cameFromProducts = true
                 });
-        }
-        [HttpGet]
-        public IActionResult Featured()
-        {
-            ViewBag.Title = "Featured Products";
-            ViewBag.Header = "Featured Products";
-            ViewBag.ShowCategory = true;
-            ViewBag.Featured = true;
-            return View("ProductList", _productRepo.GetFeaturedWithCategoryName());
         }
         [HttpGet]
         public IActionResult ProductList([FromServices]ICategoryRepo categoryRepo, int id)
@@ -74,6 +67,5 @@ namespace SpyStore.Hol.Mvc.Controllers
             ViewBag.Featured = false;
             return View("ProductList", _productRepo.Search(searchString));
         }
-
     }
 }

@@ -20,10 +20,15 @@ namespace SpyStore.Hol.Dal.Repos
             _orderDetailRepo = orderDetailRepo;
         }
 
-        internal OrderRepo(DbContextOptions<StoreContext> options,
-            IOrderDetailRepo orderDetailRepo) : 
-            this(new StoreContext(options),orderDetailRepo)
+        internal OrderRepo(DbContextOptions<StoreContext> options) : base(options)
         {
+            _orderDetailRepo = new OrderDetailRepo(Context);
+        }
+
+        public override void Dispose()
+        {
+            _orderDetailRepo.Dispose();
+            base.Dispose();
         }
 
         public IList<Order> GetOrderHistory() => 
@@ -31,7 +36,7 @@ namespace SpyStore.Hol.Dal.Repos
 
         public OrderWithDetailsAndProductInfo GetOneWithDetails(int orderId)
         {
-            var order = Table.Include(x=>x.CustomerNavigation)
+            var order = Table.IgnoreQueryFilters().Include(x=>x.CustomerNavigation)
                 .FirstOrDefault(x => x.Id == orderId);
             if (order == null)
             {

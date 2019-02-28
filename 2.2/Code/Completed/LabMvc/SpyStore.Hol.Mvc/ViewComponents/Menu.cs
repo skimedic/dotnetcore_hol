@@ -9,7 +9,7 @@ namespace SpyStore.Hol.Mvc.ViewComponents
     //The runtime searches for the view in the following paths:
     //    Views/<controller_name>/Components/<view_component_name>/<view_name>
     //    Views/Shared/Components/<view_component_name>/<view_name>
-    //Add Pages location
+    //    /Pages/Shared/Components/<View Component Name>/<View Name>
     public class Menu : ViewComponent
     {
         private readonly ICategoryRepo _categoryRepo;
