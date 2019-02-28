@@ -27,7 +27,7 @@ namespace SpyStore.Hol.Dal.Repos.Base
         {
             _disposeContext = true;
         }
-        public void Dispose()
+        public virtual void Dispose()
         {
             if (_disposeContext)
             {
