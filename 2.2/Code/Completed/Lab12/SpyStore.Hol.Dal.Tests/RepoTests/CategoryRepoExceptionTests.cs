@@ -1,41 +1,28 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
+using SpyStore.Hol.Dal.EfStructures;
 using SpyStore.Hol.Dal.Repos;
 using SpyStore.Hol.Models.Entities;
+using System.Linq;
+using SpyStore.Hol.Dal.Exceptions;
+using SpyStore.Hol.Dal.Repos.Interfaces;
+using SpyStore.Hol.Dal.Tests.RepoTests.Base;
 using Xunit;
 
 namespace SpyStore.Hol.Dal.Tests.RepoTests
 {
     [Collection("SpyStore.DAL")]
-    public class CategoryRepoExceptionTests : IDisposable
+    public class CategoryRepoExceptionTests : RepoTestsBase
     {
-        private readonly CategoryRepo _repo;
+        private readonly ICategoryRepo _repo;
 
         public CategoryRepoExceptionTests()
         {
-            _repo = new CategoryRepo();
-            CleanDatabase();
+            _repo = new CategoryRepo(Db);
         }
-
-        public void Dispose()
+        public override void Dispose()
         {
-            CleanDatabase();
             _repo.Dispose();
-        }
-
-        private void CleanDatabase()
-        {
-            _repo.Context.Database.ExecuteSqlCommand("Delete from Store.Categories");
-            _repo.Context.Database.ExecuteSqlCommand($"DBCC CHECKIDENT (\"Store.Categories\", RESEED, -1);");
-        }
-
-        [Fact]
-        public void ShouldNotDeleteACategoryFromSameContextWithConcurrencyIssue()
-        {
-            var category = new Category {CategoryName = "Foo"};
-            _repo.Add(category);
-            Assert.Equal(1, _repo.Count);
-            var ex = Assert.Throws<Exception>(() => _repo.Delete(category.Id, null, false));
         }
 
         [Fact]
@@ -44,7 +31,7 @@ namespace SpyStore.Hol.Dal.Tests.RepoTests
             var category = new Category {CategoryName = "Foo"};
             _repo.Add(category);
             _repo.Context.Database.ExecuteSqlCommand("Update Store.Categories set CategoryName = 'Bar'");
-            var ex = Assert.Throws<DbUpdateConcurrencyException>(() => _repo.Delete(category.Id, category.TimeStamp));
+            var ex = Assert.Throws<SpyStoreConcurrencyException>(() => _repo.Delete(category));
         }
 
         //[Fact]

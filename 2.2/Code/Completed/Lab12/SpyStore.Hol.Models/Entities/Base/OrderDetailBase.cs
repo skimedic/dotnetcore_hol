@@ -18,8 +18,7 @@ namespace SpyStore.Hol.Models.Entities.Base
         public decimal UnitCost { get; set; }
 
         [DataType(DataType.Currency), Display(Name = "Total")]
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        public decimal? LineItemTotal { get; set; }
+        public decimal LineItemTotal { get; set; }
 
     }
 }

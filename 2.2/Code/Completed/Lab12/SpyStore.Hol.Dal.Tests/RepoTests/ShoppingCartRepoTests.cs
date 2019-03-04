@@ -1,28 +1,30 @@
 ﻿using System;
+using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using SpyStore.Hol.Dal.EfStructures;
+using SpyStore.Hol.Dal.Exceptions;
 using SpyStore.Hol.Dal.Initialization;
 using SpyStore.Hol.Dal.Repos;
+using SpyStore.Hol.Dal.Repos.Interfaces;
+using SpyStore.Hol.Dal.Tests.RepoTests.Base;
 using SpyStore.Hol.Models.Entities;
 using Xunit;
 
 namespace SpyStore.Hol.Dal.Tests.RepoTests
 {
     [Collection("SpyStore.DAL")]
-    public class ShoppingCartRepoTests : IDisposable
+    public class ShoppingCartRepoTests : RepoTestsBase
     {
-        private readonly ShoppingCartRepo _repo;
+        private readonly IShoppingCartRepo _repo;
 
         public ShoppingCartRepoTests()
         {
-            var context = new StoreContextFactory().CreateDbContext(null);
-            _repo = new ShoppingCartRepo(context,new ProductRepo(context),new CustomerRepo(context);
-            SampleDataInitializer.InitializeData(_repo.Context);
-
+            _repo = new ShoppingCartRepo(Db,new ProductRepo(Db),new CustomerRepo(Db));
+            Db.CustomerId = 1;
+            LoadDatabase();
         }
-        public void Dispose()
+        public override void Dispose()
         {
-            SampleDataInitializer.ClearData(_repo.Context);
             _repo.Dispose();
         }
 
@@ -34,28 +36,31 @@ namespace SpyStore.Hol.Dal.Tests.RepoTests
                 ProductId = 2,
                 Quantity = 3,
                 DateCreated = DateTime.Now,
-                CustomerId = 0
+                CustomerId = Db.CustomerId
             };
             _repo.Add(item);
-            var shoppingCartRecords = _repo.GetAll().ToList();
-            Assert.Equal(2,shoppingCartRecords.Count);
-            Assert.Equal(2,shoppingCartRecords[0].ProductId);
-            Assert.Equal(3,shoppingCartRecords[0].Quantity);
+            var shoppingCartRecords = _repo.GetShoppingCartRecords(Db.CustomerId).ToList();
+            Assert.Equal(2, shoppingCartRecords.Count);
+            Assert.Equal(33, shoppingCartRecords[0].ProductId);
+            Assert.Equal(1, shoppingCartRecords[0].Quantity);
+            Assert.Equal(2, shoppingCartRecords[1].ProductId);
+            Assert.Equal(3, shoppingCartRecords[1].Quantity);
         }
+
         [Fact]
         public void ShouldUpdateQuantityOnAddIfAlreadyInCart()
         {
             var item = new ShoppingCartRecord()
             {
-                ProductId = 32,
+                ProductId = 33,
                 Quantity = 1,
                 DateCreated = DateTime.Now,
-                CustomerId = 0
+                CustomerId = Db.CustomerId
             };
             _repo.Add(item);
             var shoppingCartRecords = _repo.GetAll().ToList();
             Assert.Single(shoppingCartRecords);
-            Assert.Equal(2,shoppingCartRecords[0].Quantity);
+            Assert.Equal(2, shoppingCartRecords[0].Quantity);
         }
 
         [Fact]
@@ -66,11 +71,11 @@ namespace SpyStore.Hol.Dal.Tests.RepoTests
                 ProductId = 30,
                 Quantity = -1,
                 DateCreated = DateTime.Now,
-                CustomerId = 0
+                CustomerId = Db.CustomerId
             };
             _repo.Add(item);
             var shoppingCartRecords = _repo.GetAll().ToList();
-            Assert.Equal(0,shoppingCartRecords.Count(x => x.ProductId==34));
+            Assert.Equal(0, shoppingCartRecords.Count(x => x.ProductId == 34));
         }
 
         [Fact]
@@ -78,18 +83,19 @@ namespace SpyStore.Hol.Dal.Tests.RepoTests
         {
             var item = new ShoppingCartRecord()
             {
-                ProductId = 32,
+                ProductId = 33,
                 Quantity = -10,
                 DateCreated = DateTime.Now,
-                CustomerId = 0
+                CustomerId = Db.CustomerId
             };
             _repo.Add(item);
-            Assert.Equal(0,_repo.Count);
+            Assert.Equal(0, _repo.Table.Count());
         }
+
         [Fact]
         public void ShouldUpdateQuantity()
         {
-            var item = _repo.Find(0, 32);
+            var item = _repo.Find(1);
             item.Quantity = 5;
             item.DateCreated = DateTime.Now;
             _repo.Update(item);
@@ -101,7 +107,7 @@ namespace SpyStore.Hol.Dal.Tests.RepoTests
         [Fact]
         public void ShouldDeleteOnUpdateIfQuantityEqualsZero()
         {
-            var item = _repo.Find(0, 32);
+            var item = _repo.Find(1);
             item.Quantity = 0;
             item.DateCreated = DateTime.Now;
             _repo.Update(item);
@@ -112,7 +118,7 @@ namespace SpyStore.Hol.Dal.Tests.RepoTests
         [Fact]
         public void ShouldDeleteOnUpdateIfQuantityLessThanZero()
         {
-            var item = _repo.Find(0, 32);
+            var item = _repo.Find(1);
             item.Quantity = -10;
             item.DateCreated = DateTime.Now;
             _repo.Update(item);
@@ -123,17 +129,20 @@ namespace SpyStore.Hol.Dal.Tests.RepoTests
         [Fact]
         public void ShouldDeleteCartRecord()
         {
-            var item = _repo.Find(0, 32);
+            var item = _repo.Find(1);
             _repo.Context.Entry(item).State = EntityState.Detached;
-            _repo.Delete(item.Id, item.TimeStamp);
+            _repo.Delete(item);
             Assert.Empty(_repo.GetAll());
         }
+
         [Fact]
         public void ShouldNotDeleteMissingCartRecord()
         {
-            var item = _repo.Find(0, 32);
-            Assert.Throws<DbUpdateConcurrencyException>(()=>_repo.Delete(200, item.TimeStamp));
+            var item = _repo.Find(1);
+            var recordToDelete = new ShoppingCartRecord {Id = 200, TimeStamp = item.TimeStamp};
+            Assert.Throws<SpyStoreConcurrencyException>(() => _repo.Delete(recordToDelete));
         }
+
         [Fact]
         public void ShouldThrowWhenAddingToMuchQuantity()
         {
@@ -145,18 +154,18 @@ namespace SpyStore.Hol.Dal.Tests.RepoTests
                 DateCreated = DateTime.Now,
                 CustomerId = 2
             };
-            var ex = Assert.Throws<InvalidQuantityException>(() => _repo.Update(item));
-            Assert.Equal("Can't add more product than available in stock", ex.Message);
-        }
-        [Fact]
-        public void ShouldThrowWhenUpdatingTooMuchQuantity()
-        {
-            var item = _repo.Find(0, 32);
-            item.Quantity = 100;
-            item.DateCreated = DateTime.Now;
-            var ex = Assert.Throws<InvalidQuantityException>(()=>_repo.Update(item));
+            var ex = Assert.Throws<SpyStoreInvalidQuantityException>(() => _repo.Update(item));
             Assert.Equal("Can't add more product than available in stock", ex.Message);
         }
 
+        [Fact]
+        public void ShouldThrowWhenUpdatingTooMuchQuantity()
+        {
+            var item = _repo.Find(1);
+            item.Quantity = 100;
+            item.DateCreated = DateTime.Now;
+            var ex = Assert.Throws<SpyStoreInvalidQuantityException>(() => _repo.Update(item));
+            Assert.Equal("Can't add more product than available in stock", ex.Message);
+        }
     }
 }

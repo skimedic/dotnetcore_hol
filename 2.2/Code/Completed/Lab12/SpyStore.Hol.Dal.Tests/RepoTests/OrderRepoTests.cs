@@ -1,25 +1,27 @@
 ﻿using System;
 using System.Linq;
+using SpyStore.Hol.Dal.EfStructures;
 using SpyStore.Hol.Dal.Initialization;
 using SpyStore.Hol.Dal.Repos;
+using SpyStore.Hol.Dal.Repos.Interfaces;
+using SpyStore.Hol.Dal.Tests.RepoTests.Base;
 using Xunit;
 
 namespace SpyStore.Hol.Dal.Tests.RepoTests
 {
     [Collection("SpyStore.DAL")]
-    public class OrderRepoTests : IDisposable
+    public class OrderRepoTests : RepoTestsBase
     {
-        private readonly OrderRepo _repo;
+        private readonly IOrderRepo _repo;
 
         public OrderRepoTests()
         {
-            _repo = new OrderRepo(new OrderDetailRepo());
-            SampleDataInitializer.InitializeData(_repo.Context);
-
+            _repo = new OrderRepo(Db,new OrderDetailRepo(Db));
+            Db.CustomerId = 1;
+            LoadDatabase();
         }
-        public void Dispose()
+        public override void Dispose()
         {
-            SampleDataInitializer.ClearData(_repo.Context);
             _repo.Dispose();
         }
 

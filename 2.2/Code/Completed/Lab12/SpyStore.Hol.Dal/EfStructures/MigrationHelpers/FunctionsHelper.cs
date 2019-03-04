@@ -13,7 +13,7 @@ namespace SpyStore.Hol.Dal.EfStructures.MigrationHelpers
       DECLARE @Result MONEY; 
       SELECT @Result = SUM([Quantity]*[UnitCost]) FROM Store.OrderDetails 
       WHERE OrderId = @OrderId; 
-      RETURN @Result 
+      RETURN coalesce(@Result,0) 
     END";
             migrationBuilder.Sql(sql);
         }

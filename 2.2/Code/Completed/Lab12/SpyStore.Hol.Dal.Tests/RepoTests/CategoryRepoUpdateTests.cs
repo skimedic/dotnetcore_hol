@@ -1,32 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+using SpyStore.Hol.Dal.EfStructures;
 using SpyStore.Hol.Dal.Repos;
+using SpyStore.Hol.Dal.Repos.Interfaces;
+using SpyStore.Hol.Dal.Tests.RepoTests.Base;
 using SpyStore.Hol.Models.Entities;
 using Xunit;
 
 namespace SpyStore.Hol.Dal.Tests.RepoTests
 {
     [Collection("SpyStore.DAL")]
-    public class CategoryRepoUpdateTests : IDisposable
+    public class CategoryRepoUpdateTests : RepoTestsBase
     {
-        private readonly CategoryRepo _repo;
+        private readonly ICategoryRepo _repo;
 
         public CategoryRepoUpdateTests()
         {
-            _repo = new CategoryRepo();
-            CleanDatabase();
+            _repo = new CategoryRepo(Db);
         }
-        public void Dispose()
+        public override void Dispose()
         {
-            CleanDatabase();
             _repo.Dispose();
-        }
-
-        private void CleanDatabase()
-        {
-            _repo.Context.Database.ExecuteSqlCommand("Delete from Store.Categories");
-            _repo.Context.Database.ExecuteSqlCommand($"DBCC CHECKIDENT (\"Store.Categories\", RESEED, -1);");
         }
 
         [Fact]
@@ -41,10 +36,14 @@ namespace SpyStore.Hol.Dal.Tests.RepoTests
             _repo.Update(category, false);
             var count = _repo.SaveChanges();
             Assert.Equal(1, count);
-            var repo = new CategoryRepo();
-            var cat = repo.Find(category.Id);
-            Assert.Equal(cat.CategoryName, category.CategoryName);
-
+            using (var context = new StoreContextFactory().CreateDbContext(null))
+            {
+                using (var repo = new CategoryRepo(context))
+                {
+                    var cat = repo.Find(category.Id);
+                    Assert.Equal(cat.CategoryName, category.CategoryName);
+                }
+            }
         }
         [Fact]
         public void ShouldUpdateARangeOfCategoryEntities()
@@ -62,9 +61,14 @@ namespace SpyStore.Hol.Dal.Tests.RepoTests
             _repo.UpdateRange(categories, false);
             var count = _repo.SaveChanges();
             Assert.Equal(3, count);
-            var repo = new CategoryRepo();
+            using (var context = new StoreContextFactory().CreateDbContext(null))
+            {
+                using (var repo = new CategoryRepo(context))
+                {
             var cat = repo.Find(categories[0].Id);
             Assert.Equal("Foo1", cat.CategoryName);
+                }
+            }
 
         }
     }

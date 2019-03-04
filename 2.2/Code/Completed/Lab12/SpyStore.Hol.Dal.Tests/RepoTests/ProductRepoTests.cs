@@ -1,36 +1,37 @@
 ﻿using System;
 using System.Linq;
+using SpyStore.Hol.Dal.EfStructures;
 using SpyStore.Hol.Dal.Initialization;
 using SpyStore.Hol.Dal.Repos;
+using SpyStore.Hol.Dal.Repos.Interfaces;
+using SpyStore.Hol.Dal.Tests.RepoTests.Base;
 using Xunit;
 
 namespace SpyStore.Hol.Dal.Tests.RepoTests
 {
     [Collection("SpyStore.DAL")]
-    public class ProductRepoTests : IDisposable
+    public class ProductRepoTests : RepoTestsBase
     {
-        private readonly ProductRepo _repo;
+        private readonly IProductRepo _repo;
 
         public ProductRepoTests()
         {
-            _repo = new ProductRepo();
-            SampleDataInitializer.InitializeData(_repo.Context);
-
+            _repo = new ProductRepo(Db);
+            LoadDatabase();
         }
-        public void Dispose()
+        public override void Dispose()
         {
-            SampleDataInitializer.ClearData(_repo.Context);
             _repo.Dispose();
         }
 
         [Theory]
-        [InlineData(0, 5)]
         [InlineData(1, 5)]
-        [InlineData(2, 6)]
+        [InlineData(2, 5)]
         [InlineData(3, 6)]
-        [InlineData(4, 3)]
-        [InlineData(5, 7)]
-        [InlineData(6, 9)]
+        [InlineData(4, 6)]
+        [InlineData(5, 3)]
+        [InlineData(6, 7)]
+        [InlineData(7, 9)]
         public void ShouldGetAllProductsForACategory(int catId, int productCount)
         {
             var prods = _repo.GetProductsForCategory(catId).ToList();

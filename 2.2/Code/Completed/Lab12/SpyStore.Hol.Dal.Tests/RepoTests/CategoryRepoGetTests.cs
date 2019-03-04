@@ -1,43 +1,27 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
+using SpyStore.Hol.Dal.EfStructures;
 using SpyStore.Hol.Dal.Repos;
+using SpyStore.Hol.Dal.Repos.Interfaces;
+using SpyStore.Hol.Dal.Tests.RepoTests.Base;
 using SpyStore.Hol.Models.Entities;
 using Xunit;
 
 namespace SpyStore.Hol.Dal.Tests.RepoTests
 {
     [Collection("SpyStore.DAL")]
-    public class CategoryRepoGetTests : IDisposable
+    public class CategoryRepoGetTests : RepoTestsBase
     {
-        private readonly CategoryRepo _repo;
+        private readonly ICategoryRepo _repo;
 
         public CategoryRepoGetTests()
         {
-            _repo = new CategoryRepo();
-            CleanDatabase();
+            _repo = new CategoryRepo(Db);
         }
-        public void Dispose()
+        public override void Dispose()
         {
-            CleanDatabase();
             _repo.Dispose();
         }
-
-        private void CleanDatabase()
-        {
-            _repo.Context.Database.ExecuteSqlCommand("Delete from Store.Categories");
-            _repo.Context.Database.ExecuteSqlCommand($"DBCC CHECKIDENT (\"Store.Categories\", RESEED, -1);");
-        }
-
-        //private IList<Product> CreateProducts()
-        //{
-        //    var prods = new List<Product>
-        //    {
-        //        new Product() {CurrentPrice = 12.99M, ModelName = "Product 1", ModelNumber = "P1"},
-        //        new Product() {CurrentPrice = 9.99M, ModelName = "Product 2", ModelNumber = "P2"},
-        //    };
-        //    return prods;
-        //}
-
 
         [Fact]
         public void ShouldGetACategoryWithProductInfo()

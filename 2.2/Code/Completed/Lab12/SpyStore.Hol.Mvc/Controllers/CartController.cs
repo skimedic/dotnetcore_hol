@@ -42,6 +42,7 @@ namespace SpyStore.Hol.Mvc.Controllers
                 });
 
         }
+
         [HttpGet]
         public IActionResult Index([FromServices] ICustomerRepo customerRepo)
         {

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using SpyStore.Hol.Dal.EfStructures;
 using SpyStore.Hol.Dal.Initialization;
 using SpyStore.Hol.Models.Entities;
@@ -14,32 +15,32 @@ namespace SpyStore.Hol.Dal.Tests.ContextTests
 
         public OrderTests()
         {
-            var storeContextFactory = new StoreContextFactory();
-            SampleDataInitializer.InitializeData(storeContextFactory.CreateDbContext(new string[0]));
-            _db = storeContextFactory.CreateDbContext(new string[0]);
-            
+            _db = new StoreContextFactory().CreateDbContext(new string[0]);
+            _db.CustomerId = 1;
+            //Have to load database with different context, OR call reload on each entity
+            SampleDataInitializer.InitializeData(new StoreContextFactory().CreateDbContext(new string[0]));
         }
 
         public void Dispose()
         {
-            SampleDataInitializer.ClearData(_db);
             _db.Dispose();
         }
 
         [Fact]
         public void ShouldGetOrderTotal()
         {
+            var order = _db.Orders.IgnoreQueryFilters().FirstOrDefault(x => x.Id == 1);
             var orders = _db.Orders.ToList();
             Assert.Single(orders);
-            Assert.Equal(4424.90M, orders[0].OrderTotal ?? 0);
+            Assert.Equal(4414.90M, orders[0].OrderTotal);
         }
 
         [Fact]
         public void ShouldGetOrderTotalWithFunction()
         {
-            var order = _db.Orders.First(x => StoreContext.GetOrderTotal(x.Id) == 4424.90M);
+            var order = _db.Orders.First(x => StoreContext.GetOrderTotal(x.Id) == 4414.90M);
             Assert.NotNull(order);
-            Assert.Equal(4424.90M, order.OrderTotal ?? 0);
+            Assert.Equal(4414.90M, order.OrderTotal);
         }
 
         [Fact]
@@ -62,9 +63,11 @@ namespace SpyStore.Hol.Dal.Tests.ContextTests
             _db.SaveChanges();
 
             //Need to use a new DbContext to get the updated value
-            order = new StoreContextFactory().CreateDbContext(new string[0]).Orders.FirstOrDefault();
+            var storeContext = new StoreContextFactory().CreateDbContext(new string[0]);
+            storeContext.CustomerId = 1;
+            order = storeContext.Orders.First();
             //order = _db.Orders.FirstOrDefault();
-            Assert.Equal(4924.90M, order.OrderTotal);
+            Assert.Equal(4914.90M, order.OrderTotal);
         }
     }
 }
