@@ -69,6 +69,7 @@ namespace SpyStore.Hol.Mvc
                     //options.MinifyJsFiles(); //Minifies all JS files
                     options.MinifyJsFiles("js/site.js");
                     //options.AddJavaScriptBundle("js/validations/validationCode.js", "js/validations/**/*.js");
+                    //options.AddJavaScriptBundle("js/validations/validationCode.js", "js/validations/validators.js", "js/validations/errorFormatting.js");
                 });
             }
 

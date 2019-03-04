@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 using SpyStore.Hol.Dal.Repos.Interfaces;
 using SpyStore.Hol.Models.Entities;
 using SpyStore.Hol.Models.Entities.Base;
@@ -42,6 +41,7 @@ namespace SpyStore.Hol.Mvc.Controllers
                 });
 
         }
+
         [HttpGet]
         public IActionResult Index([FromServices] ICustomerRepo customerRepo)
         {

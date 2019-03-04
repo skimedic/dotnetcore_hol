@@ -22,6 +22,7 @@ namespace SpyStore.Hol.Mvc.Controllers
         [HttpGet]
         public IActionResult Featured()
         {
+            ViewBag.Foo = _settings.MySetting1;
             ViewBag.Title = "Featured Products";
             ViewBag.Header = "Featured Products";
             ViewBag.ShowCategory = true;
@@ -54,6 +55,9 @@ namespace SpyStore.Hol.Mvc.Controllers
             ViewBag.Featured = false;
             return View(_productRepo.GetProductsForCategory(id));
         }
+
+        //[Route("[controller]/[action]/{searchString}")]
+        //[HttpPost]
         [Route("[controller]/[action]")]
         [HttpPost("{searchString}")]
         public IActionResult Search(string searchString)

@@ -59,8 +59,8 @@ namespace SpyStore.Hol.Mvc
             services.Configure<CustomSettings>(Configuration.GetSection("CustomSettings"));
             if (_env.IsDevelopment() || _env.EnvironmentName == "Local")
             {
-                //services.AddWebOptimizer(false,false);
-                services.AddWebOptimizer(options =>
+                services.AddWebOptimizer(false,false);
+                /*services.AddWebOptimizer(options =>
                 {
                     options.MinifyCssFiles(); //Minifies all CSS files
                     //options.MinifyJsFiles(); //Minifies all JS files
@@ -68,6 +68,7 @@ namespace SpyStore.Hol.Mvc
                     options.AddJavaScriptBundle("js/validations/validationCode.js", "js/validations/**/*.js");
                     //options.AddJavaScriptBundle("js/validations/validationCode.js", "js/validations/validators.js", "js/validations/errorFormatting.js");
                 });
+				*/
             }
             else
             {

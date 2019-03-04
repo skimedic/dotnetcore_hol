@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 using SpyStore.Hol.Dal.Repos.Interfaces;
 using SpyStore.Hol.Models.Entities;
 using SpyStore.Hol.Models.Entities.Base;
@@ -42,12 +41,13 @@ namespace SpyStore.Hol.Mvc.Controllers
                 });
 
         }
+
         [HttpGet]
         public IActionResult Index([FromServices] ICustomerRepo customerRepo)
         {
             ViewBag.Title = "Cart";
             ViewBag.Header = "Cart";
-            IEnumerable<CartRecordWithProductInfo> cartItems =
+            IEnumerable<CartRecordWithProductInfo> cartItems = 
                 _shoppingCartRepo.GetShoppingCartRecords(ViewBag.CustomerId);
             var customer = customerRepo.Find(ViewBag.CustomerId);
             var mapper = _config.CreateMapper();

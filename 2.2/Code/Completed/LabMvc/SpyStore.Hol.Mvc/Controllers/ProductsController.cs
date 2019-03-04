@@ -57,6 +57,9 @@ namespace SpyStore.Hol.Mvc.Controllers
             ViewBag.Featured = false;
             return View(_productRepo.GetProductsForCategory(id));
         }
+
+        //[Route("[controller]/[action]/{searchString}")]
+        //[HttpPost]
         [Route("[controller]/[action]")]
         [HttpPost("{searchString}")]
         public IActionResult Search(string searchString)
