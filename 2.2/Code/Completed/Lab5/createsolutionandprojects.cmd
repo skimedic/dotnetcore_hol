@@ -1,4 +1,10 @@
-dotnet new globaljson --sdk-version 2.1.504
+REM .NET Core 2.1 VS 2017
+REM dotnet new globaljson --sdk-version 2.1.507
+REM .NET Core 2.1 VS 2019 16.0
+REM dotnet new globaljson --sdk-version 2.1.604
+REM .NET Core 2.1 VS 2019 16.1
+dotnet new globaljson --sdk-version 2.1.700
+
 dotnet new sln -n SpyStore.Hol
 dotnet new mvc -n SpyStore.Hol.Mvc -au none --no-https  -o .\SpyStore.Hol.Mvc
 dotnet sln SpyStore.Hol.sln add SpyStore.Hol.Mvc

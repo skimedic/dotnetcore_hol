@@ -1,4 +1,4 @@
-dotnet new globaljson --sdk-version 2.2.104
+dotnet new globaljson --sdk-version 2.2.300
 dotnet new sln -n SpyStore.Hol
 dotnet new mvc -n SpyStore.Hol.Mvc -au none --no-https  -o .\SpyStore.Hol.Mvc
 dotnet sln SpyStore.Hol.sln add SpyStore.Hol.Mvc
