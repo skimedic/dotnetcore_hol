@@ -10,7 +10,7 @@ using SpyStore.Hol.Dal.EfStructures;
 namespace SpyStore.Hol.Dal.EfStructures.Migrations
 {
     [DbContext(typeof(StoreContext))]
-    [Migration("20190224054828_Final")]
+    [Migration("20190304203421_Final")]
     partial class Final
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -82,7 +82,7 @@ namespace SpyStore.Hol.Dal.EfStructures.Migrations
                         .HasColumnType("datetime")
                         .HasDefaultValueSql("getdate()");
 
-                    b.Property<decimal?>("OrderTotal")
+                    b.Property<decimal>("OrderTotal")
                         .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("money")
                         .HasComputedColumnSql("Store.GetOrderTotal([Id])");
@@ -109,7 +109,7 @@ namespace SpyStore.Hol.Dal.EfStructures.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<decimal?>("LineItemTotal")
+                    b.Property<decimal>("LineItemTotal")
                         .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("money")
                         .HasComputedColumnSql("[Quantity]*[UnitCost]");

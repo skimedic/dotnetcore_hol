@@ -11,7 +11,7 @@ namespace SpyStore.Hol.Dal.EfStructures.Migrations
                 schema: "Store",
                 table: "Orders",
                 type: "money",
-                nullable: true,
+                nullable: false,
                 computedColumnSql: "Store.GetOrderTotal([Id])");
 
             migrationBuilder.AddColumn<decimal>(
@@ -19,7 +19,7 @@ namespace SpyStore.Hol.Dal.EfStructures.Migrations
                 schema: "Store",
                 table: "OrderDetails",
                 type: "money",
-                nullable: true,
+                nullable: false,
                 computedColumnSql: "[Quantity]*[UnitCost]");
         }
 

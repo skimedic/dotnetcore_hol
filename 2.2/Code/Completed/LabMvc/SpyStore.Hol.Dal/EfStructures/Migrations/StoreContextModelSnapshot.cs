@@ -80,7 +80,7 @@ namespace SpyStore.Hol.Dal.EfStructures.Migrations
                         .HasColumnType("datetime")
                         .HasDefaultValueSql("getdate()");
 
-                    b.Property<decimal?>("OrderTotal")
+                    b.Property<decimal>("OrderTotal")
                         .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("money")
                         .HasComputedColumnSql("Store.GetOrderTotal([Id])");
@@ -107,7 +107,7 @@ namespace SpyStore.Hol.Dal.EfStructures.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<decimal?>("LineItemTotal")
+                    b.Property<decimal>("LineItemTotal")
                         .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("money")
                         .HasComputedColumnSql("[Quantity]*[UnitCost]");
