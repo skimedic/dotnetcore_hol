@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="8.0.0" />
+    <PackageReference Include="bootstrap.sass" Version="4.3.1" />
     <PackageReference Include="LigerShark.WebOptimizer.Core" Version="1.0.236" />
     <PackageReference Include="ligershark.weboptimizer.sass" Version="1.0.34-beta" />
     <PackageReference Include="Microsoft.AspNetCore.App" />

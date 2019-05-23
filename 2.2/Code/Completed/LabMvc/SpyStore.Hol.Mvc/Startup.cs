@@ -59,16 +59,19 @@ namespace SpyStore.Hol.Mvc
             services.Configure<CustomSettings>(Configuration.GetSection("CustomSettings"));
             if (_env.IsDevelopment() || _env.EnvironmentName == "Local")
             {
-                services.AddWebOptimizer(false,false);
-                /*services.AddWebOptimizer(options =>
+                //http://localhost:5000/scss/spystore-bootstrap2.css
+                //services.AddWebOptimizer(false,false);
+                services.AddWebOptimizer(options =>
                 {
-                    options.MinifyCssFiles(); //Minifies all CSS files
+                    //options.CompileScssFiles("scss/spystore-bootstrap.scss");
+                    options.AddScssBundle("css/spystore-bootstrap.css", "scss/spystore-bootstrap.scss");
+                    //options.AddScssBundle("scss/spystore-site.css", "scss/spystore/_functions.scss", "scss/spystore/_variables.scss", "scss/spystore/site.scss");
+                    //options.MinifyCssFiles(); //Minifies all CSS files
                     //options.MinifyJsFiles(); //Minifies all JS files
-                    options.MinifyJsFiles("js/site.js");
-                    options.AddJavaScriptBundle("js/validations/validationCode.js", "js/validations/**/*.js");
+                    //options.MinifyJsFiles("js/site.js");
+                    //options.AddJavaScriptBundle("js/validations/validationCode.js", "js/validations/**/*.js");
                     //options.AddJavaScriptBundle("js/validations/validationCode.js", "js/validations/validators.js", "js/validations/errorFormatting.js");
                 });
-				*/
             }
             else
             {
