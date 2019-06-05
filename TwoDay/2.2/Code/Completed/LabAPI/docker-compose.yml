@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  spystore.hol.service:
+    image: ${DOCKER_REGISTRY-}spystoreholservice
+    build:
+      context: .
+      dockerfile: SpyStore.Hol.Service/Dockerfile
