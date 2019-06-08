@@ -1,20 +1,20 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using SpyStore.Hol.Models.Entities;
 using SpyStore.Hol.Models.ViewModels;
 using SpyStore.Hol.Mvc.Controllers.Base;
+using SpyStore.Hol.Mvc.Support;
 
 namespace SpyStore.Hol.Mvc.Controllers
 {
     [Route("[controller]/[action]")]
     public class OrdersController : BaseController
     {
-        //private readonly IOrderRepo _orderRepo;
-        //public OrdersController(IOrderRepo orderRepo)
-        //{
-        //    _orderRepo = orderRepo;
-        //}
+        public OrdersController(SpyStoreServiceWrapper serviceWrapper, IConfiguration configuration) : base(configuration)
+        {
+        }
 
         //[HttpGet]
         //public IActionResult Index()

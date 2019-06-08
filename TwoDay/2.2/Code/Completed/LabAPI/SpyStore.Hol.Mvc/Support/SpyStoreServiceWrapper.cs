@@ -5,6 +5,7 @@ using System.Security.Policy;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
 using SpyStore.Hol.Models.Entities;
+using SpyStore.Hol.Models.Entities.Base;
 using SpyStore.Hol.Models.ViewModels;
 
 namespace SpyStore.Hol.Mvc.Support
@@ -26,7 +27,7 @@ namespace SpyStore.Hol.Mvc.Support
         //Shopping Cart Record Controller
         Task<IList<CartRecordWithProductInfo>> GetCartRecordsAsync(int id);
         //Task<string> AddToCartAsync(int customerId, int productId, int quantity);
-        //Task<string> UpdateCartItemAsync(ShoppingCartRecord item);
+        Task<CartRecordWithProductInfo> UpdateShoppingCartRecord(int recordId, ShoppingCartRecord item);
         //Task RemoveCartItemAsync(ShoppingCartRecord item);
         //Shopping Cart Controller
         Task<CartWithCustomerInfo> GetCartAsync(int customerId);
@@ -125,6 +126,19 @@ namespace SpyStore.Hol.Mvc.Support
             return result;
         }
 
+        public async Task<CartRecordWithProductInfo> UpdateShoppingCartRecord(int recordId, ShoppingCartRecord item)
+        {
+            var response = await _client.PutAsJsonAsync($"{_settings.Uri}{_settings.CartRecordBaseUri}/{recordId}", item);
+
+            response.EnsureSuccessStatusCode();
+            var location = response.Headers.Location.OriginalString;
+            var updatedResponse = await _client.GetAsync(location);
+            updatedResponse.EnsureSuccessStatusCode();
+            var result = await updatedResponse.Content.ReadAsAsync<CartRecordWithProductInfo>();
+
+            return result;
+        }
+
         public async Task<CartWithCustomerInfo> GetCartAsync(int customerId)
         {
             var response = await _client.GetAsync($"{_settings.Uri}{_settings.CartBaseUri}/{customerId}");
@@ -143,7 +157,7 @@ namespace SpyStore.Hol.Mvc.Support
             response.EnsureSuccessStatusCode();
             
             var result = await response.Content.ReadAsAsync<Product>();
-
+            //TODO: Fix this
             return null;
         }
 

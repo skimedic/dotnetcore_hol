@@ -5,7 +5,16 @@ body {
     padding-bottom: 20px;
 }
 
-.foo {
+.header {
+    text-align: center;
+}
+.nav {
+    text=align: center;
+}
+.container {
+    max-width: 90%;
+    text-align: center;
+    align-content: center;
 }
 /* Wrapping element */
 /* Set some basic padding to keep content from hitting the edges */

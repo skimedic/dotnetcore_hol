@@ -1,4 +1,4 @@
-﻿@model CartWithCustomerInfo
+﻿@model CartViewModel
 @{
     ViewData["Title"] = "Index";
     var cartTotal = 0M;
@@ -18,7 +18,7 @@
             </thead>
             @for (var x = 0; x < Model.CartRecords.Count; x++)
             {
-                CartRecordWithProductInfo item = Model.CartRecords[x];
+                CartRecordViewModel item = Model.CartRecords[x];
                 cartTotal += item.LineItemTotal;
                 <partial name="Update" model="item" />
             }
@@ -53,8 +53,11 @@
             "option strict";
             var quantity = form.elements["Quantity"].value;
             var timeStamp = form.elements["TimeStamp"].value;
+            var productId = form.elements["ProductId"].value;
+            var customerId = form.elements["CustomerId"].value;
+            var unitsInStock = form.elements["UnitsInStock"].value;
             var token = $('input[name="__RequestVerificationToken"]', form).val();
-            var myData = { TimeStamp: timeStamp, Quantity: quantity };
+            var myData = { TimeStamp: timeStamp, Quantity: quantity, ProductId:productId, CustomerId: customerId, UnitsInStock:unitsInStock };
             var dataWithAntiforgeryToken = $.extend(myData, { '__RequestVerificationToken': token });
 
             $.ajax({

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using SpyStore.Hol.Models.Entities;
 using SpyStore.Hol.Models.Entities.Base;
 using SpyStore.Hol.Models.ViewModels;
@@ -20,7 +21,7 @@ namespace SpyStore.Hol.Mvc.Controllers
         private readonly SpyStoreServiceWrapper _serviceWrapper;
 
         readonly MapperConfiguration _config = null;
-        public CartController(SpyStoreServiceWrapper serviceWrapper)
+        public CartController(SpyStoreServiceWrapper serviceWrapper, IConfiguration configuration) : base(configuration)
         {
             _serviceWrapper = serviceWrapper;
             _config = new MapperConfiguration(
@@ -49,14 +50,13 @@ namespace SpyStore.Hol.Mvc.Controllers
             ViewBag.Title = "Cart";
             ViewBag.Header = "Cart";
             CartWithCustomerInfo cartWithCustomerInfo = await _serviceWrapper.GetCartAsync(ViewBag.CustomerId);
-            //var customer = await _serviceWrapper.GetCustomerAsync(ViewBag.CustomerId);
-            //var mapper = _config.CreateMapper();
-            //var viewModel = new CartViewModel
-            //{
-            //    Customer = customer,
-            //    CartRecords = mapper.Map<IList<CartRecordViewModel>>(cartItems)
-            //};
-            return View(cartWithCustomerInfo);
+            var mapper = _config.CreateMapper();
+            var viewModel = new CartViewModel
+            {
+                Customer = cartWithCustomerInfo.Customer,
+                CartRecords = mapper.Map<IList<CartRecordViewModel>>(cartWithCustomerInfo.CartRecords)
+            };
+            return View(viewModel);
         }
         //[HttpGet("{productId}")]
         //public IActionResult AddToCart([FromServices] IProductRepo productRepo,
@@ -92,37 +92,23 @@ namespace SpyStore.Hol.Mvc.Controllers
         //    }
         //    return RedirectToAction(nameof(CartController.Index));
         //}
-        //[HttpPost("{id}"), ValidateAntiForgeryToken]
-        //public IActionResult Update(ShoppingCartRecordBase record)
-        //{
-        //    _shoppingCartRepo.Context.CustomerId = ViewBag.CustomerId;
-        //    ShoppingCartRecord dbItem = _shoppingCartRepo.Find(record.Id);
-        //    var mapper = _config.CreateMapper();
-        //    if (record.TimeStamp != null && dbItem.TimeStamp.SequenceEqual(record.TimeStamp))
-        //    {
-        //        dbItem.Quantity = record.Quantity;
-        //        dbItem.DateCreated = DateTime.Now;
-        //        try
-        //        {
-        //            _shoppingCartRepo.Update(dbItem);
-        //            var updatedItem = _shoppingCartRepo.GetShoppingCartRecord(dbItem.Id);
-        //            CartRecordViewModel newItem = mapper.Map<CartRecordViewModel>(updatedItem);
-        //            return PartialView(newItem);
-        //        }
-        //        catch (Exception)
-        //        {
-        //            ModelState.AddModelError(string.Empty, "An error occurred updating the cart.  Please reload the page and try again.");
-        //            var updatedItem = _shoppingCartRepo.GetShoppingCartRecord(dbItem.ProductId);
-        //            CartRecordViewModel newItem = mapper.Map<CartRecordViewModel>(updatedItem);
-        //            return PartialView(newItem);
-        //        }
-        //    }
-        //    ModelState.AddModelError("", "Another user has updated the record.");
-        //    var item = _shoppingCartRepo.GetShoppingCartRecord(dbItem.ProductId);
-        //    CartRecordViewModel vm = mapper.Map<CartRecordViewModel>(dbItem);
-        //    return PartialView(vm);
+        [HttpPost("{id}"), ValidateAntiForgeryToken]
+        public async Task<IActionResult> Update(int id, CartRecordViewModel record)
+        {
+            var cartRecord = new ShoppingCartRecord
+            {
+                Id = record.Id,
+                Quantity = record.Quantity,
+                ProductId = record.ProductId,
+                TimeStamp = record.TimeStamp,
+                CustomerId = record.CustomerId
+            };
+            var item = await _serviceWrapper.UpdateShoppingCartRecord(id, cartRecord);
+            var mapper = _config.CreateMapper();
+            CartRecordViewModel vm = mapper.Map<CartRecordViewModel>(item);
+            return PartialView(vm);
 
-        //}
+        }
         //[HttpPost("{id}"), ValidateAntiForgeryToken]
         //public IActionResult Delete(int customerId, int id, ShoppingCartRecord item)
         //{

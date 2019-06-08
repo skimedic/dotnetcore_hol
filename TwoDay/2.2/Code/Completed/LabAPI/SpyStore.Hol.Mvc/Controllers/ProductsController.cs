@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using SpyStore.Hol.Mvc.Controllers.Base;
@@ -11,7 +12,7 @@ namespace SpyStore.Hol.Mvc.Controllers
     {
         private readonly SpyStoreServiceWrapper _serviceWrapper;
 
-        public ProductsController(SpyStoreServiceWrapper serviceWrapper)
+        public ProductsController(SpyStoreServiceWrapper serviceWrapper, IConfiguration configuration) : base(configuration)
         {
             _serviceWrapper = serviceWrapper;
         }

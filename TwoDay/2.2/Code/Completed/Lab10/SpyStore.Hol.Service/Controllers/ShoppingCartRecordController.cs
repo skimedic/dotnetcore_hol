@@ -107,7 +107,7 @@ namespace SpyStore.Hol.Service.Controllers
     /// <response code="400">Returned when there was an error in the data (bad CustomerId/ProductId).</response>
     /// <response code="500">Returned when there was an error in the repo.</response>
     [HttpPut("{recordId}", Name = "UpdateCartRecord")]
-    public ActionResult<ShoppingCartRecord> UpdateShoppingCartRecord(int recordId, ShoppingCartRecord item)
+    public ActionResult UpdateShoppingCartRecord(int recordId, ShoppingCartRecord item)
     {
       if (item == null || item.Id != recordId || !ModelState.IsValid)
       {
@@ -116,9 +116,9 @@ namespace SpyStore.Hol.Service.Controllers
       item.DateCreated = DateTime.Now;
       _repo.Context.CustomerId = item.CustomerId;
       _repo.Update(item);
-      //Location: http://localhost:8477/api/ShoppingCart/0 (201)
-      return CreatedAtRoute("GetShoppingCart",
-        new {controller = "ShoppingCart", customerId = item.CustomerId},
+      //Location: http://localhost:8477/api/ShoppingCartRecord/0 (201)
+      return CreatedAtRoute("GetShoppingCartRecord",
+        new {controller = "ShoppingCartRecord", recordId = item.Id},
         null);
     }
 
