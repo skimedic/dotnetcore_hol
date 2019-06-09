@@ -29,7 +29,7 @@ namespace SpyStore.Hol.Service.Controllers
     [Produces("application/json")]
     [ProducesResponseType(200)]
     [ProducesResponseType(500)]
-    public ActionResult<IEnumerable<Customer>> Get() => _repo.GetAll().ToList();
+    public ActionResult<IEnumerable<Customer>> Get() => Ok(_repo.GetAll().ToList());
 
     /// <summary>
     /// Gets a single customer.

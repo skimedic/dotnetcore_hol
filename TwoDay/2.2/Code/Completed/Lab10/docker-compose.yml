@@ -13,6 +13,7 @@ services:
     image: ${DOCKER_REGISTRY-}spystoreholservice
     ports:
       - "38080:80"
+      - "32080:80"
     build:
       context: .
       dockerfile: SpyStore.Hol.Service/Dockerfile

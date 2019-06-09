@@ -17,7 +17,7 @@ namespace SpyStore.Hol.Dal.EfStructures
                 $@"Data Source=(localdb)\mssqllocaldb2017;Initial Catalog=SpyStore2.2_2017;Trusted_Connection=True;MultipleActiveResultSets=true;AttachDbFileName={path}\SpyStore2.2_2017.mdf;";
 #elif LOCALDB
             var connectionString =
-                @"Server=(localdb)\mssqllocaldb;Database=SpyStore21;Trusted_Connection=True;MultipleActiveResultSets=true;";
+                @"Server=(localdb)\mssqllocaldb;Database=SpyStoreHol;Trusted_Connection=True;MultipleActiveResultSets=true;";
 #else
       var connectionString =
         @"Server=.,6433;Database=SpyStoreHol;User ID=sa;Password=P@ssw0rd;MultipleActiveResultSets=true;";

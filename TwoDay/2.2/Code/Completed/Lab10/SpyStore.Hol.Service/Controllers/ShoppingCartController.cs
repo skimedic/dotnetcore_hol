@@ -32,7 +32,7 @@ namespace SpyStore.Hol.Service.Controllers
     [ProducesResponseType(200)]
     [ProducesResponseType(204)]
     [ProducesResponseType(500)]
-    public ActionResult<CartWithCustomerInfo> GetShoppingCart(int customerId)
+    public ActionResult<CartWithCustomerInfo> GetShoppingCart(int customerId) 
       => _repo.GetShoppingCartRecordsWithCustomer(customerId);
 
     /// <summary>
@@ -41,7 +41,9 @@ namespace SpyStore.Hol.Service.Controllers
     /// <param name="customerId"></param>
     /// <param name="customer"></param>
     /// <returns></returns>
-    [HttpPost("buy", Name = "Purchase")] 
+    [HttpPost("buy", Name = "Purchase")]
+    [ProducesResponseType(201)]
+    [ProducesResponseType(500)]
     public IActionResult Purchase(int customerId, Customer customer)
     {
       if (customer == null || customer.Id != customerId || !ModelState.IsValid)
@@ -51,9 +53,9 @@ namespace SpyStore.Hol.Service.Controllers
 
       int orderId;
       orderId = _repo.Purchase(customerId);
-      //Location: http://localhost:8477/api/Orders/0/1
+      //Location: http://localhost:8477/api/OrderDetails/2
       return CreatedAtRoute("GetOrderDetails",
-        routeValues: new {customerId = customerId, orderId = orderId}, value: orderId);
+        routeValues: new {orderId = orderId},null);
     }
   }
 }

@@ -52,9 +52,9 @@ namespace SpyStore.Hol.Service
                     builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin().AllowCredentials();
                 });
             });
+            var connectionString = Configuration.GetConnectionString("SpyStore");
             services.AddDbContextPool<StoreContext>(
-                options => options.UseSqlServer(
-                    Configuration.GetConnectionString("SpyStore")));
+                options =>options.UseSqlServer(connectionString));
             services.AddScoped<ICategoryRepo, CategoryRepo>();
             services.AddScoped<IProductRepo, ProductRepo>();
             services.AddScoped<ICustomerRepo, CustomerRepo>();
@@ -74,7 +74,7 @@ namespace SpyStore.Hol.Service
                         {
                             Name = "Freeware",
                             //Url = "https://en.wikipedia.org/wiki/Freeware"
-                            Url = "http://localhost:38080/LICENSE.txt"
+                            Url = "http://localhost:32080/LICENSE.txt"
                         }
                     });
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";

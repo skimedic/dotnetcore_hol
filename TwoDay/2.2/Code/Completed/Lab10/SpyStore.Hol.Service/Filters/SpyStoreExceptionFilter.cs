@@ -18,11 +18,10 @@ namespace SpyStore.Hol.Service.Filters
 
         public override void OnException(ExceptionContext context)
         {
-            bool isDevelopment = _hostingEnvironment.IsDevelopment();
             var ex = context.Exception;
-            string stackTrace = (isDevelopment) ? context.Exception.StackTrace : string.Empty;
+            string stackTrace = _hostingEnvironment.IsDevelopment() ? context.Exception.StackTrace : string.Empty;
             string message = ex.Message;
-            string error = string.Empty;
+            string error;
             IActionResult actionResult;
             switch (ex)
             {
@@ -54,7 +53,7 @@ namespace SpyStore.Hol.Service.Filters
                     };
                     break;
             }
-            //context.ExceptionHandled = true;
+            //context.ExceptionHandled = true; //If this is uncommented, the exception is swallowed
             context.Result = actionResult;
         }
     }
