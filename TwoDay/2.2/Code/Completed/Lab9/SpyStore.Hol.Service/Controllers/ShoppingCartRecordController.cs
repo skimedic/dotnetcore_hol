@@ -65,8 +65,7 @@ namespace SpyStore.Hol.Service.Controllers
     [ProducesResponseType(201)]
     [ProducesResponseType(400)]
     [ProducesResponseType(500)]
-    public ActionResult<ShoppingCartRecord> AddShoppingCartRecord(int customerId, 
-      ShoppingCartRecord record)
+    public ActionResult AddShoppingCartRecord(int customerId, ShoppingCartRecord record)
     {
       if (record == null || customerId != record.CustomerId || !ModelState.IsValid)
       {
@@ -107,7 +106,10 @@ namespace SpyStore.Hol.Service.Controllers
     /// <response code="400">Returned when there was an error in the data (bad CustomerId/ProductId).</response>
     /// <response code="500">Returned when there was an error in the repo.</response>
     [HttpPut("{recordId}", Name = "UpdateCartRecord")]
-    public ActionResult<ShoppingCartRecord> UpdateShoppingCartRecord(int recordId, ShoppingCartRecord item)
+    [ProducesResponseType(201)]
+    [ProducesResponseType(400)]
+    [ProducesResponseType(500)]
+    public ActionResult UpdateShoppingCartRecord(int recordId, ShoppingCartRecord item)
     {
       if (item == null || item.Id != recordId || !ModelState.IsValid)
       {
@@ -116,9 +118,9 @@ namespace SpyStore.Hol.Service.Controllers
       item.DateCreated = DateTime.Now;
       _repo.Context.CustomerId = item.CustomerId;
       _repo.Update(item);
-      //Location: http://localhost:8477/api/ShoppingCart/0 (201)
-      return CreatedAtRoute("GetShoppingCart",
-        new {controller = "ShoppingCart", customerId = item.CustomerId},
+      //Location: http://localhost:8477/api/ShoppingCartRecord/0 (201)
+      return CreatedAtRoute("GetShoppingCartRecord",
+        new {controller = "ShoppingCartRecord", recordId = item.Id},
         null);
     }
 
@@ -147,7 +149,10 @@ namespace SpyStore.Hol.Service.Controllers
     /// <response code="201">Returned new created item</response>
     /// <response code="400">Returned when there was an error in the data (bad CustomerId/ProductId).</response>
     /// <response code="500">Returned when there was an error in the repo.</response>
-    [HttpDelete("{recordId}",Name = "DeleteCartRecord")] 
+    [HttpDelete("{recordId}",Name = "DeleteCartRecord")]
+    [ProducesResponseType(201)]
+    [ProducesResponseType(400)]
+    [ProducesResponseType(500)]
     //1.1 spec allows for body in delete statement
     public IActionResult DeleteCartRecord(int recordId, ShoppingCartRecord item)
     {

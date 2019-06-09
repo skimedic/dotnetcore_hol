@@ -13,6 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpyStore.Hol.Dal.Tests", "S
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionItems", "{FFE916C7-DDBD-4113-94EE-BF2378AEFADA}"
 	ProjectSection(SolutionItems) = preProject
+		Docker.txt = Docker.txt
 		global.json = global.json
 		Migrations.txt = Migrations.txt
 	EndProjectSection
@@ -108,6 +109,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {D222BF33-B86E-44F1-949D-77474EB1A2AB}
+		SolutionGuid = {A97190F5-9C78-414D-B6DB-6CAE0F39F3C8}
 	EndGlobalSection
 EndGlobal

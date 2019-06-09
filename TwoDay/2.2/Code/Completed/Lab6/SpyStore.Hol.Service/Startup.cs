@@ -47,9 +47,9 @@ namespace SpyStore.Hol.Service
                     builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin().AllowCredentials();
                 });
             });
+            var connectionString = Configuration.GetConnectionString("SpyStore");
             services.AddDbContextPool<StoreContext>(
-                options => options.UseSqlServer(
-                    Configuration.GetConnectionString("SpyStore")));
+                options =>options.UseSqlServer(connectionString));
             services.AddScoped<ICategoryRepo, CategoryRepo>();
             services.AddScoped<IProductRepo, ProductRepo>();
             services.AddScoped<ICustomerRepo, CustomerRepo>();

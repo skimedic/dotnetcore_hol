@@ -25,8 +25,8 @@ dotnet add SpyStore.Hol.Mvc reference SpyStore.Hol.Models
 
 dotnet add SpyStore.Hol.Dal reference SpyStore.Hol.Models
 
-dotnet add SpyStore.Hol.Dal.tests reference SpyStore.Hol.Models
-dotnet add SpyStore.Hol.Dal.tests reference SpyStore.Hol.Dal
+dotnet add SpyStore.Hol.Dal.Tests reference SpyStore.Hol.Models
+dotnet add SpyStore.Hol.Dal.Tests reference SpyStore.Hol.Dal
 
 dotnet add SpyStore.Hol.Service reference SpyStore.Hol.Dal
 dotnet add SpyStore.Hol.Service reference SpyStore.Hol.Models
@@ -40,6 +40,7 @@ dotnet add SpyStore.Hol.Service package Swashbuckle.AspNetCore.Annotations
 dotnet add SpyStore.Hol.Service package Swashbuckle.AspNetCore.Swagger
 dotnet add SpyStore.Hol.Service package Swashbuckle.AspNetCore.SwaggerGen
 dotnet add SpyStore.Hol.Service package Swashbuckle.AspNetCore.SwaggerUI
+REM This must be entered on one line
 dotnet add SpyStore.Hol.Service package Microsoft.VisualStudio.Azure.Containers.Tools.Targets -v 1.7.9
 dotnet add SpyStore.Hol.Service package Microsoft.VisualStudio.Web.CodeGeneration.Design -v 2.2.3
 
@@ -59,6 +60,6 @@ dotnet add SpyStore.Hol.Models package AutoMapper
 dotnet add SpyStore.Hol.Models package Newtonsoft.Json
 
 dotnet add SpyStore.Hol.Dal.Tests package Microsoft.EntityFrameworkCore.SqlServer -v 2.2.0
-
+dotnet add SpyStore.Hol.Service.Tests package Microsoft.EntityFrameworkCore.SqlServer -v 2.2.0
 
 
