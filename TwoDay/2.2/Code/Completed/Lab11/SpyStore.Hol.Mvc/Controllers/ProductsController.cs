@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using SpyStore.Hol.Dal.Repos.Interfaces;
+﻿using Microsoft.Extensions.Configuration;
 using SpyStore.Hol.Mvc.Controllers.Base;
 using SpyStore.Hol.Mvc.Support;
 
@@ -9,15 +6,10 @@ namespace SpyStore.Hol.Mvc.Controllers
 {
     public class ProductsController : BaseController
     {
-        private readonly IProductRepo _productRepo;
-        private readonly CustomSettings _settings;
-
-        public ProductsController(
-            IProductRepo productRepo,
-            IOptionsSnapshot<CustomSettings> settings)
+        private readonly SpyStoreServiceWrapper _serviceWrapper;
+        public ProductsController(SpyStoreServiceWrapper serviceWrapper, IConfiguration configuration) : base(configuration)
         {
-            _settings = settings.Value;
-            _productRepo = productRepo;
+            _serviceWrapper = serviceWrapper;
         }
 
     }
