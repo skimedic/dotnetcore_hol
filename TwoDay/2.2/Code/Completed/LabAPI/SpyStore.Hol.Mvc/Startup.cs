@@ -49,7 +49,6 @@ namespace SpyStore.Hol.Mvc
                     options.AddJavaScriptBundle("js/validations/validationCode.js", "js/validations/**/*.js");
                     //options.AddJavaScriptBundle("js/validations/validationCode.js", "js/validations/validators.js", "js/validations/errorFormatting.js");
                 });
-
             }
             else
             {
@@ -82,7 +81,6 @@ namespace SpyStore.Hol.Mvc
             //app.UseCookiePolicy();
 
             //app.UseMvcWithDefaultRoute();
-            //app.UseMvc();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

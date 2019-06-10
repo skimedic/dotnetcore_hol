@@ -1,4 +1,4 @@
-﻿@model IList<Product>
+﻿@model IList<ProductViewModel>
 @{
     ViewData["Title"] = ViewBag.Title;
 }
@@ -9,7 +9,6 @@
     }
 </div>
 <h3>@ViewBag.Header</h3>
-<h3>@ViewBag.Foo</h3>
 <div class="row">
     @for (int x = 0; x < Model.Count; x++)
     {

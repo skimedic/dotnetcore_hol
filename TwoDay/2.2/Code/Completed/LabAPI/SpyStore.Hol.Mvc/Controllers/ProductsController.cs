@@ -1,21 +1,20 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using SpyStore.Hol.Mvc.Controllers.Base;
 using SpyStore.Hol.Mvc.Support;
 
 namespace SpyStore.Hol.Mvc.Controllers
 {
+    [Route("[controller]/[action]")]
     public class ProductsController : BaseController
     {
         private readonly SpyStoreServiceWrapper _serviceWrapper;
-
         public ProductsController(SpyStoreServiceWrapper serviceWrapper, IConfiguration configuration) : base(configuration)
         {
             _serviceWrapper = serviceWrapper;
         }
+
         [HttpGet]
         public async Task<IActionResult> Featured()
         {
@@ -34,16 +33,18 @@ namespace SpyStore.Hol.Mvc.Controllers
         {
             return RedirectToAction(nameof(Featured));
         }
-        //public ActionResult Details(int id)
-        //{
-        //    return RedirectToAction(nameof(CartController.AddToCart),
-        //        nameof(CartController).Replace("Controller", ""),
-        //        new
-        //        {
-        //            productId = id,
-        //            cameFromProducts = true
-        //        });
-        //}
+
+        public ActionResult Details(int id)
+        {
+            return RedirectToAction(nameof(CartController.AddToCart),
+                nameof(CartController).Replace("Controller", ""),
+                new
+                {
+                    productId = id,
+                    cameFromProducts = true
+                });
+        }
+
         [HttpGet]
         public async Task<IActionResult> ProductList(int id)
         {
@@ -55,8 +56,6 @@ namespace SpyStore.Hol.Mvc.Controllers
             return View(await _serviceWrapper.GetProductsForACategoryAsync(id));
         }
 
-        //[Route("[controller]/[action]/{searchString}")]
-        //[HttpPost]
         [Route("[controller]/[action]")]
         [HttpPost("{searchString}")]
         public async Task<IActionResult> Search(string searchString)

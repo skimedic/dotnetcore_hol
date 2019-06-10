@@ -35,6 +35,9 @@
             </tfoot>
         </table>
         <form asp-controller="Cart" asp-action="Buy">
+            <input asp-for="Customer.Id" type="hidden"/>
+            <input asp-for="Customer.EmailAddress" type="hidden"/>
+            <input asp-for="Customer.Password" value="hidden"  type="hidden"/>
             <div class="pull-right">
                 <button class="btn btn-primary">Checkout</button>
             </div>
@@ -68,7 +71,7 @@
                     success: function(data) {
                         $("#row_" + id).replaceWith(data);
                     },
-                    error: function() {
+                    error: function(jqXHR, exception) {
                         alert('An error occurred: Please reload the page and try again.');
                     }
                 })

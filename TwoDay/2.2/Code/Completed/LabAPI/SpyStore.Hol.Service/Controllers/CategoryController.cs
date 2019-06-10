@@ -27,7 +27,7 @@ namespace SpyStore.Hol.Service.Controllers
         /// <returns>List of all categories</returns>
         /// <response code="200">Returns categories.</response>
         /// <response code="500">Returned when there was an error in the repo.</response>
-        [HttpGet(Name="GetAllCategories")]
+        [HttpGet(Name = "GetAllCategories")]
         [Produces("application/json")]
         [ProducesResponseType(200)]
         [ProducesResponseType(500)]
@@ -49,7 +49,7 @@ namespace SpyStore.Hol.Service.Controllers
         /// <response code="200">Returns single Category.</response>
         /// <response code="404">Returned when Category with specific id doesn't exist.</response>
         /// <response code="500">Returned when there was an error in the repo.</response>
-        [HttpGet("{id}",Name = "GetCategory")]
+        [HttpGet("{id}", Name = "GetCategory")]
         [Produces("application/json")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
@@ -75,11 +75,11 @@ namespace SpyStore.Hol.Service.Controllers
         /// <returns>List of all products in a category</returns>
         /// <response code="200">Returns all products for a single category.</response>
         /// <response code="500">Returned when there was an error in the repo.</response>
-        [HttpGet("{categoryId}/products", Name="GetCategoryProducts")]
+        [HttpGet("{categoryId}/products", Name = "GetCategoryProducts")]
         [Produces("application/json")]
         [ProducesResponseType(200)]
         [ProducesResponseType(500)]
-        public ActionResult<IList<Product>> GetProductsForCategory([FromServices] IProductRepo productRepo, int categoryId) 
+        public ActionResult<IList<Product>> GetProductsForCategory([FromServices] IProductRepo productRepo, int categoryId)
             => productRepo.GetProductsForCategory(categoryId).ToList();
     }
 }

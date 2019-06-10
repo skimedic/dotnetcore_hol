@@ -1,12 +1,17 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using SpyStore.Hol.Dal.EfStructures;
@@ -33,7 +38,6 @@ namespace SpyStore.Hol.Service
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-
             services.AddMvcCore(config =>
                     config.Filters.Add(new SpyStoreExceptionFilter(_env)))
                 .AddJsonFormatters(j =>
@@ -41,8 +45,6 @@ namespace SpyStore.Hol.Service
                     j.ContractResolver = new DefaultContractResolver();
                     j.Formatting = Formatting.Indented;
                 });
-
-            // http://docs.asp.net/en/latest/security/cors.html
             services.AddCors(options =>
             {
                 options.AddPolicy("AllowAll", builder =>
@@ -50,10 +52,9 @@ namespace SpyStore.Hol.Service
                     builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin().AllowCredentials();
                 });
             });
-            //NOTE: Did not disable mixed mode running here
+            var connectionString = Configuration.GetConnectionString("SpyStore");
             services.AddDbContextPool<StoreContext>(
-                options => options.UseSqlServer(
-                    Configuration.GetConnectionString("SpyStore")));
+                options =>options.UseSqlServer(connectionString));
             services.AddScoped<ICategoryRepo, CategoryRepo>();
             services.AddScoped<IProductRepo, ProductRepo>();
             services.AddScoped<ICustomerRepo, CustomerRepo>();
@@ -73,7 +74,7 @@ namespace SpyStore.Hol.Service
                         {
                             Name = "Freeware",
                             //Url = "https://en.wikipedia.org/wiki/Freeware"
-                            Url = "http://localhost:23741/LICENSE.txt"
+                            Url = "http://localhost:32080/LICENSE.txt"
                         }
                     });
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
@@ -99,7 +100,6 @@ namespace SpyStore.Hol.Service
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json","SpyStore Service v1");
-                //c.RoutePrefix = string.Empty;
             });
             app.UseStaticFiles();
             app.UseCors("AllowAll");  // has to go before UseMvc

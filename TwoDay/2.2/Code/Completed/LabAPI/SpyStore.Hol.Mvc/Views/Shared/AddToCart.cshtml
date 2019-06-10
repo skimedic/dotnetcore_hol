@@ -2,7 +2,6 @@
 @{
     ViewData["Title"] = @ViewBag.Title;
 }
-<h3>@ViewBag.Header</h3>
 <form method="post"
       asp-controller="Cart"
       asp-action="AddToCart"
@@ -22,6 +21,6 @@
 }
 @section Scripts {
     @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        <partial name="_ValidationScriptsPartial" />
     }
 }
