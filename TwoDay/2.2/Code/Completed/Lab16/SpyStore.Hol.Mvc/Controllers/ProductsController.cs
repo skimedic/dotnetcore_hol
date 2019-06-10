@@ -1,40 +1,39 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using SpyStore.Hol.Dal.Repos.Interfaces;
+﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using SpyStore.Hol.Mvc.Controllers.Base;
 using SpyStore.Hol.Mvc.Support;
 
 namespace SpyStore.Hol.Mvc.Controllers
 {
+    [Route("[controller]/[action]")]
     public class ProductsController : BaseController
     {
-        private readonly IProductRepo _productRepo;
-        private readonly CustomSettings _settings;
-
-        public ProductsController(
-            IProductRepo productRepo,
-            IOptionsSnapshot<CustomSettings> settings)
+        private readonly SpyStoreServiceWrapper _serviceWrapper;
+        public ProductsController(SpyStoreServiceWrapper serviceWrapper, IConfiguration configuration) : base(configuration)
         {
-            _settings = settings.Value;
-            _productRepo = productRepo;
+            _serviceWrapper = serviceWrapper;
         }
+
         [HttpGet]
-        public IActionResult Featured()
+        public async Task<IActionResult> Featured()
         {
-            ViewBag.Foo = _settings.MySetting1;
             ViewBag.Title = "Featured Products";
             ViewBag.Header = "Featured Products";
             ViewBag.ShowCategory = true;
             ViewBag.Featured = true;
-            return View("ProductList", _productRepo.GetFeaturedWithCategoryName());
+            return View("ProductList", await _serviceWrapper.GetFeaturedProductsAsync());
         }
 
+        [Route("/")]
+        [Route("Products")]
+        [Route("Products/Index")]
         [HttpGet]
         public ActionResult Index()
         {
             return RedirectToAction(nameof(Featured));
         }
+
         public ActionResult Details(int id)
         {
             return RedirectToAction(nameof(CartController.AddToCart),
@@ -45,28 +44,27 @@ namespace SpyStore.Hol.Mvc.Controllers
                     cameFromProducts = true
                 });
         }
+
         [HttpGet]
-        public IActionResult ProductList([FromServices]ICategoryRepo categoryRepo, int id)
+        public async Task<IActionResult> ProductList(int id)
         {
-            var cat = categoryRepo.Find(id);
+            var cat = await _serviceWrapper.GetCategoryAsync(id);
             ViewBag.Title = cat?.CategoryName;
             ViewBag.Header = cat?.CategoryName;
             ViewBag.ShowCategory = false;
             ViewBag.Featured = false;
-            return View(_productRepo.GetProductsForCategory(id));
+            return View(await _serviceWrapper.GetProductsForACategoryAsync(id));
         }
 
-        //[Route("[controller]/[action]/{searchString}")]
-        //[HttpPost]
         [Route("[controller]/[action]")]
         [HttpPost("{searchString}")]
-        public IActionResult Search(string searchString)
+        public async Task<IActionResult> Search(string searchString)
         {
             ViewBag.Title = "Search Results";
             ViewBag.Header = "Search Results";
             ViewBag.ShowCategory = true;
             ViewBag.Featured = false;
-            return View("ProductList", _productRepo.Search(searchString));
+            return View("ProductList", await _serviceWrapper.SearchAsync(searchString));
         }
     }
 }
