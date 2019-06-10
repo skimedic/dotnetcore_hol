@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewComponents;
-using SpyStore.Hol.Dal.Repos.Interfaces;
+using SpyStore.Hol.Mvc.Support;
 
 namespace SpyStore.Hol.Mvc.ViewComponents
 {
@@ -12,24 +12,22 @@ namespace SpyStore.Hol.Mvc.ViewComponents
     //    /Pages/Shared/Components/<View Component Name>/<View Name>
     public class Menu : ViewComponent
     {
-        private readonly ICategoryRepo _categoryRepo;
+        private readonly SpyStoreServiceWrapper _serviceWrapper;
 
-        public Menu(ICategoryRepo categoryRepo)
+        public Menu(SpyStoreServiceWrapper serviceWrapper)
         {
-            _categoryRepo = categoryRepo;
+            _serviceWrapper = serviceWrapper;
         }
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            return await Task.Run<IViewComponentResult>(() =>
+            var cats = await _serviceWrapper.GetCategoriesAsync();
+            if (cats == null)
             {
-                var cats = _categoryRepo.GetAll();
-                if (cats == null)
-                {
-                    return new ContentViewComponentResult("There was an error getting the categories");
-                }
-                return View("MenuView", cats);
-            });
+                return new ContentViewComponentResult("There was an error getting the categories");
+            }
+
+            return View("MenuView", cats);
         }
     }
 }
