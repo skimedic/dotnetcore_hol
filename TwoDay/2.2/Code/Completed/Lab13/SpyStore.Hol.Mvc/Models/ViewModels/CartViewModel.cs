@@ -1,14 +1,4 @@
-﻿#region Copyright
-// Copyright Information
-// ==================================
-// SpyStore.Hol - SpyStore.Hol.Mvc - CartViewModel.cs
-// All samples copyright Philip Japikse
-// http://www.skimedic.com 02/24/2019
-// See License.txt for more information
-// ==================================
-#endregion
-
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using SpyStore.Hol.Models.Entities;
 
 namespace SpyStore.Hol.Mvc.Models.ViewModels
