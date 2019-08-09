@@ -8,10 +8,35 @@ using SpyStore.Hol.Mvc.Models;
 
 namespace SpyStore.Hol.Mvc.Controllers
 {
+    [Route("[controller]/[action]/{id?}")]
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        [Route("/")]
+        [Route("/Home")]
+        [Route("/Home/Index")]
+        [Route("/Home/Index/{id?}")]
+        public IActionResult Index(int? id)
         {
+            return View();
+        }
+
+        //[Route("[controller]/[action]/{id?}")]
+        [HttpGet("/[action]/[controller]/{id?}")]
+        public IActionResult Test(int? id)
+        {
+            return View("Index");
+        }
+        public IActionResult About()
+        {
+            ViewData["Message"] = "Your application description page.";
+
+            return View();
+        }
+
+        public IActionResult Contact()
+        {
+            ViewData["Message"] = "Your contact page.";
+
             return View();
         }
 
