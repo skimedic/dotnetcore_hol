@@ -1,4 +1,11 @@
-dotnet new globaljson --sdk-version 2.2.300
+rem VS 2017 15.9
+rem dotnet new globaljson --sdk-version 2.2.108
+rem VS 2019 16.0
+rem dotnet new globaljson --sdk-version 2.2.205
+rem VS 2019 16.1
+rem dotnet new globaljson --sdk-version 2.2.301
+rem VS 2019 16.2
+dotnet new globaljson --sdk-version 2.2.401
 rem create the solution
 dotnet new sln -n SpyStore.Hol
 rem create the ASP.NET Core Web App project and add it to the solution

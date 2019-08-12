@@ -7,7 +7,9 @@
       asp-controller="Cart"
       asp-action="AddToCart"
       asp-route-customerId="@ViewBag.CustomerId"
-      asp-route-productId="@Model.Id">
+      asp-route-productId="@Model.Id"
+      asp-antiforgery="true"
+      id="myForm">
     @Html.EditorForModel()
 </form>
 @{

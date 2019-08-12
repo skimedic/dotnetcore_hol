@@ -30,6 +30,9 @@ namespace SpyStore.Hol.Mvc.Controllers
             return View("ProductList", _productRepo.GetFeaturedWithCategoryName());
         }
 
+        [Route("/")]
+        [Route("/Products")]
+        [Route("/Products/Index")]
         [HttpGet]
         public ActionResult Index()
         {

@@ -14,6 +14,7 @@ using SpyStore.Hol.Mvc.Models.ViewModels;
 namespace SpyStore.Hol.Mvc.Controllers
 {
     [Route("[controller]/[action]")]
+    //[Route("ShoppingCart/[action]")]
     public class CartController : BaseController
     {
         private readonly IShoppingCartRepo _shoppingCartRepo;

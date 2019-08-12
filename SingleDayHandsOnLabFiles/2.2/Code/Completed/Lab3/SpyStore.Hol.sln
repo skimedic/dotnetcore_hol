@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26124.0
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28917.182
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpyStore.Hol.Mvc", "SpyStore.Hol.Mvc\SpyStore.Hol.Mvc.csproj", "{FE5FA16C-6C35-44D6-8A30-F31AFD10C5EC}"
 EndProject
@@ -13,8 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpyStore.Hol.Dal.Tests", "S
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionItems", "{FFE916C7-DDBD-4113-94EE-BF2378AEFADA}"
 	ProjectSection(SolutionItems) = preProject
-		Migrations.txt = Migrations.txt
 		global.json = global.json
+		Migrations.txt = Migrations.txt
 	EndProjectSection
 EndProject
 Global
