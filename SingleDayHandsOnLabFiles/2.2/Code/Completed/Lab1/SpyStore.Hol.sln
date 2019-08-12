@@ -13,6 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpyStore.Hol.Dal.Tests", "S
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionItems", "{14194F0B-8C63-4EF6-A18D-05F285F917FA}"
 	ProjectSection(SolutionItems) = preProject
+		DockerDal.txt = DockerDal.txt
 		global.json = global.json
 	EndProjectSection
 EndProject
