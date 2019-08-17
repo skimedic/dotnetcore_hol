@@ -14,6 +14,7 @@ using SpyStore.Hol.Mvc.Models.ViewModels;
 namespace SpyStore.Hol.Mvc.Controllers
 {
     [Route("[controller]/[action]")]
+    //[Route("ShoppingCart/[action]")]
     public class CartController : BaseController
     {
         private readonly IShoppingCartRepo _shoppingCartRepo;
@@ -93,7 +94,7 @@ namespace SpyStore.Hol.Mvc.Controllers
             return RedirectToAction(nameof(CartController.Index));
         }
         [HttpPost("{id}"), ValidateAntiForgeryToken]
-        public IActionResult Update(ShoppingCartRecordBase record)
+        public IActionResult Update(CartRecordViewModel record)
         {
             _shoppingCartRepo.Context.CustomerId = ViewBag.CustomerId;
             ShoppingCartRecord dbItem = _shoppingCartRepo.Find(record.Id);
@@ -105,7 +106,7 @@ namespace SpyStore.Hol.Mvc.Controllers
                 try
                 {
                     _shoppingCartRepo.Update(dbItem);
-                    var updatedItem = _shoppingCartRepo.GetShoppingCartRecord(dbItem.Id);
+                    CartRecordWithProductInfo updatedItem = _shoppingCartRepo.GetShoppingCartRecord(dbItem.Id);
                     CartRecordViewModel newItem = mapper.Map<CartRecordViewModel>(updatedItem);
                     return PartialView(newItem);
                 }

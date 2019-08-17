@@ -94,7 +94,7 @@ namespace SpyStore.Hol.Mvc.Controllers
             return RedirectToAction(nameof(CartController.Index));
         }
         [HttpPost("{id}"), ValidateAntiForgeryToken]
-        public IActionResult Update(ShoppingCartRecordBase record)
+        public IActionResult Update(CartRecordViewModel record)
         {
             _shoppingCartRepo.Context.CustomerId = ViewBag.CustomerId;
             ShoppingCartRecord dbItem = _shoppingCartRepo.Find(record.Id);
