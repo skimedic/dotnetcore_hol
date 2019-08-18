@@ -7,6 +7,7 @@ using SpyStore.Hol.Mvc.Support;
 
 namespace SpyStore.Hol.Mvc.Controllers
 {
+    [Route("[controller]/[action]")]
     public class ProductsController : BaseController
     {
         private readonly IProductRepo _productRepo;

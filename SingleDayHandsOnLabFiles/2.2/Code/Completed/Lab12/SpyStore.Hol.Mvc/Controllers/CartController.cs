@@ -43,6 +43,8 @@ namespace SpyStore.Hol.Mvc.Controllers
 
         }
 
+        [Route("/Cart")]
+        [Route("/Cart/Index")]
         [HttpGet]
         public IActionResult Index([FromServices] ICustomerRepo customerRepo)
         {

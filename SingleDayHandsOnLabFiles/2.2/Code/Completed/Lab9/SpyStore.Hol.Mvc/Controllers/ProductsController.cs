@@ -7,6 +7,7 @@ using SpyStore.Hol.Mvc.Support;
 
 namespace SpyStore.Hol.Mvc.Controllers
 {
+    [Route("[controller]/[action]")]
     public class ProductsController : BaseController
     {
         private readonly IProductRepo _productRepo;
@@ -30,6 +31,9 @@ namespace SpyStore.Hol.Mvc.Controllers
             return View("ProductList", _productRepo.GetFeaturedWithCategoryName());
         }
 
+        [Route("/")]
+        [Route("/Products")]
+        [Route("/Products/Index")]
         [HttpGet]
         public ActionResult Index()
         {

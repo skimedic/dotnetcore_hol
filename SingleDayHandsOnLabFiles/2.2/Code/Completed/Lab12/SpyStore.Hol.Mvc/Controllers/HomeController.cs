@@ -8,8 +8,16 @@ using SpyStore.Hol.Mvc.Models;
 
 namespace SpyStore.Hol.Mvc.Controllers
 {
+    [Route("[controller]/[action]")]
     public class HomeController : Controller
     {
+        [Route("/Home")]
+        [Route("/Home/Index")]
+        public IActionResult Index()
+        {
+            return View();
+        }
+
         public IActionResult Privacy()
         {
             return View();
