@@ -17,6 +17,8 @@ namespace SpyStore.Hol.Mvc.Controllers
             _orderRepo = orderRepo;
         }
 
+        [Route("/Orders")]
+        [Route("/Orders/Index")]
         [HttpGet]
         public IActionResult Index()
         {
