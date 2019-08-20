@@ -30,7 +30,7 @@ dotnet add SpyStore.Hol.Dal.tests reference SpyStore.Hol.Dal
 
 dotnet add SpyStore.Hol.Mvc package AutoMapper
 dotnet add SpyStore.Hol.Mvc package Newtonsoft.Json
-dotnet add SpyStore.Hol.Mvc package LigerShark.WebOptimizer.Core
+dotnet add SpyStore.Hol.Mvc package LigerShark.WebOptimizer.Core -v 1.0.236
 dotnet add SpyStore.Hol.Mvc package LigerShark.WebOptimizer.sass -v 1.0.34-beta
 dotnet add SpyStore.Hol.Mvc package Microsoft.Web.LibraryManager.Build
 
