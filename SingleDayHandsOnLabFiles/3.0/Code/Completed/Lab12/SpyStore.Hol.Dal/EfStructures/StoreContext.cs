@@ -12,6 +12,7 @@
 
 using System;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using SpyStore.Hol.Models.Entities;
 using SpyStore.Hol.Models.Entities.Base;
 using SpyStore.Hol.Models.ViewModels;
@@ -24,7 +25,20 @@ namespace SpyStore.Hol.Dal.EfStructures
 
         public StoreContext(DbContextOptions<StoreContext> options) : base(options)
         {
+            this.ChangeTracker.StateChanged += ChangeTracker_StateChanged;
+            this.ChangeTracker.Tracked+= ChangeTrackerOnTracked;
         }
+
+        private void ChangeTrackerOnTracked(object sender, EntityTrackedEventArgs e)
+        {
+            if (e.Entry.Entity is EntityBase)
+            {
+
+            }
+            throw new NotImplementedException();
+        }
+
+        private void ChangeTracker_StateChanged(object sender, Microsoft.EntityFrameworkCore.ChangeTracking.EntityStateChangedEventArgs e) => throw new NotImplementedException();
 
         [DbFunction("GetOrderTotal", Schema = "Store")]
         public static int GetOrderTotal(int orderId)
