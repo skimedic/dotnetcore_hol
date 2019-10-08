@@ -15,6 +15,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionIt
 	ProjectSection(SolutionItems) = preProject
 		DockerDal.txt = DockerDal.txt
 		global.json = global.json
+		migration.sql = migration.sql
 		Migrations.txt = Migrations.txt
 	EndProjectSection
 EndProject
