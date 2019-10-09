@@ -124,6 +124,10 @@ namespace SpyStore.Hol.Mvc.Controllers
                 {
                     _shoppingCartRepo.Update(dbItem);
                     CartRecordWithProductInfo updatedItem = _shoppingCartRepo.GetShoppingCartRecord(dbItem.Id);
+                    if (updatedItem == null)
+                    {
+                        return new EmptyResult();
+                    }
                     CartRecordViewModel newItem = mapper.Map<CartRecordViewModel>(updatedItem);
                     return PartialView(newItem);
                 }

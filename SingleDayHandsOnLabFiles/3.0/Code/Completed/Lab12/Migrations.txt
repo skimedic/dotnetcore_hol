@@ -6,3 +6,5 @@ dotnet ef database update
 
 dotnet ef migrations add Final -c SpyStore.Hol.Dal.EfStructures.StoreContext 
 dotnet ef database update
+
+dotnet ef migrations script --idempotent -o ..\migration.sql

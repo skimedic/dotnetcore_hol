@@ -105,7 +105,6 @@ namespace SpyStore.Hol.Mvc
 
             app.UseEndpoints(endpoints =>
             {
-                //endpoints.
                 endpoints.MapControllers();
             });
         }
