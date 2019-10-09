@@ -93,8 +93,8 @@ namespace SpyStore.Hol.Mvc
                 using (var serviceScope = app.ApplicationServices
                     .GetRequiredService<IServiceScopeFactory>().CreateScope())
                 {
-                    SampleDataInitializer
-                        .InitializeData(serviceScope.ServiceProvider.GetRequiredService<StoreContext>());
+                    //SampleDataInitializer
+                    //    .InitializeData(serviceScope.ServiceProvider.GetRequiredService<StoreContext>());
                 }
             }
             else

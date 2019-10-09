@@ -4,8 +4,8 @@
   "version": "1.0",
   "defaultProvider": "cdnjs", 
   "defaultDestination": "wwwroot/lib",
-  "libraries": [ 
-    {
+  "libraries": [  
+    { 
       "library": "jquery@3.4.1",
       "destination": "wwwroot/lib/jquery",
       "files": ["jquery.js", "jquery.min.js"]

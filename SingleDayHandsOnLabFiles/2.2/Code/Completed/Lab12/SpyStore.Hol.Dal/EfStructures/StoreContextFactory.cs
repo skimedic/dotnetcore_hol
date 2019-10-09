@@ -22,8 +22,10 @@ namespace SpyStore.Hol.Dal.EfStructures
       var connectionString =
         @"Server=.,6433;Database=SpyStoreHol;User ID=sa;Password=P@ssw0rd;MultipleActiveResultSets=true;";
 #endif
+      //optionsBuilder
+      //  .UseSqlServer(connectionString, options => options.EnableRetryOnFailure());
       optionsBuilder
-        .UseSqlServer(connectionString, options => options.EnableRetryOnFailure());
+        .UseSqlServer(connectionString);
       optionsBuilder
         .ConfigureWarnings(warnings => warnings.Throw(RelationalEventId.QueryClientEvaluationWarning));
       Console.WriteLine(connectionString);

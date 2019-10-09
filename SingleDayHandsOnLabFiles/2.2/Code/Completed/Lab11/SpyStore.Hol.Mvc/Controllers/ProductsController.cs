@@ -39,6 +39,7 @@ namespace SpyStore.Hol.Mvc.Controllers
         {
             return RedirectToAction(nameof(Featured));
         }
+        [HttpGet("{id}")]
         public ActionResult Details(int id)
         {
             return RedirectToAction(nameof(CartController.AddToCart),
@@ -49,7 +50,7 @@ namespace SpyStore.Hol.Mvc.Controllers
                     cameFromProducts = true
                 });
         }
-        [HttpGet]
+        [HttpGet("{id}")]
         public IActionResult ProductList([FromServices]ICategoryRepo categoryRepo, int id)
         {
             var cat = categoryRepo.Find(id);
@@ -62,7 +63,6 @@ namespace SpyStore.Hol.Mvc.Controllers
 
         //[Route("[controller]/[action]/{searchString}")]
         //[HttpPost]
-        [Route("[controller]/[action]")]
         [HttpPost("{searchString}")]
         public IActionResult Search(string searchString)
         {
