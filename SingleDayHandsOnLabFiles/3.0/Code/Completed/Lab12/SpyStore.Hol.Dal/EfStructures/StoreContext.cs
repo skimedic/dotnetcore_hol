@@ -25,8 +25,8 @@ namespace SpyStore.Hol.Dal.EfStructures
 
         public StoreContext(DbContextOptions<StoreContext> options) : base(options)
         {
-            this.ChangeTracker.StateChanged += ChangeTracker_StateChanged;
-            this.ChangeTracker.Tracked+= ChangeTrackerOnTracked;
+            //this.ChangeTracker.StateChanged += ChangeTracker_StateChanged;
+            //this.ChangeTracker.Tracked+= ChangeTrackerOnTracked;
         }
 
         private void ChangeTrackerOnTracked(object sender, EntityTrackedEventArgs e)
@@ -35,7 +35,7 @@ namespace SpyStore.Hol.Dal.EfStructures
             {
 
             }
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         private void ChangeTracker_StateChanged(object sender, Microsoft.EntityFrameworkCore.ChangeTracking.EntityStateChangedEventArgs e) => throw new NotImplementedException();
