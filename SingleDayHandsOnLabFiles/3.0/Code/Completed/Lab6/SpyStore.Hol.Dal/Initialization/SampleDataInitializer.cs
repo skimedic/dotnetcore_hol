@@ -1,4 +1,16 @@
-﻿using System;
+﻿#region copyright
+
+// Copyright Information
+// ==================================
+// SpyStore.Hol - SpyStore.Hol.Dal - SampleDataInitializer.cs
+// All samples copyright Philip Japikse
+// http://www.skimedic.com 2019/10/04
+// See License.txt for more information
+// ==================================
+
+#endregion
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
@@ -19,14 +31,18 @@ namespace SpyStore.Hol.Dal.Initialization
 
         internal static void ResetIdentity(StoreContext context)
         {
-            var tables = new[] {"Categories","Customers",
-        "OrderDetails","Orders","Products","ShoppingCartRecords"};
+            var tables = new[]
+            {
+                "Categories", "Customers",
+                "OrderDetails", "Orders", "Products", "ShoppingCartRecords"
+            };
             foreach (var itm in tables)
             {
                 var rawSqlString = $"DBCC CHECKIDENT (\"Store.{itm}\", RESEED, 0);";
                 context.Database.ExecuteSqlRaw(rawSqlString);
             }
         }
+
         public static void ClearData(StoreContext context)
         {
             context.Database.ExecuteSqlRaw("Delete from Store.Categories");
@@ -39,11 +55,30 @@ namespace SpyStore.Hol.Dal.Initialization
         {
             try
             {
-                if (!context.Categories.Any())
+                var cust = new Customer()
                 {
-                    context.Categories.AddRange(SampleData.GetCategories());
+                    EmailAddress = "spy@secrets.com",
+                    Password = "Foo",
+                    FullName = "Super Spy",
+                };
+                if (!context.Customers.Any())
+                {
+                    context.Customers.Add(cust);
                     context.SaveChanges();
                 }
+                if (!context.Categories.Any())
+                {
+                    foreach (var itm in SampleData.GetCategories())
+                    {
+                        context.Categories.Add(itm.Cat);
+                        context.SaveChanges();
+                        itm.Cat.Products.AddRange(itm.Products);
+                        context.SaveChanges();
+                    }
+                    //context.Categories.AddRange();
+                    //context.SaveChanges();
+                }
+
                 if (!context.Customers.Any())
                 {
                     var prod1 = context.Categories
@@ -59,23 +94,25 @@ namespace SpyStore.Hol.Dal.Initialization
                         .Include(c => c.Products).FirstOrDefault()?
                         .Products.Skip(1).FirstOrDefault();
 
-                    context.Customers.AddRange(SampleData.GetAllCustomerRecords(
-                        new List<Product> { prod1, prod2, prod3, prod4 }));
+                    context.Customers.Update(SampleData.GetAllCustomerRecords(cust,
+                        new List<Product> {prod1, prod2, prod3, prod4}));
                     context.SaveChanges();
                 }
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex);
+                throw;
             }
         }
+
         public static void InitializeData(StoreContext context)
         {
             //Ensure the database exists and is up to date
+            context.Database.EnsureDeleted();
             context.Database.Migrate();
             ClearData(context);
             SeedData(context);
         }
-
     }
 }

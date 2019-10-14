@@ -1,4 +1,16 @@
-﻿using System;
+﻿#region copyright
+
+// Copyright Information
+// ==================================
+// SpyStore.Hol - SpyStore.Hol.Dal - SampleData.cs
+// All samples copyright Philip Japikse
+// http://www.skimedic.com 2019/10/04
+// See License.txt for more information
+// ==================================
+
+#endregion
+
+using System;
 using System.Collections.Generic;
 using SpyStore.Hol.Models.Entities;
 using SpyStore.Hol.Models.Entities.Base;
@@ -7,12 +19,12 @@ namespace SpyStore.Hol.Dal.Initialization
 {
     public static class SampleData
     {
-        public static IEnumerable<Category> GetCategories() => new List<Category>
+        public static IEnumerable<(Category Cat,List<Product> Products)> GetCategories() => 
+            new List<(Category,List<Product>)>
         {
-            new Category
-            {
-                CategoryName = "Communications",
-                Products = new List<Product>
+            (new Category 
+            { CategoryName = "Communications"},
+                new List<Product>
                 {
                     new Product
                     {
@@ -96,12 +108,11 @@ namespace SpyStore.Hol.Dal.Initialization
                         CurrentPrice = 459.99M,
                         UnitsInStock = 5,
                     },
-                }
-            },
-            new Category
+                }),
+            (new Category
             {
-                CategoryName = "Deception",
-                Products = new List<Product>
+                CategoryName = "Deception" },
+                new List<Product>
                 {
                     new Product
                     {
@@ -184,13 +195,12 @@ namespace SpyStore.Hol.Dal.Initialization
                         UnitCost = 799.99M,
                         CurrentPrice = 799.99M,
                         UnitsInStock = 5,
-                    },
-                }
-            },
-            new Category
+                    }
+                }),
+            (new Category
             {
-                CategoryName = "Travel",
-                Products = new List<Product>
+                CategoryName = "Travel"},
+                new List<Product>
                 {
                     new Product
                     {
@@ -291,11 +301,10 @@ namespace SpyStore.Hol.Dal.Initialization
                         UnitsInStock = 5,
                     },
                 }
-            },
-            new Category
-            {
-                CategoryName = "Protection",
-                Products = new List<Product>
+            ),
+            (new Category
+            { CategoryName = "Protection"},
+                new List<Product>
                 {
                     new Product
                     {
@@ -396,11 +405,11 @@ namespace SpyStore.Hol.Dal.Initialization
                         UnitsInStock = 5,
                     },
                 }
-            },
-            new Category
+            ),
+            (new Category
             {
-                CategoryName = "Munitions",
-                Products = new List<Product>
+                CategoryName = "Munitions" },
+                new List<Product>
                 {
                     new Product
                     {
@@ -452,11 +461,11 @@ namespace SpyStore.Hol.Dal.Initialization
                         UnitsInStock = 5,
                     },
                 }
-            },
-            new Category
+            ),
+            (new Category
             {
-                CategoryName = "Tools",
-                Products = new List<Product>
+                CategoryName = "Tools"},
+                new List<Product>
                 {
                     new Product
                     {
@@ -573,11 +582,11 @@ namespace SpyStore.Hol.Dal.Initialization
                         UnitsInStock = 5,
                     },
                 }
-            },
-            new Category
+            ),
+            (new Category
             {
-                CategoryName = "General",
-                Products = new List<Product>
+                CategoryName = "General"},
+                new List<Product>
                 {
                     new Product
                     {
@@ -726,44 +735,46 @@ namespace SpyStore.Hol.Dal.Initialization
                         UnitsInStock = 5,
                     },
                 }
-            }
+            )
         };
 
-        public static IEnumerable<Customer> GetAllCustomerRecords(IList<Product> products) => new List<Customer>
+        public static Customer GetAllCustomerRecords(
+            Customer cust, IList<Product> products)
         {
-            new Customer()
+            cust.Orders = new List<Order>
             {
-                EmailAddress = "spy@secrets.com",
-                Password = "Foo",
-                FullName = "Super Spy",
-                Orders = new List<Order>
+                new Order()
                 {
-                    new Order()
+                    OrderDate = DateTime.Now.Subtract(new TimeSpan(20, 0, 0, 0)),
+                    ShipDate = DateTime.Now.Subtract(new TimeSpan(5, 0, 0, 0)),
+                    OrderDetails = new List<OrderDetail>
                     {
-                        OrderDate = DateTime.Now.Subtract(new TimeSpan(20, 0, 0, 0)),
-                        ShipDate = DateTime.Now.Subtract(new TimeSpan(5, 0, 0, 0)),
-                        OrderDetails = new List<OrderDetail>
+                        new OrderDetail()
                         {
-                            new OrderDetail()
-                                {ProductNavigation = products[0], Quantity = 3, UnitCost = products[0].CurrentPrice},
-                            new OrderDetail()
-                                {ProductNavigation = products[1], Quantity = 2, UnitCost = products[1].CurrentPrice},
-                            new OrderDetail()
-                                {ProductNavigation = products[2], Quantity = 5, UnitCost = products[3].CurrentPrice},
-                        }
-                    }
-                },
-                ShoppingCartRecords = new List<ShoppingCartRecord>
-                {
-                    new ShoppingCartRecord
-                    {
-                        DateCreated = DateTime.Now,
-                        ProductNavigation = products[3],
-                        Quantity = 1,
-                        LineItemTotal = products[3].CurrentPrice
+                            ProductNavigation = products[0], Quantity = 3, UnitCost = products[0].CurrentPrice
+                        },
+                        new OrderDetail()
+                        {
+                            ProductNavigation = products[1], Quantity = 2, UnitCost = products[1].CurrentPrice
+                        },
+                        new OrderDetail()
+                        {
+                            ProductNavigation = products[2], Quantity = 5, UnitCost = products[3].CurrentPrice
+                        },
                     }
                 }
-            }
-        };
+            };
+            cust.ShoppingCartRecords = new List<ShoppingCartRecord>
+            {
+                new ShoppingCartRecord
+                {
+                    DateCreated = DateTime.Now,
+                    ProductNavigation = products[3],
+                    Quantity = 1,
+                    LineItemTotal = products[3].CurrentPrice
+                }
+            };
+            return cust;
+        }
     }
 }

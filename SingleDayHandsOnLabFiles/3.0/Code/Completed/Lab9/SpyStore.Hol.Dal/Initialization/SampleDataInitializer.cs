@@ -55,10 +55,28 @@ namespace SpyStore.Hol.Dal.Initialization
         {
             try
             {
+                var cust = new Customer()
+                {
+                    EmailAddress = "spy@secrets.com",
+                    Password = "Foo",
+                    FullName = "Super Spy",
+                };
+                if (!context.Customers.Any())
+                {
+                    context.Customers.Add(cust);
+                    context.SaveChanges();
+                }
                 if (!context.Categories.Any())
                 {
-                    context.Categories.AddRange(SampleData.GetCategories());
-                    context.SaveChanges();
+                    foreach (var itm in SampleData.GetCategories())
+                    {
+                        context.Categories.Add(itm.Cat);
+                        context.SaveChanges();
+                        itm.Cat.Products.AddRange(itm.Products);
+                        context.SaveChanges();
+                    }
+                    //context.Categories.AddRange();
+                    //context.SaveChanges();
                 }
 
                 if (!context.Customers.Any())
@@ -76,7 +94,7 @@ namespace SpyStore.Hol.Dal.Initialization
                         .Include(c => c.Products).FirstOrDefault()?
                         .Products.Skip(1).FirstOrDefault();
 
-                    context.Customers.AddRange(SampleData.GetAllCustomerRecords(
+                    context.Customers.Update(SampleData.GetAllCustomerRecords(cust,
                         new List<Product> {prod1, prod2, prod3, prod4}));
                     context.SaveChanges();
                 }
@@ -84,12 +102,14 @@ namespace SpyStore.Hol.Dal.Initialization
             catch (Exception ex)
             {
                 Console.WriteLine(ex);
+                throw;
             }
         }
 
         public static void InitializeData(StoreContext context)
         {
             //Ensure the database exists and is up to date
+            context.Database.EnsureDeleted();
             context.Database.Migrate();
             ClearData(context);
             SeedData(context);
