@@ -1,1 +1,0 @@
-dotnet ef migrations add Initial -o EfStructures\Migrations -c SpyStore.Hol.Dal.EfStructures.StoreContext 
