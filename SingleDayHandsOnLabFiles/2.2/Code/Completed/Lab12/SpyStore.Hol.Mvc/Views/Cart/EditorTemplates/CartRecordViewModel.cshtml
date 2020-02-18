@@ -5,7 +5,7 @@
     var ts = JsonConvert.SerializeObject(Model.TimeStamp).Replace("\"","");
 }
     <nocache>
-        <form asp-controller="Cart" asp-action="Update" asp-route-id="@Model.Id" id="@formName" method="post">
+        <form asp-antiforgery="true" asp-controller="Cart" asp-action="Update" asp-route-id="@Model.Id" id="@formName" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <span asp-validation-for="Quantity" class="text-danger"></span>
             <input type="hidden" asp-for="Id" />

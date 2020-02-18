@@ -156,6 +156,16 @@ namespace SpyStore.Hol.Dal.Tests.RepoTests
             Assert.Throws<SpyStoreConcurrencyException>(() => _repo.Delete(recordToDelete));
         }
 
+        protected void ExecuteInTransaction(Action actionToExecute)
+        {
+            var strategy = _repo.Context.Database.CreateExecutionStrategy();
+            strategy.Execute(() =>
+            {
+                using var trans = _repo.Context.Database.BeginTransaction();
+                actionToExecute();
+                trans.Rollback();
+            });
+        }
         [Fact]
         public void ShouldThrowWhenAddingToMuchQuantity()
         {
