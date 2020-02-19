@@ -1,4 +1,4 @@
-dotnet new globaljson --sdk-version 3.0.100
+dotnet new globaljson --sdk-version 3.1.100
 
 rem create the solution
 dotnet new sln -n SpyStore.Hol

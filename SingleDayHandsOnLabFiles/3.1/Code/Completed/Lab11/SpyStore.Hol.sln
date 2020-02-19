@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26124.0
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29806.167
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpyStore.Hol.Mvc", "SpyStore.Hol.Mvc\SpyStore.Hol.Mvc.csproj", "{673AB6CC-4341-4E94-8615-D98076E6CC6E}"
 EndProject

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26124.0
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29806.167
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpyStore.Hol.Mvc", "SpyStore.Hol.Mvc\SpyStore.Hol.Mvc.csproj", "{673AB6CC-4341-4E94-8615-D98076E6CC6E}"
 EndProject
@@ -13,6 +13,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpyStore.Hol.Dal.Tests", "S
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionItems", "{FFE916C7-DDBD-4113-94EE-BF2378AEFADA}"
 	ProjectSection(SolutionItems) = preProject
+		createsolutionandprojects.cmd = createsolutionandprojects.cmd
 		DockerDal.txt = DockerDal.txt
 		global.json = global.json
 		Migrations.txt = Migrations.txt
