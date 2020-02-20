@@ -22,7 +22,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>C:\GitHub\dotnetcore_hol\TwoDayHandsOnLabFiles\3.1\Code\Completed\Lab7\SpyStore.Hol.Service\SpyStore.Hol.Service.xml</DocumentationFile>
+    <DocumentationFile>SpyStore.Hol.Service.xml</DocumentationFile>
   </PropertyGroup>
 
 
