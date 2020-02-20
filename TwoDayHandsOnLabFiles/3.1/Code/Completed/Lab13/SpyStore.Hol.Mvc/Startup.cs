@@ -73,6 +73,7 @@ namespace SpyStore.Hol.Mvc
                 app.UseHsts();
             }
             app.UseHttpsRedirection();
+			app.UseWebOptimizer();
             app.UseStaticFiles();
             app.UseCookiePolicy();
             app.UseRouting();
