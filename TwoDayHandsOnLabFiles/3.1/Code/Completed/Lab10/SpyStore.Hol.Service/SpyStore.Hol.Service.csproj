@@ -26,7 +26,18 @@
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DocumentationFile>SpyStore.Hol.Service.xml</DocumentationFile>
+      <NoWarn>$(NoWarn);1591</NoWarn>
   </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+        <DocumentationFile>SpyStore.Hol.Service.xml</DocumentationFile>
+        <NoWarn>$(NoWarn);1591</NoWarn>
+    </PropertyGroup>
 
+    <Target Name="PrepublishScript" BeforeTargets="PrepareForPublish">  
+        <ItemGroup>
+            <DocFile Include="*.xml" />
+        </ItemGroup>
+        <Copy SourceFiles="@(DocFile)" DestinationFolder="$(PublishDir)" SkipUnchangedFiles="false" />
+    </Target>
 
 </Project>

@@ -8,6 +8,7 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
 COPY ["SpyStore.Hol.Service/SpyStore.Hol.Service.csproj", "SpyStore.Hol.Service/"]
+COPY ["SpyStore.Hol.Service/SpyStore.Hol.Service.xml", "app/"]
 COPY ["SpyStore.Hol.Models/SpyStore.Hol.Models.csproj", "SpyStore.Hol.Models/"]
 COPY ["SpyStore.Hol.Dal/SpyStore.Hol.Dal.csproj", "SpyStore.Hol.Dal/"]
 RUN dotnet restore "SpyStore.Hol.Service/SpyStore.Hol.Service.csproj"
