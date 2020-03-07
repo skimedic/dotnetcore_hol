@@ -7,15 +7,13 @@ namespace SpyStore.Hol.Dal.Initialization
 {
     public static class SampleData
     {
-        public static IEnumerable<(Category Cat,List<Product> Products)> GetCategories() => 
-            new List<(Category,List<Product>)>
-        {
-            (new Category 
-            { CategoryName = "Communications"},
-                new List<Product>
-                {
+        public static IEnumerable<Product> GetProducts() =>
+            new List<Product>()
+            {
                     new Product
                     {
+                        CategoryId = 1,
+                        Id = 1,
                         Details = new ProductDetails
                         {
                             ProductImage = "product-image.png",
@@ -33,6 +31,8 @@ namespace SpyStore.Hol.Dal.Initialization
                     },
                     new Product
                     {
+                        CategoryId = 1,
+                        Id = 2,
                         Details = new ProductDetails
                         {
                             ProductImage = "product-image.png",
@@ -49,6 +49,8 @@ namespace SpyStore.Hol.Dal.Initialization
                     },
                     new Product
                     {
+                        CategoryId = 1,
+                        Id = 3,
                         Details = new ProductDetails
                         {
                             ProductImage = "product-image.png",
@@ -65,6 +67,8 @@ namespace SpyStore.Hol.Dal.Initialization
                     },
                     new Product
                     {
+                        CategoryId = 1,
+                        Id = 4,
                         Details = new ProductDetails
                         {
                             ProductImage = "product-image.png",
@@ -82,6 +86,8 @@ namespace SpyStore.Hol.Dal.Initialization
                     },
                     new Product
                     {
+                        CategoryId = 1,
+                        Id = 5,
                         Details = new ProductDetails
                         {
                             ProductImage = "product-image.png",
@@ -96,14 +102,10 @@ namespace SpyStore.Hol.Dal.Initialization
                         CurrentPrice = 459.99M,
                         UnitsInStock = 5,
                     },
-                }),
-            (new Category
-            {
-                CategoryName = "Deception" },
-                new List<Product>
-                {
                     new Product
                     {
+                        CategoryId = 2,
+                        Id = 6,
                         Details = new ProductDetails
                         {
                             ProductImage = "product-image.png",
@@ -121,6 +123,8 @@ namespace SpyStore.Hol.Dal.Initialization
                     },
                     new Product
                     {
+                        CategoryId = 2,
+                        Id = 7,
                         Details = new ProductDetails
                         {
                             ProductImage = "product-image.png",
@@ -137,6 +141,8 @@ namespace SpyStore.Hol.Dal.Initialization
                     },
                     new Product
                     {
+                        CategoryId = 2,
+                        Id = 8,
                         Details = new ProductDetails
                         {
                             ProductImage = "product-image.png",
@@ -153,6 +159,8 @@ namespace SpyStore.Hol.Dal.Initialization
                     },
                     new Product
                     {
+                        CategoryId = 2,
+                        Id = 9,
                         Details = new ProductDetails
                         {
                             ProductImage = "product-image.png",
@@ -170,6 +178,8 @@ namespace SpyStore.Hol.Dal.Initialization
                     },
                     new Product
                     {
+                        CategoryId = 2,
+                        Id = 10,
                         Details = new ProductDetails
                         {
                             ProductImage = "product-image.png",
@@ -183,15 +193,11 @@ namespace SpyStore.Hol.Dal.Initialization
                         UnitCost = 799.99M,
                         CurrentPrice = 799.99M,
                         UnitsInStock = 5,
-                    }
-                }),
-            (new Category
-            {
-                CategoryName = "Travel"},
-                new List<Product>
-                {
-                    new Product
+                    },
+                                        new Product
                     {
+                        CategoryId = 3,
+                        Id = 11,
                         Details = new ProductDetails
                         {
                             ProductImage = "product-image.png",
@@ -208,6 +214,8 @@ namespace SpyStore.Hol.Dal.Initialization
                     },
                     new Product
                     {
+                        CategoryId = 3,
+                        Id = 12,
                         Details = new ProductDetails
                         {
                             ProductImage = "product-image.png",
@@ -225,6 +233,8 @@ namespace SpyStore.Hol.Dal.Initialization
                     },
                     new Product
                     {
+                        CategoryId = 3,
+                        Id = 13,
                         Details = new ProductDetails
                         {
                             ProductImage = "product-image.png",
@@ -241,6 +251,8 @@ namespace SpyStore.Hol.Dal.Initialization
                     },
                     new Product
                     {
+                        CategoryId = 3,
+                        Id = 14,
                         Details = new ProductDetails
                         {
                             ProductImage = "product-image.png",
@@ -257,6 +269,8 @@ namespace SpyStore.Hol.Dal.Initialization
                     },
                     new Product
                     {
+                        CategoryId = 3,
+                        Id = 15,
                         Details = new ProductDetails
                         {
                             ProductImage = "product-image.png",
@@ -274,6 +288,8 @@ namespace SpyStore.Hol.Dal.Initialization
                     },
                     new Product
                     {
+                        CategoryId = 3,
+                        Id = 16,
                         Details = new ProductDetails
                         {
                             ProductImage = "product-image.png",
@@ -288,14 +304,10 @@ namespace SpyStore.Hol.Dal.Initialization
                         CurrentPrice = 13.99M,
                         UnitsInStock = 5,
                     },
-                }
-            ),
-            (new Category
-            { CategoryName = "Protection"},
-                new List<Product>
-                {
                     new Product
                     {
+                        CategoryId = 4,
+                        Id = 17,
                         Details = new ProductDetails
                         {
                             ProductImage = "product-image.png",
@@ -312,6 +324,8 @@ namespace SpyStore.Hol.Dal.Initialization
                     },
                     new Product
                     {
+                        CategoryId = 4,
+                        Id = 18,
                         Details = new ProductDetails
                         {
                             ProductImage = "product-image.png",
@@ -329,6 +343,8 @@ namespace SpyStore.Hol.Dal.Initialization
                     },
                     new Product
                     {
+                        CategoryId = 4,
+                        Id = 19,
                         Details = new ProductDetails
                         {
                             ProductImage = "product-image.png",
@@ -345,6 +361,8 @@ namespace SpyStore.Hol.Dal.Initialization
                     },
                     new Product
                     {
+                        CategoryId = 4,
+                        Id = 20,
                         Details = new ProductDetails
                         {
                             ProductImage = "product-image.png",
@@ -362,6 +380,8 @@ namespace SpyStore.Hol.Dal.Initialization
                     },
                     new Product
                     {
+                        CategoryId = 4,
+                        Id = 21,
                         Details = new ProductDetails
                         {
                             ProductImage = "product-image.png",
@@ -378,6 +398,8 @@ namespace SpyStore.Hol.Dal.Initialization
                     },
                     new Product
                     {
+                        CategoryId = 4,
+                        Id = 22,
                         Details = new ProductDetails
                         {
                             ProductImage = "product-image.png",
@@ -392,15 +414,10 @@ namespace SpyStore.Hol.Dal.Initialization
                         CurrentPrice = 79.99M,
                         UnitsInStock = 5,
                     },
-                }
-            ),
-            (new Category
-            {
-                CategoryName = "Munitions" },
-                new List<Product>
-                {
                     new Product
                     {
+                        CategoryId = 5,
+                        Id = 23,
                         Details = new ProductDetails
                         {
                             ProductImage = "product-image.png",
@@ -418,6 +435,8 @@ namespace SpyStore.Hol.Dal.Initialization
                     },
                     new Product
                     {
+                        CategoryId = 5,
+                        Id = 24,
                         Details = new ProductDetails
                         {
                             ProductImage = "product-image.png",
@@ -434,6 +453,8 @@ namespace SpyStore.Hol.Dal.Initialization
                     },
                     new Product
                     {
+                        CategoryId = 5,
+                        Id = 25,
                         Details = new ProductDetails
                         {
                             ProductImage = "product-image.png",
@@ -448,15 +469,10 @@ namespace SpyStore.Hol.Dal.Initialization
                         CurrentPrice = 129.99M,
                         UnitsInStock = 5,
                     },
-                }
-            ),
-            (new Category
-            {
-                CategoryName = "Tools"},
-                new List<Product>
-                {
                     new Product
                     {
+                        CategoryId = 6,
+                        Id = 26,
                         Details = new ProductDetails
                         {
                             ProductImage = "product-image.png",
@@ -474,6 +490,8 @@ namespace SpyStore.Hol.Dal.Initialization
                     },
                     new Product
                     {
+                        CategoryId = 6,
+                        Id = 27,
                         Details = new ProductDetails
                         {
                             ProductImage = "product-image.png",
@@ -490,6 +508,8 @@ namespace SpyStore.Hol.Dal.Initialization
                     },
                     new Product
                     {
+                        CategoryId = 6,
+                        Id = 28,
                         Details = new ProductDetails
                         {
                             ProductImage = "product-image.png",
@@ -506,6 +526,8 @@ namespace SpyStore.Hol.Dal.Initialization
                     },
                     new Product
                     {
+                        CategoryId = 6,
+                        Id = 29,
                         Details = new ProductDetails
                         {
                             ProductImage = "product-image.png",
@@ -523,6 +545,8 @@ namespace SpyStore.Hol.Dal.Initialization
                     },
                     new Product
                     {
+                        CategoryId = 6,
+                        Id = 30,
                         Details = new ProductDetails
                         {
                             ProductImage = "product-image.png",
@@ -539,6 +563,8 @@ namespace SpyStore.Hol.Dal.Initialization
                     },
                     new Product
                     {
+                        CategoryId = 6,
+                        Id = 31,
                         Details = new ProductDetails
                         {
                             ProductImage = "product-image.png",
@@ -555,6 +581,8 @@ namespace SpyStore.Hol.Dal.Initialization
                     },
                     new Product
                     {
+                        CategoryId = 6,
+                        Id = 32,
                         Details = new ProductDetails
                         {
                             ProductImage = "product-image.png",
@@ -569,15 +597,10 @@ namespace SpyStore.Hol.Dal.Initialization
                         CurrentPrice = 399.99M,
                         UnitsInStock = 5,
                     },
-                }
-            ),
-            (new Category
-            {
-                CategoryName = "General"},
-                new List<Product>
-                {
                     new Product
                     {
+                        CategoryId = 7,
+                        Id = 33,
                         Details = new ProductDetails
                         {
                             ProductImage = "product-image.png",
@@ -595,6 +618,8 @@ namespace SpyStore.Hol.Dal.Initialization
                     },
                     new Product
                     {
+                        CategoryId = 7,
+                        Id = 34,
                         Details = new ProductDetails
                         {
                             ProductImage = "product-image.png",
@@ -611,6 +636,8 @@ namespace SpyStore.Hol.Dal.Initialization
                     },
                     new Product
                     {
+                        CategoryId = 7,
+                        Id = 35,
                         Details = new ProductDetails
                         {
                             ProductImage = "product-image.png",
@@ -627,6 +654,8 @@ namespace SpyStore.Hol.Dal.Initialization
                     },
                     new Product
                     {
+                        CategoryId = 7,
+                        Id = 36,
                         Details = new ProductDetails
                         {
                             ProductImage = "product-image.png",
@@ -643,6 +672,8 @@ namespace SpyStore.Hol.Dal.Initialization
                     },
                     new Product
                     {
+                        CategoryId = 7,
+                        Id = 37,
                         Details = new ProductDetails
                         {
                             ProductImage = "product-image.png",
@@ -659,6 +690,8 @@ namespace SpyStore.Hol.Dal.Initialization
                     },
                     new Product
                     {
+                        CategoryId = 7,
+                        Id = 38,
                         Details = new ProductDetails
                         {
                             ProductImage = "product-image.png",
@@ -676,6 +709,8 @@ namespace SpyStore.Hol.Dal.Initialization
                     },
                     new Product
                     {
+                        CategoryId = 7,
+                        Id = 39,
                         Details = new ProductDetails
                         {
                             ProductImage = "product-image.png",
@@ -692,6 +727,8 @@ namespace SpyStore.Hol.Dal.Initialization
                     },
                     new Product
                     {
+                        CategoryId = 7,
+                        Id = 40,
                         Details = new ProductDetails
                         {
                             ProductImage = "product-image.png",
@@ -708,6 +745,8 @@ namespace SpyStore.Hol.Dal.Initialization
                     },
                     new Product
                     {
+                        CategoryId = 7,
+                        Id = 41,
                         Details = new ProductDetails
                         {
                             ProductImage = "product-image.png",
@@ -722,47 +761,75 @@ namespace SpyStore.Hol.Dal.Initialization
                         CurrentPrice = 399.99M,
                         UnitsInStock = 5,
                     },
-                }
-            )
+            };
+        public static IEnumerable<Category> GetCategories() => 
+            new List<Category>
+        {
+            new Category 
+            { Id = 1,CategoryName = "Communications"},
+            new Category
+            {Id = 2,
+                CategoryName = "Deception" },
+            new Category
+            {Id = 3,
+                CategoryName = "Travel"},
+            
+            new Category
+            { Id = 4,CategoryName = "Protection"},
+            new Category
+            {Id = 5,
+                CategoryName = "Munitions" },
+            new Category
+            {Id = 6,
+                CategoryName = "Tools"},
+            new Category
+            {Id = 7,
+                CategoryName = "General"}
         };
 
-        public static Customer GetAllCustomerRecords(
-            Customer cust, IList<Product> products)
+        public static IList<Order> GetOrders() => new List<Order>
         {
-            cust.Orders = new List<Order>
+            new Order()
             {
-                new Order()
-                {
-                    OrderDate = DateTime.Now.Subtract(new TimeSpan(20, 0, 0, 0)),
-                    ShipDate = DateTime.Now.Subtract(new TimeSpan(5, 0, 0, 0)),
-                    OrderDetails = new List<OrderDetail>
-                    {
-                        new OrderDetail()
-                        {
-                            ProductNavigation = products[0], Quantity = 3, UnitCost = products[0].CurrentPrice
-                        },
-                        new OrderDetail()
-                        {
-                            ProductNavigation = products[1], Quantity = 2, UnitCost = products[1].CurrentPrice
-                        },
-                        new OrderDetail()
-                        {
-                            ProductNavigation = products[2], Quantity = 5, UnitCost = products[3].CurrentPrice
-                        },
-                    }
-                }
-            };
-            cust.ShoppingCartRecords = new List<ShoppingCartRecord>
+                Id = 1, CustomerId = 1,
+                OrderDate = DateTime.Now.Subtract(new TimeSpan(20, 0, 0, 0)),
+                ShipDate = DateTime.Now.Subtract(new TimeSpan(5, 0, 0, 0)),
+            }
+        };
+
+
+        public static IList<OrderDetail> GetOrderDetails(IList<Product> products) => new List<OrderDetail>
+        {
+            new OrderDetail()
+            { 
+                Id = 1, OrderId = 1,
+                ProductNavigation = products[0], Quantity = 3, UnitCost = products[0].CurrentPrice
+            },
+            new OrderDetail()
+            {
+                Id = 2, OrderId = 1,
+                ProductNavigation = products[1], Quantity = 2, UnitCost = products[1].CurrentPrice
+            },
+            new OrderDetail()
+            {
+                Id = 3, OrderId = 1,
+                ProductNavigation = products[2], Quantity = 5, UnitCost = products[2].CurrentPrice
+            },
+        };
+
+        public static IList<ShoppingCartRecord> GetCart(IList<Product> products)
+        => new List<ShoppingCartRecord>
             {
                 new ShoppingCartRecord
                 {
+                    Id = 1,
+                    CustomerId = 1,
                     DateCreated = DateTime.Now,
-                    ProductNavigation = products[3],
+                    ProductNavigation = products[0],
                     Quantity = 1,
-                    LineItemTotal = products[3].CurrentPrice
+                    LineItemTotal = products[0].CurrentPrice
                 }
             };
-            return cust;
-        }
+
     }
 }

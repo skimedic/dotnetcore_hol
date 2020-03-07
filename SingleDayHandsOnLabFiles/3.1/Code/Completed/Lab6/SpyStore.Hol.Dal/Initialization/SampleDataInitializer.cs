@@ -1,19 +1,8 @@
-﻿#region copyright
-
-// Copyright Information
-// ==================================
-// SpyStore.Hol - SpyStore.Hol.Dal - SampleDataInitializer.cs
-// All samples copyright Philip Japikse
-// http://www.skimedic.com 2019/10/04
-// See License.txt for more information
-// ==================================
-
-#endregion
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 using SpyStore.Hol.Dal.EfStructures;
 using SpyStore.Hol.Models.Entities;
 
@@ -45,6 +34,7 @@ namespace SpyStore.Hol.Dal.Initialization
 
         public static void ClearData(StoreContext context)
         {
+            context.Database.Migrate();
             context.Database.ExecuteSqlRaw("Delete from Store.Categories");
             context.Database.ExecuteSqlRaw("Delete from Store.Customers");
             ResetIdentity(context);
@@ -57,47 +47,131 @@ namespace SpyStore.Hol.Dal.Initialization
             {
                 var cust = new Customer()
                 {
+                    Id = 1,
                     EmailAddress = "spy@secrets.com",
                     Password = "Foo",
                     FullName = "Super Spy",
                 };
                 if (!context.Customers.Any())
                 {
-                    context.Customers.Add(cust);
-                    context.SaveChanges();
+                    IExecutionStrategy strategy = context.Database.CreateExecutionStrategy();
+                    strategy.Execute(() =>
+                    {
+                        using (var transaction = context.Database.BeginTransaction())
+                        {
+                            context.Database.ExecuteSqlRaw("DBCC CHECKIDENT ('Store.Customers', RESEED, 0);");
+                            context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT Store.Customers" + " ON");
+                            context.Customers.Add(cust);
+                            context.SaveChanges();
+                            context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT Store.Customers" + " OFF");
+                            transaction.Commit();
+                        }
+                    });
                 }
+
                 if (!context.Categories.Any())
                 {
-                    foreach (var itm in SampleData.GetCategories())
+                    context.Database.ExecuteSqlRaw("DBCC CHECKIDENT ('Store.Categories', RESEED, 0);");
+                    IExecutionStrategy strategy = context.Database.CreateExecutionStrategy();
+                    strategy.Execute(() =>
                     {
-                        context.Categories.Add(itm.Cat);
-                        context.SaveChanges();
-                        itm.Cat.Products.AddRange(itm.Products);
-                        context.SaveChanges();
-                    }
-                    //context.Categories.AddRange();
-                    //context.SaveChanges();
+                        using (var transaction = context.Database.BeginTransaction())
+                        {
+                            context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT Store.Categories" + " ON");
+                            context.Categories.AddRange(SampleData.GetCategories());
+                            context.SaveChanges();
+                            context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT Store.Categories" + " OFF");
+                            transaction.Commit();
+                        }
+                    });
                 }
 
-                if (!context.Customers.Any())
+                if (!context.Products.Any())
                 {
-                    var prod1 = context.Categories
-                        .Include(c => c.Products).FirstOrDefault()?
-                        .Products.Skip(3).FirstOrDefault();
-                    var prod2 = context.Categories.Skip(2)
-                        .Include(c => c.Products).FirstOrDefault()?
-                        .Products.Skip(2).FirstOrDefault();
-                    var prod3 = context.Categories.Skip(5)
-                        .Include(c => c.Products).FirstOrDefault()?
-                        .Products.Skip(1).FirstOrDefault();
-                    var prod4 = context.Categories.Skip(2)
-                        .Include(c => c.Products).FirstOrDefault()?
-                        .Products.Skip(1).FirstOrDefault();
-
-                    context.Customers.Update(SampleData.GetAllCustomerRecords(cust,
-                        new List<Product> {prod1, prod2, prod3, prod4}));
-                    context.SaveChanges();
+                    context.Database.ExecuteSqlRaw("DBCC CHECKIDENT ('Store.Products', RESEED, 0);");
+                    IExecutionStrategy strategy = context.Database.CreateExecutionStrategy();
+                    strategy.Execute(() =>
+                    {
+                        using (var transaction = context.Database.BeginTransaction())
+                        {
+                            context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT Store.Products" + " ON");
+                            context.Products.AddRange(SampleData.GetProducts());
+                            context.SaveChanges();
+                            context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT Store.Products" + " OFF");
+                            transaction.Commit();
+                        }
+                    });
                 }
+
+                if (!context.Orders.Any())
+                {
+                    context.Database.ExecuteSqlRaw("DBCC CHECKIDENT ('Store.Orders', RESEED, 0);");
+                    IExecutionStrategy strategy = context.Database.CreateExecutionStrategy();
+                    strategy.Execute(() =>
+                    {
+                        using (var transaction = context.Database.BeginTransaction())
+                        {
+                            context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT Store.Orders" + " ON");
+                            context.Orders.AddRange(SampleData.GetOrders());
+                            context.SaveChanges();
+                            context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT Store.Orders" + " OFF");
+                            transaction.Commit();
+                        }
+                    });
+                }
+
+                if (!context.OrderDetails.Any())
+                {
+                    var products = new List<Product>
+                    {
+                        context.Categories
+                            .Include(c => c.Products).FirstOrDefault()?
+                            .Products.Skip(3).FirstOrDefault(),
+                        context.Categories.Skip(2)
+                            .Include(c => c.Products).FirstOrDefault()?
+                            .Products.Skip(2).FirstOrDefault(),
+                        context.Categories.Skip(5)
+                            .Include(c => c.Products).FirstOrDefault()?
+                            .Products.Skip(1).FirstOrDefault(),
+                    };
+                    context.Database.ExecuteSqlRaw("DBCC CHECKIDENT ('Store.OrderDetails', RESEED, 0);");
+                    IExecutionStrategy strategy = context.Database.CreateExecutionStrategy();
+                    strategy.Execute(() =>
+                    {
+                        using (var transaction = context.Database.BeginTransaction())
+                        {
+                            context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT Store.OrderDetails" + " ON");
+                            context.OrderDetails.AddRange(SampleData.GetOrderDetails(products));
+                            context.SaveChanges();
+                            context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT Store.OrderDetails" + " OFF");
+                            transaction.Commit();
+                        }
+                    });
+                }
+
+                if (!context.ShoppingCartRecords.Any())
+                {
+                    var products = new List<Product>
+                    {
+                        context.Categories.Skip(2)
+                            .Include(c => c.Products).FirstOrDefault()?
+                            .Products.Skip(1).FirstOrDefault()
+                    };
+                    context.Database.ExecuteSqlRaw("DBCC CHECKIDENT ('Store.ShoppingCartRecords', RESEED, 0);");
+                    IExecutionStrategy strategy = context.Database.CreateExecutionStrategy();
+                    strategy.Execute(() =>
+                    {
+                        using (var transaction = context.Database.BeginTransaction())
+                        {
+                            context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT Store.ShoppingCartRecords" + " ON");
+                            context.ShoppingCartRecords.AddRange(SampleData.GetCart(products));
+                            context.SaveChanges();
+                            context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT Store.ShoppingCartRecords" + " OFF");
+                            transaction.Commit();
+                        }
+                    });
+                }
+
             }
             catch (Exception ex)
             {
@@ -109,7 +183,7 @@ namespace SpyStore.Hol.Dal.Initialization
         public static void InitializeData(StoreContext context)
         {
             //Ensure the database exists and is up to date
-            context.Database.EnsureDeleted();
+            //context.Database.EnsureDeleted();
             context.Database.Migrate();
             ClearData(context);
             SeedData(context);

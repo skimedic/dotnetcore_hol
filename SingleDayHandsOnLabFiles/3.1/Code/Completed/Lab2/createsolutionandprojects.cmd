@@ -1,4 +1,4 @@
-dotnet new globaljson --sdk-version 3.0.100
+dotnet new globaljson --sdk-version 3.1.100
 
 rem create the solution
 dotnet new sln -n SpyStore.Hol
@@ -26,18 +26,18 @@ dotnet add SpyStore.Hol.Dal.tests reference SpyStore.Hol.Dal
 dotnet add SpyStore.Hol.Mvc package AutoMapper -v 9.0.0
 dotnet add SpyStore.Hol.Mvc package LigerShark.WebOptimizer.Core -v 3.0.250
 dotnet add SpyStore.Hol.Mvc package Microsoft.Web.LibraryManager.Build -v 2.0.96
-dotnet add SpyStore.Hol.Mvc package Microsoft.EntityFrameworkCore.SqlServer -v 3.1.1
+dotnet add SpyStore.Hol.Mvc package Microsoft.EntityFrameworkCore.SqlServer -v 3.1.2
 
-dotnet add SpyStore.Hol.Dal package Microsoft.EntityFrameworkCore.SqlServer -v 3.1.1 
-dotnet add SpyStore.Hol.Dal package Microsoft.EntityFrameworkCore.Design -v 3.1.1
+dotnet add SpyStore.Hol.Dal package Microsoft.EntityFrameworkCore.SqlServer -v 3.1.2 
+dotnet add SpyStore.Hol.Dal package Microsoft.EntityFrameworkCore.Design -v 3.1.2
 dotnet add SpyStore.Hol.Dal package System.Text.Json -v 4.7.1
-dotnet add SpyStore.Hol.Dal package Microsoft.EntityFrameworkCore.Tools -v 3.1.1
+dotnet add SpyStore.Hol.Dal package Microsoft.EntityFrameworkCore.Tools -v 3.1.2
 
-dotnet add SpyStore.Hol.Models package Microsoft.EntityFrameworkCore.Abstractions -v 3.1.1
+dotnet add SpyStore.Hol.Models package Microsoft.EntityFrameworkCore.Abstractions -v 3.1.2
 dotnet add SpyStore.Hol.Models package AutoMapper -v 9.0.0
 dotnet add SpyStore.Hol.Models package System.Text.Json -v 4.7.1
 
-dotnet add SpyStore.Hol.Dal.Tests package Microsoft.EntityFrameworkCore.SqlServer -v 3.1.1
+dotnet add SpyStore.Hol.Dal.Tests package Microsoft.EntityFrameworkCore.SqlServer -v 3.1.2
 
 
 

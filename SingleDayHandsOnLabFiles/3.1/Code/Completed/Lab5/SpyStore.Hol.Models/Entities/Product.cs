@@ -17,15 +17,14 @@ namespace SpyStore.Hol.Models.Entities
 
     [Required] public int CategoryId { get; set; }
 
-    [JsonIgnore]
     [ForeignKey(nameof(CategoryId))]
     public Category CategoryNavigation { get; set; }
 
-    [InverseProperty(nameof(ShoppingCartRecord.ProductNavigation))]
+    [JsonIgnore,InverseProperty(nameof(ShoppingCartRecord.ProductNavigation))]
     public List<ShoppingCartRecord> ShoppingCartRecords { get; set; }
       = new List<ShoppingCartRecord>();
 
-    [InverseProperty(nameof(OrderDetail.ProductNavigation))]
+    [JsonIgnore,InverseProperty(nameof(OrderDetail.ProductNavigation))]
     public List<OrderDetail> OrderDetails { get; set; }
       = new List<OrderDetail>();
 
