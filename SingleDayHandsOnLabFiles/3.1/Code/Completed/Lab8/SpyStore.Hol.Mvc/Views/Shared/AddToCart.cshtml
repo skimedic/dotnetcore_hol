@@ -16,12 +16,13 @@
     if (ViewBag.CameFromProducts != null && ViewBag.CameFromProducts)
     {
         <div>
-            <a href="#" onclick="window.history.go(-1); return false;">Back to List</a>
+            <a href="#" onclick="window.history.go(-1);return false;">Back to List</a>
         </div>
     }
 }
+
 @section Scripts {
     @{
-        <partial name="_ValidationScriptsPartial" />
+        <partial name="_ValidationScriptsPartial"/>
     }
 }

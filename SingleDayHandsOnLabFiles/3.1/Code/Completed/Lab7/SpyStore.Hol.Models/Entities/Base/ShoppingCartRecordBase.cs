@@ -1,14 +1,10 @@
-﻿#region copyright
-
-// Copyright Information
+﻿// Copyright Information
 // ==================================
 // SpyStore.Hol - SpyStore.Hol.Models - ShoppingCartRecordBase.cs
 // All samples copyright Philip Japikse
-// http://www.skimedic.com 2019/10/04
+// http://www.skimedic.com 2020/03/07
 // See License.txt for more information
 // ==================================
-
-#endregion
 
 using System;
 using System.ComponentModel.DataAnnotations;
@@ -21,6 +17,7 @@ namespace SpyStore.Hol.Models.Entities.Base
         public DateTime? DateCreated { get; set; }
 
         [Required] public int CustomerId { get; set; }
+
         [Required] public int Quantity { get; set; }
 
         [DataType(DataType.Currency), Display(Name = "Line Total")]

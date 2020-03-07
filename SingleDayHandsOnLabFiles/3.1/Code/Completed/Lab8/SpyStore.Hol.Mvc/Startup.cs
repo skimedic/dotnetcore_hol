@@ -1,3 +1,11 @@
+// Copyright Information
+// ==================================
+// SpyStore.Hol - SpyStore.Hol.Mvc - Startup.cs
+// All samples copyright Philip Japikse
+// http://www.skimedic.com 2020/03/07
+// See License.txt for more information
+// ==================================
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +35,41 @@ namespace SpyStore.Hol.Mvc
         }
 
         public IConfiguration Configuration { get; }
+
+        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        {
+            if (env.IsDevelopment() || env.IsEnvironment("Local"))
+            {
+                app.UseDeveloperExceptionPage();
+                using (var serviceScope = app.ApplicationServices
+                    .GetRequiredService<IServiceScopeFactory>().CreateScope())
+                {
+                    SampleDataInitializer.InitializeData(
+                        serviceScope.ServiceProvider.GetRequiredService<StoreContext>());
+                }
+            }
+            else
+            {
+                app.UseExceptionHandler("/Home/Error");
+            }
+
+            app.UseWebOptimizer();
+            app.UseStaticFiles();
+
+            app.UseRouting();
+
+            app.UseAuthorization();
+
+            app.UseEndpoints(endpoints =>
+            {
+                
+                endpoints.MapControllers();
+				//endpoints.MapControllerRoute(
+                //    name: "default",
+                //    pattern: "{controller=Home}/{action=Index}/{id?}");
+            });
+        }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -63,39 +106,6 @@ namespace SpyStore.Hol.Mvc
                     //options.AddJavaScriptBundle("js/validations/validationCode.js", "js/validations/**/*.js");
                 });
             }
-
-        }
-
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-        {
-            if (env.IsDevelopment() || env.IsEnvironment("Local"))
-            {
-                app.UseDeveloperExceptionPage();
-                using (var serviceScope = app.ApplicationServices
-                    .GetRequiredService<IServiceScopeFactory>().CreateScope())
-                {
-                    SampleDataInitializer.InitializeData(
-                        serviceScope.ServiceProvider.GetRequiredService<StoreContext>());
-                }
-            }
-            else
-            {
-                app.UseExceptionHandler("/Home/Error");
-            }
-
-            app.UseWebOptimizer();
-            app.UseStaticFiles();
-
-            app.UseRouting();
-
-            app.UseAuthorization();
-
-            app.UseEndpoints(endpoints =>
-            {
-                //endpoints.
-                endpoints.MapControllers();
-            });
         }
     }
 }

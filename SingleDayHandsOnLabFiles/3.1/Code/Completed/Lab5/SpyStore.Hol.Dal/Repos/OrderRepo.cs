@@ -1,4 +1,12 @@
-﻿using System.Collections.Generic;
+﻿// Copyright Information
+// ==================================
+// SpyStore.Hol - SpyStore.Hol.Dal - OrderRepo.cs
+// All samples copyright Philip Japikse
+// http://www.skimedic.com 2020/03/07
+// See License.txt for more information
+// ==================================
+
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using SpyStore.Hol.Dal.EfStructures;
@@ -9,12 +17,12 @@ using SpyStore.Hol.Models.ViewModels;
 
 namespace SpyStore.Hol.Dal.Repos
 {
-    public class OrderRepo : RepoBase<Order>,IOrderRepo
+    public class OrderRepo : RepoBase<Order>, IOrderRepo
     {
         private readonly IOrderDetailRepo _orderDetailRepo;
 
         public OrderRepo(
-            StoreContext context, 
+            StoreContext context,
             IOrderDetailRepo orderDetailRepo) : base(context)
         {
             _orderDetailRepo = orderDetailRepo;
@@ -31,19 +39,21 @@ namespace SpyStore.Hol.Dal.Repos
             base.Dispose();
         }
 
-        public IList<Order> GetOrderHistory() => 
+        public IList<Order> GetOrderHistory() =>
             GetAll(x => x.OrderDate).ToList();
 
         public OrderWithDetailsAndProductInfo GetOneWithDetails(int orderId)
         {
-            var order = Table.IgnoreQueryFilters().Include(x=>x.CustomerNavigation)
+            var order = Table.IgnoreQueryFilters().Include(x => x.CustomerNavigation)
                 .FirstOrDefault(x => x.Id == orderId);
             if (order == null)
             {
                 return null;
             }
+
             var orderDetailsWithProductInfoForOrder = _orderDetailRepo.GetOrderDetailsWithProductInfoForOrder(order.Id);
-            var orderWithDetailsAndProductInfo = OrderWithDetailsAndProductInfo.Create(order,order.CustomerNavigation, orderDetailsWithProductInfoForOrder);
+            var orderWithDetailsAndProductInfo = OrderWithDetailsAndProductInfo.Create(order, order.CustomerNavigation,
+                orderDetailsWithProductInfoForOrder);
             return orderWithDetailsAndProductInfo;
         }
     }

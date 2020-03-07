@@ -1,4 +1,12 @@
-﻿using System;
+﻿// Copyright Information
+// ==================================
+// SpyStore.Hol - SpyStore.Hol.Dal.Tests - OrderDetailsRepoTests.cs
+// All samples copyright Philip Japikse
+// http://www.skimedic.com 2020/03/07
+// See License.txt for more information
+// ==================================
+
+using System;
 using System.Linq;
 using SpyStore.Hol.Dal.EfStructures;
 using SpyStore.Hol.Dal.Initialization;
@@ -12,14 +20,15 @@ namespace SpyStore.Hol.Dal.Tests.RepoTests
     [Collection("SpyStore.DAL")]
     public class OrderDetailRepoTests : RepoTestsBase
     {
-        private readonly IOrderDetailRepo _repo;
-
         public OrderDetailRepoTests()
         {
             _repo = new OrderDetailRepo(Db);
             Db.CustomerId = 1;
             LoadDatabase();
         }
+
+        private readonly IOrderDetailRepo _repo;
+
         public override void Dispose()
         {
             _repo.Dispose();
@@ -29,7 +38,7 @@ namespace SpyStore.Hol.Dal.Tests.RepoTests
         public void ShouldGetAllOrderDetails()
         {
             var orders = _repo.GetAll().ToList();
-            Assert.Equal(_repo.Table.Count(),orders.Count());
+            Assert.Equal(_repo.Table.Count(), orders.Count());
         }
 
         [Fact]
@@ -39,6 +48,5 @@ namespace SpyStore.Hol.Dal.Tests.RepoTests
             var orderDetail = orderDetails.FirstOrDefault(x => x.ProductId == 25);
             Assert.Equal(1799.9700M, orderDetail.LineItemTotal);
         }
-
     }
 }

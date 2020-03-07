@@ -1,4 +1,12 @@
-﻿using System;
+﻿// Copyright Information
+// ==================================
+// SpyStore.Hol - SpyStore.Hol.Dal - ShoppingCartRepo.cs
+// All samples copyright Philip Japikse
+// http://www.skimedic.com 2020/03/07
+// See License.txt for more information
+// ==================================
+
+using System;
 using System.Collections.Generic;
 using System.Data;
 using Microsoft.Data.SqlClient;
@@ -15,17 +23,18 @@ namespace SpyStore.Hol.Dal.Repos
 {
     public class ShoppingCartRepo : RepoBase<ShoppingCartRecord>, IShoppingCartRepo
     {
-        private readonly IProductRepo _productRepo;
         private readonly ICustomerRepo _customerRepo;
-        public ShoppingCartRepo(StoreContext context, 
-            IProductRepo productRepo, 
+        private readonly IProductRepo _productRepo;
+
+        public ShoppingCartRepo(StoreContext context,
+            IProductRepo productRepo,
             ICustomerRepo customerRepo) : base(context)
         {
             _productRepo = productRepo;
             _customerRepo = customerRepo;
         }
 
-        internal ShoppingCartRepo(DbContextOptions<StoreContext> options): base(new StoreContext(options))
+        internal ShoppingCartRepo(DbContextOptions<StoreContext> options) : base(new StoreContext(options))
         {
             _productRepo = new ProductRepo(Context);
             _customerRepo = new CustomerRepo(Context);
@@ -69,6 +78,7 @@ namespace SpyStore.Hol.Dal.Repos
             {
                 throw new SpyStoreInvalidProductException("Unable to locate product");
             }
+
             return Update(entity, product, persist);
         }
 
@@ -78,6 +88,7 @@ namespace SpyStore.Hol.Dal.Repos
             {
                 return Delete(entity, persist);
             }
+
             if (entity.Quantity > product.UnitsInStock)
             {
                 throw new SpyStoreInvalidQuantityException("Can't add more product than available in stock");
@@ -90,6 +101,7 @@ namespace SpyStore.Hol.Dal.Repos
                 dbRecord.LineItemTotal = entity.Quantity * product.CurrentPrice;
                 return base.Update(dbRecord, persist);
             }
+
             throw new SpyStoreConcurrencyException("Record was changed since it was loaded");
         }
 
@@ -112,6 +124,7 @@ namespace SpyStore.Hol.Dal.Repos
             {
                 throw new SpyStoreInvalidProductException("Unable to locate the product");
             }
+
             return Add(entity, product, persist);
         }
 
@@ -128,6 +141,7 @@ namespace SpyStore.Hol.Dal.Repos
                 entity.LineItemTotal = entity.Quantity * product.CurrentPrice;
                 return base.Add(entity, persist);
             }
+
             item.Quantity += entity.Quantity;
             return item.Quantity <= 0 ? Delete(item, persist) : Update(item, product, persist);
         }
@@ -157,13 +171,15 @@ namespace SpyStore.Hol.Dal.Repos
             };
             try
             {
-                Context.Database.ExecuteSqlRaw("EXEC [Store].[PurchaseItemsInCart] @customerId, @orderid out", customerIdParam, orderIdParam);
+                Context.Database.ExecuteSqlRaw("EXEC [Store].[PurchaseItemsInCart] @customerId, @orderid out",
+                    customerIdParam, orderIdParam);
             }
             catch (Exception ex)
             {
                 return -1;
             }
-            return (int)orderIdParam.Value;
+
+            return (int) orderIdParam.Value;
         }
     }
 }

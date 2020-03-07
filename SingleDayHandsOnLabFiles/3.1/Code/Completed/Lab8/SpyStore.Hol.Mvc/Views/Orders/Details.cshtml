@@ -38,44 +38,44 @@
     <div class="table-responsive">
         <table class="table table-bordered product-table">
             <thead>
-                <tr>
-                    <th style="width: 70%;">Product</th>
-                    <th class="text-right">Price</th>
-                    <th class="text-right">Quantity</th>
-                    <th class="text-right">Total</th>
-                </tr>
+            <tr>
+                <th style="width: 70%;">Product</th>
+                <th class="text-right">Price</th>
+                <th class="text-right">Quantity</th>
+                <th class="text-right">Total</th>
+            </tr>
             </thead>
             <tbody>
-                @for (int x = 0; x < Model.OrderDetails.Count; x++)
-                {
-                    var item = Model.OrderDetails[x];
-                    <tr>
-                        <td>
-                            <div class="product-cell-detail">
-                                <img src="@Url.Content($"~/images/{item.ProductImageThumb}")" class="pull-left" />
-                                <a asp-controller="Products" asp-action="Details" asp-route-id="@item.ProductId" class="h5">
-                                    @Html.DisplayFor(model => item.ModelName)
-                                </a>
-                                <div class="small text-muted">
-                                    @Html.DisplayFor(model => item.Description)
-                                </div>
+            @for (int x = 0; x < Model.OrderDetails.Count; x++)
+            {
+                var item = Model.OrderDetails[x];
+                <tr>
+                    <td>
+                        <div class="product-cell-detail">
+                            <img src="@Url.Content($"~/images/{item.ProductImageThumb}")" class="pull-left"/>
+                            <a asp-controller="Products" asp-action="Details" asp-route-id="@item.ProductId" class="h5">
+                                @Html.DisplayFor(model => item.ModelName)
+                            </a>
+                            <div class="small text-muted">
+                                @Html.DisplayFor(model => item.Description)
                             </div>
-                        </td>
-                        <td class="text-right">@Html.DisplayFor(model => item.UnitCost)</td>
-                        <td class="text-right">@Html.DisplayFor(model => item.Quantity)</td>
-                        <td class="text-right">@Html.DisplayFor(model => item.LineItemTotal)</td>
-                    </tr>
-                }
+                        </div>
+                    </td>
+                    <td class="text-right">@Html.DisplayFor(model => item.UnitCost)</td>
+                    <td class="text-right">@Html.DisplayFor(model => item.Quantity)</td>
+                    <td class="text-right">@Html.DisplayFor(model => item.LineItemTotal)</td>
+                </tr>
+            }
             </tbody>
             <tfoot>
-                <tr>
-                    <th>&nbsp;</th>
-                    <th>&nbsp;</th>
-                    <th>&nbsp;</th>
-                    <th class="text-right">
-                        @Html.DisplayFor(model => model.OrderTotal)
-                    </th>
-                </tr>
+            <tr>
+                <th>&nbsp;</th>
+                <th>&nbsp;</th>
+                <th>&nbsp;</th>
+                <th class="text-right">
+                    @Html.DisplayFor(model => model.OrderTotal)
+                </th>
+            </tr>
             </tfoot>
         </table>
     </div>

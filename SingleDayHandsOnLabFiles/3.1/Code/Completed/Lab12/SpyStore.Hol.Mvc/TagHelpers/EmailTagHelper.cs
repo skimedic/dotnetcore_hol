@@ -1,4 +1,12 @@
-﻿using Microsoft.AspNetCore.Razor.TagHelpers;
+﻿// Copyright Information
+// ==================================
+// SpyStore.Hol - SpyStore.Hol.Mvc - EmailTagHelper.cs
+// All samples copyright Philip Japikse
+// http://www.skimedic.com 2020/03/07
+// See License.txt for more information
+// ==================================
+
+using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace SpyStore.Hol.Mvc.TagHelpers
 {
@@ -11,11 +19,10 @@ namespace SpyStore.Hol.Mvc.TagHelpers
 
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
-            output.TagName = "a";    // Replaces <email> with <a> tag
+            output.TagName = "a"; // Replaces <email> with <a> tag
             var address = EmailName + "@" + EmailDomain;
             output.Attributes.SetAttribute("href", "mailto:" + address);
             output.Content.SetContent(address);
         }
-
     }
 }

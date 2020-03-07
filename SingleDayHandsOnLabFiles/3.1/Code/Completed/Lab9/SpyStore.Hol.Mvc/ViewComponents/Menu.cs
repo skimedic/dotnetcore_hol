@@ -1,4 +1,12 @@
-﻿using System.Threading.Tasks;
+﻿// Copyright Information
+// ==================================
+// SpyStore.Hol - SpyStore.Hol.Mvc - Menu.cs
+// All samples copyright Philip Japikse
+// http://www.skimedic.com 2020/03/07
+// See License.txt for more information
+// ==================================
+
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewComponents;
 using SpyStore.Hol.Dal.Repos.Interfaces;
@@ -28,6 +36,7 @@ namespace SpyStore.Hol.Mvc.ViewComponents
                 {
                     return new ContentViewComponentResult("There was an error getting the categories");
                 }
+
                 return View("MenuView", cats);
             });
         }

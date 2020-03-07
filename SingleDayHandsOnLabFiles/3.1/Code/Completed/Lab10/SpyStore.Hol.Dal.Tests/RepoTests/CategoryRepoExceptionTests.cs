@@ -1,14 +1,10 @@
-﻿#region copyright
-
-// Copyright Information
+﻿// Copyright Information
 // ==================================
 // SpyStore.Hol - SpyStore.Hol.Dal.Tests - CategoryRepoExceptionTests.cs
 // All samples copyright Philip Japikse
-// http://www.skimedic.com 2019/10/04
+// http://www.skimedic.com 2020/03/07
 // See License.txt for more information
 // ==================================
-
-#endregion
 
 using System;
 using Microsoft.EntityFrameworkCore;
@@ -26,12 +22,12 @@ namespace SpyStore.Hol.Dal.Tests.RepoTests
     [Collection("SpyStore.DAL")]
     public class CategoryRepoExceptionTests : RepoTestsBase
     {
-        private readonly ICategoryRepo _repo;
-
         public CategoryRepoExceptionTests()
         {
             _repo = new CategoryRepo(Db);
         }
+
+        private readonly ICategoryRepo _repo;
 
         public override void Dispose()
         {
@@ -43,7 +39,7 @@ namespace SpyStore.Hol.Dal.Tests.RepoTests
         {
             var category = new Category {CategoryName = "Foo"};
             _repo.Add(category);
-            _repo.Context.Database.ExecuteSqlCommand("Update Store.Categories set CategoryName = 'Bar'");
+            _repo.Context.Database.ExecuteSqlRaw("Update Store.Categories set CategoryName = 'Bar'");
             var ex = Assert.Throws<SpyStoreConcurrencyException>(() => _repo.Delete(category));
         }
 

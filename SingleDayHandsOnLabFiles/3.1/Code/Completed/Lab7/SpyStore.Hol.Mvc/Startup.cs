@@ -1,3 +1,11 @@
+// Copyright Information
+// ==================================
+// SpyStore.Hol - SpyStore.Hol.Mvc - Startup.cs
+// All samples copyright Philip Japikse
+// http://www.skimedic.com 2020/03/07
+// See License.txt for more information
+// ==================================
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,22 +36,6 @@ namespace SpyStore.Hol.Mvc
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
-        {
-            services.AddControllersWithViews();
-            var connectionString = Configuration.GetConnectionString("SpyStore");
-            services.AddDbContextPool<StoreContext>(options => options
-                .UseSqlServer(connectionString, o => o.EnableRetryOnFailure()));
-            services.AddScoped<ICategoryRepo, CategoryRepo>();
-            services.AddScoped<IProductRepo, ProductRepo>();
-            services.AddScoped<ICustomerRepo, CustomerRepo>();
-            services.AddScoped<IShoppingCartRepo, ShoppingCartRepo>();
-            services.AddScoped<IOrderRepo, OrderRepo>();
-            services.AddScoped<IOrderDetailRepo, OrderDetailRepo>();
-            services.Configure<CustomSettings>(Configuration.GetSection("CustomSettings"));
-        }
-
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
@@ -70,9 +62,28 @@ namespace SpyStore.Hol.Mvc
 
             app.UseEndpoints(endpoints =>
             {
-                //endpoints.
+                
                 endpoints.MapControllers();
+				//endpoints.MapControllerRoute(
+                //    name: "default",
+                //    pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+        }
+
+        // This method gets called by the runtime. Use this method to add services to the container.
+        public void ConfigureServices(IServiceCollection services)
+        {
+            services.AddControllersWithViews();
+            var connectionString = Configuration.GetConnectionString("SpyStore");
+            services.AddDbContextPool<StoreContext>(options => options
+                .UseSqlServer(connectionString, o => o.EnableRetryOnFailure()));
+            services.AddScoped<ICategoryRepo, CategoryRepo>();
+            services.AddScoped<IProductRepo, ProductRepo>();
+            services.AddScoped<ICustomerRepo, CustomerRepo>();
+            services.AddScoped<IShoppingCartRepo, ShoppingCartRepo>();
+            services.AddScoped<IOrderRepo, OrderRepo>();
+            services.AddScoped<IOrderDetailRepo, OrderDetailRepo>();
+            services.Configure<CustomSettings>(Configuration.GetSection("CustomSettings"));
         }
     }
 }

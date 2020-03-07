@@ -1,14 +1,10 @@
-﻿#region copyright
-
-// Copyright Information
+﻿// Copyright Information
 // ==================================
 // SpyStore.Hol - SpyStore.Hol.Dal - StoreContextFactory.cs
 // All samples copyright Philip Japikse
-// http://www.skimedic.com 2019/10/04
+// http://www.skimedic.com 2020/03/07
 // See License.txt for more information
 // ==================================
-
-#endregion
 
 using System;
 using Microsoft.EntityFrameworkCore;
@@ -23,7 +19,7 @@ namespace SpyStore.Hol.Dal.EfStructures
         {
             var optionsBuilder = new DbContextOptionsBuilder<StoreContext>();
             var connectionString =
-                @"Server=.,6433;Database=SpyStoreHol30;User ID=sa;Password=P@ssw0rd;MultipleActiveResultSets=true;";
+                @"Server=.,6433;Database=SpyStoreHol;User ID=sa;Password=P@ssw0rd;MultipleActiveResultSets=true;";
             optionsBuilder
                 .UseSqlServer(connectionString, options => options.EnableRetryOnFailure());
             Console.WriteLine(connectionString);

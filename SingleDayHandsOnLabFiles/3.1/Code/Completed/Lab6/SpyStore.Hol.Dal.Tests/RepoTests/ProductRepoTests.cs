@@ -1,4 +1,12 @@
-﻿using System;
+﻿// Copyright Information
+// ==================================
+// SpyStore.Hol - SpyStore.Hol.Dal.Tests - ProductRepoTests.cs
+// All samples copyright Philip Japikse
+// http://www.skimedic.com 2020/03/07
+// See License.txt for more information
+// ==================================
+
+using System;
 using System.Linq;
 using SpyStore.Hol.Dal.EfStructures;
 using SpyStore.Hol.Dal.Initialization;
@@ -19,6 +27,7 @@ namespace SpyStore.Hol.Dal.Tests.RepoTests
             _repo = new ProductRepo(Db);
             LoadDatabase();
         }
+
         public override void Dispose()
         {
             _repo.Dispose();
@@ -35,7 +44,7 @@ namespace SpyStore.Hol.Dal.Tests.RepoTests
         public void ShouldGetAllProductsForACategory(int catId, int productCount)
         {
             var prods = _repo.GetProductsForCategory(catId).ToList();
-            Assert.Equal(productCount,prods.Count());
+            Assert.Equal(productCount, prods.Count());
         }
     }
 }

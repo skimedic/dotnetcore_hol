@@ -1,4 +1,12 @@
-﻿using System;
+﻿// Copyright Information
+// ==================================
+// SpyStore.Hol - SpyStore.Hol.Mvc - CartController.cs
+// All samples copyright Philip Japikse
+// http://www.skimedic.com 2020/03/07
+// See License.txt for more information
+// ==================================
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -17,20 +25,22 @@ namespace SpyStore.Hol.Mvc.Controllers
     {
         private readonly ILogger<CartController> _logger;
         private readonly IShoppingCartRepo _shoppingCartRepo;
+
         public CartController(ILogger<CartController> logger, IShoppingCartRepo shoppingCartRepo)
         {
             _logger = logger;
             _shoppingCartRepo = shoppingCartRepo;
         }
-        public IActionResult Index([FromServices] ICustomerRepo customerRepo)
-        {
-            return null;
-        }
+
         public IActionResult AddToCart([FromServices] IProductRepo productRepo,
             int productId, bool cameFromProducts = false)
         {
             return null;
         }
 
+        public IActionResult Index([FromServices] ICustomerRepo customerRepo)
+        {
+            return null;
+        }
     }
 }

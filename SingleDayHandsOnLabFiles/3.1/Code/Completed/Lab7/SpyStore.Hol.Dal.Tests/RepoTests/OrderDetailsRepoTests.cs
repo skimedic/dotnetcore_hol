@@ -1,14 +1,10 @@
-﻿#region copyright
-
-// Copyright Information
+﻿// Copyright Information
 // ==================================
 // SpyStore.Hol - SpyStore.Hol.Dal.Tests - OrderDetailsRepoTests.cs
 // All samples copyright Philip Japikse
-// http://www.skimedic.com 2019/10/04
+// http://www.skimedic.com 2020/03/07
 // See License.txt for more information
 // ==================================
-
-#endregion
 
 using System;
 using System.Linq;
@@ -24,14 +20,14 @@ namespace SpyStore.Hol.Dal.Tests.RepoTests
     [Collection("SpyStore.DAL")]
     public class OrderDetailRepoTests : RepoTestsBase
     {
-        private readonly IOrderDetailRepo _repo;
-
         public OrderDetailRepoTests()
         {
             _repo = new OrderDetailRepo(Db);
             Db.CustomerId = 1;
             LoadDatabase();
         }
+
+        private readonly IOrderDetailRepo _repo;
 
         public override void Dispose()
         {

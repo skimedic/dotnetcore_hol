@@ -1,4 +1,12 @@
-﻿using System;
+﻿// Copyright Information
+// ==================================
+// SpyStore.Hol - SpyStore.Hol.Dal.Tests - CategoryRepoUpdateTests.cs
+// All samples copyright Philip Japikse
+// http://www.skimedic.com 2020/03/07
+// See License.txt for more information
+// ==================================
+
+using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using SpyStore.Hol.Dal.EfStructures;
@@ -13,12 +21,13 @@ namespace SpyStore.Hol.Dal.Tests.RepoTests
     [Collection("SpyStore.DAL")]
     public class CategoryRepoUpdateTests : RepoTestsBase
     {
-        private readonly ICategoryRepo _repo;
-
         public CategoryRepoUpdateTests()
         {
             _repo = new CategoryRepo(Db);
         }
+
+        private readonly ICategoryRepo _repo;
+
         public override void Dispose()
         {
             _repo.Dispose();
@@ -27,7 +36,7 @@ namespace SpyStore.Hol.Dal.Tests.RepoTests
         [Fact]
         public void ShouldUpdateACategoryEntity()
         {
-            var category = new Category { CategoryName = "Foo" };
+            var category = new Category {CategoryName = "Foo"};
             _repo.AddRange(new List<Category>
             {
                 category,
@@ -45,14 +54,15 @@ namespace SpyStore.Hol.Dal.Tests.RepoTests
                 }
             }
         }
+
         [Fact]
         public void ShouldUpdateARangeOfCategoryEntities()
         {
             var categories = new List<Category>
             {
-                new Category { CategoryName = "Foo" },
-                new Category { CategoryName = "Bar" },
-                new Category { CategoryName = "FooBar" }
+                new Category {CategoryName = "Foo"},
+                new Category {CategoryName = "Bar"},
+                new Category {CategoryName = "FooBar"}
             };
             _repo.AddRange(categories);
             categories[0].CategoryName = "Foo1";
@@ -65,12 +75,10 @@ namespace SpyStore.Hol.Dal.Tests.RepoTests
             {
                 using (var repo = new CategoryRepo(context))
                 {
-            var cat = repo.Find(categories[0].Id);
-            Assert.Equal("Foo1", cat.CategoryName);
+                    var cat = repo.Find(categories[0].Id);
+                    Assert.Equal("Foo1", cat.CategoryName);
                 }
             }
-
         }
     }
-
 }

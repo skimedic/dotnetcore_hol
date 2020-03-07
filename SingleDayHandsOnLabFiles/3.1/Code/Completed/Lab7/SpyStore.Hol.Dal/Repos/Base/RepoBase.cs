@@ -1,14 +1,10 @@
-﻿#region copyright
-
-// Copyright Information
+﻿// Copyright Information
 // ==================================
 // SpyStore.Hol - SpyStore.Hol.Dal - RepoBase.cs
 // All samples copyright Philip Japikse
-// http://www.skimedic.com 2019/10/04
+// http://www.skimedic.com 2020/03/07
 // See License.txt for more information
 // ==================================
-
-#endregion
 
 using System;
 using System.Collections.Generic;
@@ -25,8 +21,6 @@ namespace SpyStore.Hol.Dal.Repos.Base
 {
     public abstract class RepoBase<T> : IRepo<T> where T : EntityBase, new()
     {
-        public DbSet<T> Table { get; }
-        public StoreContext Context { get; }
         private readonly bool _disposeContext;
 
         protected RepoBase(StoreContext context)
@@ -40,6 +34,9 @@ namespace SpyStore.Hol.Dal.Repos.Base
         {
             _disposeContext = true;
         }
+
+        public DbSet<T> Table { get; }
+        public StoreContext Context { get; }
 
         public virtual void Dispose()
         {
@@ -98,50 +95,7 @@ namespace SpyStore.Hol.Dal.Repos.Base
 
         public int SaveChanges()
         {
-            try
-            {
-                return Context.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException ex)
-            {
-                //A concurrency error occurred
-                //Should log and handle intelligently
-                throw new SpyStoreConcurrencyException("A concurrency error happened.", ex);
-            }
-            catch (RetryLimitExceededException ex)
-            {
-                //DbResiliency retry limit exceeded
-                //Should log and handle intelligently
-                throw new SpyStoreRetryLimitExceededException("There is a problem with you connection.", ex);
-            }
-            catch (DbUpdateException ex)
-            {
-                //Should log and handle intelligently
-                if (ex.InnerException is SqlException sqlException)
-                {
-                    if (sqlException.Message.Contains("FOREIGN KEY constraint", StringComparison.OrdinalIgnoreCase))
-                    {
-                        if (sqlException.Message.Contains("table \"Store.Products\", column 'Id'",
-                            StringComparison.OrdinalIgnoreCase))
-                        {
-                            throw new SpyStoreInvalidProductException($"Invalid Product Id\r\n{ex.Message}", ex);
-                        }
-
-                        if (sqlException.Message.Contains("table \"Store.Customers\", column 'Id'",
-                            StringComparison.OrdinalIgnoreCase))
-                        {
-                            throw new SpyStoreInvalidCustomerException($"Invalid Customer Id\r\n{ex.Message}", ex);
-                        }
-                    }
-                }
-
-                throw new SpyStoreException("An error occurred updating the database", ex);
-            }
-            catch (Exception ex)
-            {
-                //Should log and handle intelligently
-                throw new SpyStoreException("An error occurred updating the database", ex);
-            }
+            return Context.SaveChanges();
         }
     }
 }

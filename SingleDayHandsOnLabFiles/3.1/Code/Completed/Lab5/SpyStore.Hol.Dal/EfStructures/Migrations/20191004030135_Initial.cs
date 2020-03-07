@@ -1,10 +1,45 @@
-﻿using System;
+﻿// Copyright Information
+// ==================================
+// SpyStore.Hol - SpyStore.Hol.Dal - 20191004030135_Initial.cs
+// All samples copyright Philip Japikse
+// http://www.skimedic.com 2020/03/07
+// See License.txt for more information
+// ==================================
+
+using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace SpyStore.Hol.Dal.EfStructures.Migrations
 {
     public partial class Initial : Migration
     {
+        protected override void Down(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.DropTable(
+                name: "OrderDetails",
+                schema: "Store");
+
+            migrationBuilder.DropTable(
+                name: "ShoppingCartRecords",
+                schema: "Store");
+
+            migrationBuilder.DropTable(
+                name: "Orders",
+                schema: "Store");
+
+            migrationBuilder.DropTable(
+                name: "Products",
+                schema: "Store");
+
+            migrationBuilder.DropTable(
+                name: "Customers",
+                schema: "Store");
+
+            migrationBuilder.DropTable(
+                name: "Categories",
+                schema: "Store");
+        }
+
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.EnsureSchema(
@@ -20,10 +55,7 @@ namespace SpyStore.Hol.Dal.EfStructures.Migrations
                     TimeStamp = table.Column<byte[]>(rowVersion: true, nullable: true),
                     CategoryName = table.Column<string>(maxLength: 50, nullable: true)
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Categories", x => x.Id);
-                });
+                constraints: table => { table.PrimaryKey("PK_Categories", x => x.Id); });
 
             migrationBuilder.CreateTable(
                 name: "Customers",
@@ -37,10 +69,7 @@ namespace SpyStore.Hol.Dal.EfStructures.Migrations
                     EmailAddress = table.Column<string>(maxLength: 50, nullable: false),
                     Password = table.Column<string>(maxLength: 50, nullable: false)
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Customers", x => x.Id);
-                });
+                constraints: table => { table.PrimaryKey("PK_Customers", x => x.Id); });
 
             migrationBuilder.CreateTable(
                 name: "Products",
@@ -106,7 +135,8 @@ namespace SpyStore.Hol.Dal.EfStructures.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     TimeStamp = table.Column<byte[]>(rowVersion: true, nullable: true),
-                    DateCreated = table.Column<DateTime>(type: "datetime", nullable: true, defaultValueSql: "getdate()"),
+                    DateCreated =
+                        table.Column<DateTime>(type: "datetime", nullable: true, defaultValueSql: "getdate()"),
                     CustomerId = table.Column<int>(nullable: false),
                     Quantity = table.Column<int>(nullable: false, defaultValue: 1),
                     LineItemTotal = table.Column<decimal>(nullable: false),
@@ -210,35 +240,8 @@ namespace SpyStore.Hol.Dal.EfStructures.Migrations
                 name: "IX_ShoppingCart",
                 schema: "Store",
                 table: "ShoppingCartRecords",
-                columns: new[] { "Id", "ProductId", "CustomerId" },
+                columns: new[] {"Id", "ProductId", "CustomerId"},
                 unique: true);
-        }
-
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.DropTable(
-                name: "OrderDetails",
-                schema: "Store");
-
-            migrationBuilder.DropTable(
-                name: "ShoppingCartRecords",
-                schema: "Store");
-
-            migrationBuilder.DropTable(
-                name: "Orders",
-                schema: "Store");
-
-            migrationBuilder.DropTable(
-                name: "Products",
-                schema: "Store");
-
-            migrationBuilder.DropTable(
-                name: "Customers",
-                schema: "Store");
-
-            migrationBuilder.DropTable(
-                name: "Categories",
-                schema: "Store");
         }
     }
 }

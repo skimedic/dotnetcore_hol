@@ -1,12 +1,10 @@
-﻿#region Copyright
-// Copyright Information
+﻿// Copyright Information
 // ==================================
 // SpyStore.Hol - SpyStore.Hol.Dal.Tests - RepoTestsBase.cs
 // All samples copyright Philip Japikse
-// http://www.skimedic.com 03/04/2019
+// http://www.skimedic.com 2020/03/07
 // See License.txt for more information
 // ==================================
-#endregion
 
 using System;
 using SpyStore.Hol.Dal.EfStructures;
@@ -17,6 +15,7 @@ namespace SpyStore.Hol.Dal.Tests.RepoTests.Base
     public class RepoTestsBase : IDisposable
     {
         protected readonly StoreContext Db;
+
         public RepoTestsBase()
         {
             Db = new StoreContextFactory().CreateDbContext(new string[0]);
@@ -27,6 +26,7 @@ namespace SpyStore.Hol.Dal.Tests.RepoTests.Base
         {
             Db.Dispose();
         }
+
         protected void CleanDatabase()
         {
             SampleDataInitializer.ClearData(Db);
@@ -36,6 +36,7 @@ namespace SpyStore.Hol.Dal.Tests.RepoTests.Base
         {
             SampleDataInitializer.InitializeData(Db);
         }
+
         //protected IList<Product> CreateProducts()
         //{
         //    var prods = new List<Product>
@@ -45,6 +46,5 @@ namespace SpyStore.Hol.Dal.Tests.RepoTests.Base
         //    };
         //    return prods;
         //}
-
     }
 }

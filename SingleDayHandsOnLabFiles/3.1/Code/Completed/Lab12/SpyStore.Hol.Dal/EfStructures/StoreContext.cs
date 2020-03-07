@@ -1,18 +1,16 @@
-﻿#region copyright
-
-// Copyright Information
+﻿// Copyright Information
 // ==================================
 // SpyStore.Hol - SpyStore.Hol.Dal - StoreContext.cs
 // All samples copyright Philip Japikse
-// http://www.skimedic.com 2019/10/04
+// http://www.skimedic.com 2020/03/07
 // See License.txt for more information
 // ==================================
 
-#endregion
-
 using System;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Microsoft.EntityFrameworkCore.Storage;
+using SpyStore.Hol.Dal.Exceptions;
 using SpyStore.Hol.Models.Entities;
 using SpyStore.Hol.Models.Entities.Base;
 using SpyStore.Hol.Models.ViewModels;
@@ -21,31 +19,13 @@ namespace SpyStore.Hol.Dal.EfStructures
 {
     public class StoreContext : DbContext
     {
-        public int CustomerId { get; set; }
-
         public StoreContext(DbContextOptions<StoreContext> options) : base(options)
         {
             //this.ChangeTracker.StateChanged += ChangeTracker_StateChanged;
             //this.ChangeTracker.Tracked+= ChangeTrackerOnTracked;
         }
 
-        private void ChangeTrackerOnTracked(object sender, EntityTrackedEventArgs e)
-        {
-            if (e.Entry.Entity is EntityBase)
-            {
-
-            }
-            //throw new NotImplementedException();
-        }
-
-        private void ChangeTracker_StateChanged(object sender, Microsoft.EntityFrameworkCore.ChangeTracking.EntityStateChangedEventArgs e) => throw new NotImplementedException();
-
-        [DbFunction("GetOrderTotal", Schema = "Store")]
-        public static int GetOrderTotal(int orderId)
-        {
-            //code in here doesn’t matter since it never gets executed
-            throw new Exception();
-        }
+        public int CustomerId { get; set; }
 
         public DbSet<CartRecordWithProductInfo> CartRecordWithProductInfos { get; set; }
         public DbSet<OrderDetailWithProductInfo> OrderDetailWithProductInfos { get; set; }
@@ -56,6 +36,61 @@ namespace SpyStore.Hol.Dal.EfStructures
         public DbSet<OrderDetail> OrderDetails { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<ShoppingCartRecord> ShoppingCartRecords { get; set; }
+
+        [DbFunction("GetOrderTotal", Schema = "Store")]
+        public static int GetOrderTotal(int orderId)
+        {
+            //code in here doesn’t matter since it never gets executed
+            throw new Exception();
+        }
+
+        public override int SaveChanges()
+        {
+            try
+            {
+                return base.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException ex)
+            {
+                //A concurrency error occurred
+                //Should log and handle intelligently
+                throw new SpyStoreConcurrencyException("A concurrency error happened.", ex);
+            }
+            catch (RetryLimitExceededException ex)
+            {
+                //DbResiliency retry limit exceeded
+                //Should log and handle intelligently
+                throw new SpyStoreRetryLimitExceededException("There is a problem with you connection.", ex);
+            }
+            catch (DbUpdateException ex)
+            {
+                //Should log and handle intelligently
+                if (ex.InnerException is SqlException sqlException)
+                {
+                    if (sqlException.Message.Contains("FOREIGN KEY constraint", StringComparison.OrdinalIgnoreCase))
+                    {
+                        if (sqlException.Message.Contains("table \"Store.Products\", column 'Id'",
+                            StringComparison.OrdinalIgnoreCase))
+                        {
+                            throw new SpyStoreInvalidProductException($"Invalid Product Id\r\n{ex.Message}", ex);
+                        }
+
+                        if (sqlException.Message.Contains("table \"Store.Customers\", column 'Id'",
+                            StringComparison.OrdinalIgnoreCase))
+                        {
+                            throw new SpyStoreInvalidCustomerException($"Invalid Customer Id\r\n{ex.Message}", ex);
+                        }
+                    }
+                }
+
+                throw new SpyStoreException("An error occurred updating the database", ex);
+            }
+            catch (Exception ex)
+            {
+                //Should log and handle intelligently
+                throw new SpyStoreException("An error occurred updating the database", ex);
+            }
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -106,6 +141,19 @@ namespace SpyStore.Hol.Dal.EfStructures
                 entity.Property(e => e.DateCreated).HasColumnType("datetime").HasDefaultValueSql("getdate()");
                 entity.Property(e => e.Quantity).HasDefaultValue(1);
             });
+        }
+
+        private void ChangeTracker_StateChanged(object sender,
+            Microsoft.EntityFrameworkCore.ChangeTracking.EntityStateChangedEventArgs e) =>
+            throw new NotImplementedException();
+
+        private void ChangeTrackerOnTracked(object sender, EntityTrackedEventArgs e)
+        {
+            if (e.Entry.Entity is EntityBase)
+            {
+            }
+
+            //throw new NotImplementedException();
         }
     }
 }

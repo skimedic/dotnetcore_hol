@@ -1,14 +1,10 @@
-﻿#region copyright
-
-// Copyright Information
+﻿// Copyright Information
 // ==================================
 // SpyStore.Hol - SpyStore.Hol.Dal.Tests - OrderTests.cs
 // All samples copyright Philip Japikse
-// http://www.skimedic.com 2019/10/04
+// http://www.skimedic.com 2020/03/07
 // See License.txt for more information
 // ==================================
-
-#endregion
 
 using System;
 using System.Linq;
@@ -23,8 +19,6 @@ namespace SpyStore.Hol.Dal.Tests.ContextTests
     [Collection("SpyStore.DAL")]
     public class OrderTests : IDisposable
     {
-        private readonly StoreContext _db;
-
         public OrderTests()
         {
             _db = new StoreContextFactory().CreateDbContext(new string[0]);
@@ -38,6 +32,8 @@ namespace SpyStore.Hol.Dal.Tests.ContextTests
             _db.Dispose();
         }
 
+        private readonly StoreContext _db;
+
         [Fact]
         public void ShouldGetOrderTotal()
         {
@@ -45,6 +41,23 @@ namespace SpyStore.Hol.Dal.Tests.ContextTests
             var orders = _db.Orders.ToList();
             Assert.Single(orders);
             Assert.Equal(4414.90M, orders[0].OrderTotal);
+        }
+
+
+        [Fact]
+        public void ShouldGetOrderTotalAfterAddingAnOrderDetail()
+        {
+            var order = _db.Orders.FirstOrDefault();
+            var orderDetail = new OrderDetail() {OrderId = order.Id, ProductId = 2, Quantity = 5, UnitCost = 100M};
+            _db.OrderDetails.Add(orderDetail);
+            _db.SaveChanges();
+
+            //Need to use a new DbContext to get the updated value
+            var storeContext = new StoreContextFactory().CreateDbContext(new string[0]);
+            storeContext.CustomerId = 1;
+            order = storeContext.Orders.First();
+            //order = _db.Orders.FirstOrDefault();
+            Assert.Equal(4914.90M, order.OrderTotal);
         }
 
         [Fact]
@@ -63,23 +76,6 @@ namespace SpyStore.Hol.Dal.Tests.ContextTests
             _db.SaveChanges();
             order = _db.Orders.First();
             Assert.Equal(DateTime.Now.ToString("d"), order.ShipDate.ToString("d"));
-        }
-
-
-        [Fact]
-        public void ShouldGetOrderTotalAfterAddingAnOrderDetail()
-        {
-            var order = _db.Orders.FirstOrDefault();
-            var orderDetail = new OrderDetail() {OrderId = order.Id, ProductId = 2, Quantity = 5, UnitCost = 100M};
-            _db.OrderDetails.Add(orderDetail);
-            _db.SaveChanges();
-
-            //Need to use a new DbContext to get the updated value
-            var storeContext = new StoreContextFactory().CreateDbContext(new string[0]);
-            storeContext.CustomerId = 1;
-            order = storeContext.Orders.First();
-            //order = _db.Orders.FirstOrDefault();
-            Assert.Equal(4914.90M, order.OrderTotal);
         }
     }
 }

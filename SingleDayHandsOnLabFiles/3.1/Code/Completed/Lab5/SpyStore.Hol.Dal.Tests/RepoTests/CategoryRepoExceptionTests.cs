@@ -1,4 +1,12 @@
-﻿using System;
+﻿// Copyright Information
+// ==================================
+// SpyStore.Hol - SpyStore.Hol.Dal.Tests - CategoryRepoExceptionTests.cs
+// All samples copyright Philip Japikse
+// http://www.skimedic.com 2020/03/07
+// See License.txt for more information
+// ==================================
+
+using System;
 using Microsoft.EntityFrameworkCore;
 using SpyStore.Hol.Dal.EfStructures;
 using SpyStore.Hol.Dal.Repos;
@@ -14,12 +22,13 @@ namespace SpyStore.Hol.Dal.Tests.RepoTests
     [Collection("SpyStore.DAL")]
     public class CategoryRepoExceptionTests : RepoTestsBase
     {
-        private readonly ICategoryRepo _repo;
-
         public CategoryRepoExceptionTests()
         {
             _repo = new CategoryRepo(Db);
         }
+
+        private readonly ICategoryRepo _repo;
+
         public override void Dispose()
         {
             _repo.Dispose();
@@ -49,6 +58,5 @@ namespace SpyStore.Hol.Dal.Tests.RepoTests
         //    var category = new Category {CategoryName = "Foo"};
         //    var ex = Assert.Throws<RetryLimitExceededException>(()=> repo.Add(category));
         //}
-
     }
 }

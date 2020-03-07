@@ -1,14 +1,10 @@
-﻿#region copyright
-
-// Copyright Information
+﻿// Copyright Information
 // ==================================
 // SpyStore.Hol - SpyStore.Hol.Dal - 20191004030135_Initial.cs
 // All samples copyright Philip Japikse
-// http://www.skimedic.com 2019/10/04
+// http://www.skimedic.com 2020/03/07
 // See License.txt for more information
 // ==================================
-
-#endregion
 
 using System;
 using Microsoft.EntityFrameworkCore.Migrations;
@@ -17,6 +13,33 @@ namespace SpyStore.Hol.Dal.EfStructures.Migrations
 {
     public partial class Initial : Migration
     {
+        protected override void Down(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.DropTable(
+                name: "OrderDetails",
+                schema: "Store");
+
+            migrationBuilder.DropTable(
+                name: "ShoppingCartRecords",
+                schema: "Store");
+
+            migrationBuilder.DropTable(
+                name: "Orders",
+                schema: "Store");
+
+            migrationBuilder.DropTable(
+                name: "Products",
+                schema: "Store");
+
+            migrationBuilder.DropTable(
+                name: "Customers",
+                schema: "Store");
+
+            migrationBuilder.DropTable(
+                name: "Categories",
+                schema: "Store");
+        }
+
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.EnsureSchema(
@@ -219,33 +242,6 @@ namespace SpyStore.Hol.Dal.EfStructures.Migrations
                 table: "ShoppingCartRecords",
                 columns: new[] {"Id", "ProductId", "CustomerId"},
                 unique: true);
-        }
-
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.DropTable(
-                name: "OrderDetails",
-                schema: "Store");
-
-            migrationBuilder.DropTable(
-                name: "ShoppingCartRecords",
-                schema: "Store");
-
-            migrationBuilder.DropTable(
-                name: "Orders",
-                schema: "Store");
-
-            migrationBuilder.DropTable(
-                name: "Products",
-                schema: "Store");
-
-            migrationBuilder.DropTable(
-                name: "Customers",
-                schema: "Store");
-
-            migrationBuilder.DropTable(
-                name: "Categories",
-                schema: "Store");
         }
     }
 }

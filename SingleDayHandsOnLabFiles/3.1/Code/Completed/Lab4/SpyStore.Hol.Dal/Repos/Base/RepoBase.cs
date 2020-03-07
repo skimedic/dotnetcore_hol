@@ -1,4 +1,12 @@
-﻿using System;
+﻿// Copyright Information
+// ==================================
+// SpyStore.Hol - SpyStore.Hol.Dal - RepoBase.cs
+// All samples copyright Philip Japikse
+// http://www.skimedic.com 2020/03/07
+// See License.txt for more information
+// ==================================
+
+using System;
 using System.Collections.Generic;
 using Microsoft.Data.SqlClient;
 using System.Linq;
@@ -13,8 +21,6 @@ namespace SpyStore.Hol.Dal.Repos.Base
 {
     public abstract class RepoBase<T> : IRepo<T> where T : EntityBase, new()
     {
-        public DbSet<T> Table { get; }
-        public StoreContext Context { get; }
         private readonly bool _disposeContext;
 
         protected RepoBase(StoreContext context)
@@ -28,6 +34,9 @@ namespace SpyStore.Hol.Dal.Repos.Base
         {
             _disposeContext = true;
         }
+
+        public DbSet<T> Table { get; }
+        public StoreContext Context { get; }
 
         public virtual void Dispose()
         {

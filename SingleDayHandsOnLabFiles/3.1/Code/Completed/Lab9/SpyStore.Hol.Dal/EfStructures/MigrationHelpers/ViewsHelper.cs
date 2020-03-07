@@ -1,14 +1,10 @@
-﻿#region copyright
-
-// Copyright Information
+﻿// Copyright Information
 // ==================================
 // SpyStore.Hol - SpyStore.Hol.Dal - ViewsHelper.cs
 // All samples copyright Philip Japikse
-// http://www.skimedic.com 2019/10/04
+// http://www.skimedic.com 2020/03/07
 // See License.txt for more information
 // ==================================
-
-#endregion
 
 using Microsoft.EntityFrameworkCore.Migrations;
 
@@ -33,21 +29,6 @@ protected override void Down(MigrationBuilder migrationBuilder)
      */
     public static class ViewsHelper
     {
-        public static void CreateOrderDetailWithProductInfoView(MigrationBuilder builder)
-        {
-            builder.Sql(@"
-CREATE VIEW [Store].[OrderDetailWithProductInfo]
-AS
-SELECT        
-  od.Id, od.TimeStamp, od.OrderId, od.ProductId, od.Quantity, od.UnitCost, 
-  od.Quantity * od.UnitCost AS LineItemTotal, 
-  p.ModelName, p.Description, p.ModelNumber, p.ProductImage, p.ProductImageLarge, 
-  p.ProductImageThumb, p.CategoryId, p.UnitsInStock, p.CurrentPrice, c.CategoryName
-FROM  Store.OrderDetails od INNER JOIN Store.Orders o ON o.Id = od.OrderId
-INNER JOIN Store.Products AS p ON od.ProductId = p.Id INNER JOIN
- Store.Categories AS c ON p.CategoryId = c.id");
-        }
-
         public static void CreateCartRecordWithProductInfoView(MigrationBuilder builder)
         {
             builder.Sql(@"
@@ -64,14 +45,29 @@ FROM Store.ShoppingCartRecords scr
 	INNER JOIN Store.Categories c ON c.Id = p.CategoryId");
         }
 
-        public static void DropOrderDetailWithProductInfoView(MigrationBuilder builder)
+        public static void CreateOrderDetailWithProductInfoView(MigrationBuilder builder)
         {
-            builder.Sql("drop view [Store].[OrderDetailWithProductInfo]");
+            builder.Sql(@"
+CREATE VIEW [Store].[OrderDetailWithProductInfo]
+AS
+SELECT        
+  od.Id, od.TimeStamp, od.OrderId, od.ProductId, od.Quantity, od.UnitCost, 
+  od.Quantity * od.UnitCost AS LineItemTotal, 
+  p.ModelName, p.Description, p.ModelNumber, p.ProductImage, p.ProductImageLarge, 
+  p.ProductImageThumb, p.CategoryId, p.UnitsInStock, p.CurrentPrice, c.CategoryName
+FROM  Store.OrderDetails od INNER JOIN Store.Orders o ON o.Id = od.OrderId
+INNER JOIN Store.Products AS p ON od.ProductId = p.Id INNER JOIN
+ Store.Categories AS c ON p.CategoryId = c.id");
         }
 
         public static void DropCartRecordWithProductInfoView(MigrationBuilder builder)
         {
             builder.Sql("drop view [Store].[CartRecordWithProductInfo]");
+        }
+
+        public static void DropOrderDetailWithProductInfoView(MigrationBuilder builder)
+        {
+            builder.Sql("drop view [Store].[OrderDetailWithProductInfo]");
         }
     }
 }

@@ -1,3 +1,11 @@
+// Copyright Information
+// ==================================
+// SpyStore.Hol - SpyStore.Hol.Mvc - Startup.cs
+// All samples copyright Philip Japikse
+// http://www.skimedic.com 2020/03/07
+// See License.txt for more information
+// ==================================
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,12 +27,6 @@ namespace SpyStore.Hol.Mvc
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
-        {
-            services.AddControllersWithViews();
-        }
-
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
@@ -36,6 +38,7 @@ namespace SpyStore.Hol.Mvc
             {
                 app.UseExceptionHandler("/Home/Error");
             }
+
             app.UseStaticFiles();
 
             app.UseRouting();
@@ -48,6 +51,12 @@ namespace SpyStore.Hol.Mvc
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+        }
+
+        // This method gets called by the runtime. Use this method to add services to the container.
+        public void ConfigureServices(IServiceCollection services)
+        {
+            services.AddControllersWithViews();
         }
     }
 }

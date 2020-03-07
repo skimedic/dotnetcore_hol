@@ -1,14 +1,10 @@
-﻿#region copyright
-
-// Copyright Information
+﻿// Copyright Information
 // ==================================
 // SpyStore.Hol - SpyStore.Hol.Models - OrderWithDetailsAndProductInfo.cs
 // All samples copyright Philip Japikse
-// http://www.skimedic.com 2019/10/04
+// http://www.skimedic.com 2020/03/07
 // See License.txt for more information
 // ==================================
-
-#endregion
 
 using System.Collections.Generic;
 using System.Linq;
@@ -31,6 +27,9 @@ namespace SpyStore.Hol.Models.ViewModels
             });
         }
 
+        public Customer Customer { get; set; }
+        public IList<OrderDetailWithProductInfo> OrderDetails { get; set; }
+
         public static OrderWithDetailsAndProductInfo Create(Order order, Customer customer,
             IEnumerable<OrderDetailWithProductInfo> details)
         {
@@ -39,8 +38,5 @@ namespace SpyStore.Hol.Models.ViewModels
             viewModel.Customer = customer;
             return viewModel;
         }
-
-        public Customer Customer { get; set; }
-        public IList<OrderDetailWithProductInfo> OrderDetails { get; set; }
     }
 }

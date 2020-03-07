@@ -1,17 +1,14 @@
-﻿#region copyright
-
-// Copyright Information
+﻿// Copyright Information
 // ==================================
 // SpyStore.Hol - SpyStore.Hol.Models - Order.cs
 // All samples copyright Philip Japikse
-// http://www.skimedic.com 2019/10/04
+// http://www.skimedic.com 2020/03/07
 // See License.txt for more information
 // ==================================
 
-#endregion
-
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 using SpyStore.Hol.Models.Entities.Base;
 
 namespace SpyStore.Hol.Models.Entities
@@ -21,7 +18,7 @@ namespace SpyStore.Hol.Models.Entities
     {
         [ForeignKey(nameof(CustomerId))] public Customer CustomerNavigation { get; set; }
 
-        [InverseProperty(nameof(OrderDetail.OrderNavigation))]
+        [JsonIgnore, InverseProperty(nameof(OrderDetail.OrderNavigation))]
         public List<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>();
     }
 }

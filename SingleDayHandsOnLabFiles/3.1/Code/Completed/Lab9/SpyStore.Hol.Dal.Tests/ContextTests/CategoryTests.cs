@@ -1,14 +1,10 @@
-﻿#region copyright
-
-// Copyright Information
+﻿// Copyright Information
 // ==================================
 // SpyStore.Hol - SpyStore.Hol.Dal.Tests - CategoryTests.cs
 // All samples copyright Philip Japikse
-// http://www.skimedic.com 2019/10/04
+// http://www.skimedic.com 2020/03/07
 // See License.txt for more information
 // ==================================
-
-#endregion
 
 using System;
 using System.Linq;
@@ -23,8 +19,6 @@ namespace SpyStore.Hol.Dal.Tests.ContextTests
     [Collection("SpyStore.DAL")]
     public class CategoryTests : IDisposable
     {
-        private readonly StoreContext _db;
-
         public CategoryTests()
         {
             _db = new StoreContextFactory().CreateDbContext(new string[0]);
@@ -37,6 +31,8 @@ namespace SpyStore.Hol.Dal.Tests.ContextTests
             _db.Dispose();
         }
 
+        private readonly StoreContext _db;
+
         private void CleanDatabase()
         {
             SampleDataInitializer.ClearData(_db);
@@ -46,21 +42,6 @@ namespace SpyStore.Hol.Dal.Tests.ContextTests
         public void FirstTest()
         {
             Assert.True(true);
-        }
-
-        [Fact]
-        public void ShouldAddACategoryWithDbSet()
-        {
-            var category = new Category {CategoryName = "Foo"};
-            _db.Categories.Add(category);
-            Assert.Equal(EntityState.Added, _db.Entry(category).State);
-            Assert.True(category.Id == 0);
-            Assert.Null(category.TimeStamp);
-            _db.SaveChanges();
-            Assert.Equal(EntityState.Unchanged, _db.Entry(category).State);
-            Assert.Equal(1, category.Id);
-            Assert.NotNull(category.TimeStamp);
-            Assert.Equal(1, _db.Categories.Count());
         }
 
         [Fact]
@@ -79,42 +60,18 @@ namespace SpyStore.Hol.Dal.Tests.ContextTests
         }
 
         [Fact]
-        public void ShouldGetAllCategoriesOrderedByName()
-        {
-            _db.Categories.Add(new Category {CategoryName = "Foo"});
-            _db.Categories.Add(new Category {CategoryName = "Bar"});
-            _db.SaveChanges();
-            var categories = _db.Categories.OrderBy(c => c.CategoryName).ToList();
-            Assert.Equal(2, _db.Categories.Count());
-            Assert.Equal("Bar", categories[0].CategoryName);
-            Assert.Equal("Foo", categories[1].CategoryName);
-        }
-
-        [Fact]
-        public void ShouldUpdateACategory()
+        public void ShouldAddACategoryWithDbSet()
         {
             var category = new Category {CategoryName = "Foo"};
             _db.Categories.Add(category);
-            _db.SaveChanges();
-            category.CategoryName = "Bar";
-            _db.Categories.Update(category);
-            Assert.Equal(EntityState.Modified, _db.Entry(category).State);
+            Assert.Equal(EntityState.Added, _db.Entry(category).State);
+            Assert.True(category.Id == 0);
+            Assert.Null(category.TimeStamp);
             _db.SaveChanges();
             Assert.Equal(EntityState.Unchanged, _db.Entry(category).State);
-            StoreContext context;
-            using (context = new StoreContextFactory().CreateDbContext(new string[0]))
-            {
-                Assert.Equal("Bar", context.Categories.First().CategoryName);
-            }
-        }
-
-        [Fact]
-        public void ShouldNotUpdateANonAttachedCategory()
-        {
-            var category = new Category {CategoryName = "Foo"};
-            _db.Categories.Add(category);
-            category.CategoryName = "Bar";
-            Assert.Throws<InvalidOperationException>(() => _db.Categories.Update(category));
+            Assert.Equal(1, category.Id);
+            Assert.NotNull(category.TimeStamp);
+            Assert.Equal(1, _db.Categories.Count());
         }
 
         [Fact]
@@ -142,6 +99,45 @@ namespace SpyStore.Hol.Dal.Tests.ContextTests
             context.Entry(catToDelete).State = EntityState.Deleted;
             var affected = context.SaveChanges();
             Assert.Equal(1, affected);
+        }
+
+        [Fact]
+        public void ShouldGetAllCategoriesOrderedByName()
+        {
+            _db.Categories.Add(new Category {CategoryName = "Foo"});
+            _db.Categories.Add(new Category {CategoryName = "Bar"});
+            _db.SaveChanges();
+            var categories = _db.Categories.OrderBy(c => c.CategoryName).ToList();
+            Assert.Equal(2, _db.Categories.Count());
+            Assert.Equal("Bar", categories[0].CategoryName);
+            Assert.Equal("Foo", categories[1].CategoryName);
+        }
+
+        [Fact]
+        public void ShouldNotUpdateANonAttachedCategory()
+        {
+            var category = new Category {CategoryName = "Foo"};
+            _db.Categories.Add(category);
+            category.CategoryName = "Bar";
+            Assert.Throws<InvalidOperationException>(() => _db.Categories.Update(category));
+        }
+
+        [Fact]
+        public void ShouldUpdateACategory()
+        {
+            var category = new Category {CategoryName = "Foo"};
+            _db.Categories.Add(category);
+            _db.SaveChanges();
+            category.CategoryName = "Bar";
+            _db.Categories.Update(category);
+            Assert.Equal(EntityState.Modified, _db.Entry(category).State);
+            _db.SaveChanges();
+            Assert.Equal(EntityState.Unchanged, _db.Entry(category).State);
+            StoreContext context;
+            using (context = new StoreContextFactory().CreateDbContext(new string[0]))
+            {
+                Assert.Equal("Bar", context.Categories.First().CategoryName);
+            }
         }
     }
 }

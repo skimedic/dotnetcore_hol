@@ -1,14 +1,10 @@
-﻿#region copyright
-
-// Copyright Information
+﻿// Copyright Information
 // ==================================
 // SpyStore.Hol - SpyStore.Hol.Dal - ShoppingCartRepo.cs
 // All samples copyright Philip Japikse
-// http://www.skimedic.com 2019/10/04
+// http://www.skimedic.com 2020/03/07
 // See License.txt for more information
 // ==================================
-
-#endregion
 
 using System;
 using System.Collections.Generic;
@@ -27,8 +23,8 @@ namespace SpyStore.Hol.Dal.Repos
 {
     public class ShoppingCartRepo : RepoBase<ShoppingCartRecord>, IShoppingCartRepo
     {
-        private readonly IProductRepo _productRepo;
         private readonly ICustomerRepo _customerRepo;
+        private readonly IProductRepo _productRepo;
 
         public ShoppingCartRepo(StoreContext context,
             IProductRepo productRepo,

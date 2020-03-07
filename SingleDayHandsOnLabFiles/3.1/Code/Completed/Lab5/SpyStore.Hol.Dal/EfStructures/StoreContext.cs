@@ -1,4 +1,12 @@
-﻿using System;
+﻿// Copyright Information
+// ==================================
+// SpyStore.Hol - SpyStore.Hol.Dal - StoreContext.cs
+// All samples copyright Philip Japikse
+// http://www.skimedic.com 2020/03/07
+// See License.txt for more information
+// ==================================
+
+using System;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
@@ -11,18 +19,11 @@ namespace SpyStore.Hol.Dal.EfStructures
 {
     public class StoreContext : DbContext
     {
-        public int CustomerId { get; set; }
-
         public StoreContext(DbContextOptions<StoreContext> options) : base(options)
         {
         }
 
-        [DbFunction("GetOrderTotal", Schema = "Store")]
-        public static int GetOrderTotal(int orderId)
-        {
-            //code in here doesn’t matter since it never gets executed
-            throw new Exception();
-        }
+        public int CustomerId { get; set; }
 
         public DbSet<CartRecordWithProductInfo> CartRecordWithProductInfos { get; set; }
         public DbSet<OrderDetailWithProductInfo> OrderDetailWithProductInfos { get; set; }
@@ -33,6 +34,13 @@ namespace SpyStore.Hol.Dal.EfStructures
         public DbSet<OrderDetail> OrderDetails { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<ShoppingCartRecord> ShoppingCartRecords { get; set; }
+
+        [DbFunction("GetOrderTotal", Schema = "Store")]
+        public static int GetOrderTotal(int orderId)
+        {
+            //code in here doesn’t matter since it never gets executed
+            throw new Exception();
+        }
 
         public override int SaveChanges()
         {

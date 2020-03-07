@@ -2,9 +2,9 @@
   //https://api.cdnjs.com/libraries/jquery?output=human
   //https://api.cdnjs.com/libraries?output=human
   "version": "1.0",
-  "defaultProvider": "cdnjs", 
+  "defaultProvider": "cdnjs",
   "defaultDestination": "wwwroot/lib",
-  "libraries": [ 
+  "libraries": [
     {
       "library": "jquery@3.4.1",
       "destination": "wwwroot/lib/jquery",
@@ -18,7 +18,7 @@
     {
       "library": "jquery-validation-unobtrusive@3.2.11",
       "destination": "wwwroot/lib/jquery-validation-unobtrusive",
-      "files": ["jquery.validate.unobtrusive.js", "jquery.validate.unobtrusive.min.js" ]
+      "files": ["jquery.validate.unobtrusive.js", "jquery.validate.unobtrusive.min.js"]
     },
     {
       "library": "font-awesome@4.7.0",

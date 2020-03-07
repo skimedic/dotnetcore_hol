@@ -14,20 +14,22 @@
                         </a>
                     </div>
                     <div class="col-sm-2">
-                        <label asp-for="@item.OrderDate"></label><br />
+                        <label asp-for="@item.OrderDate"></label><br/>
                         @Html.DisplayFor(model => item.OrderDate)
                     </div>
                     <div class="col-sm-2">
-                        <label asp-for="@item.ShipDate"></label><br />
+                        <label asp-for="@item.ShipDate"></label><br/>
                         @Html.DisplayFor(model => item.ShipDate)
                     </div>
                     <div class="col-sm-2">
-                        <label asp-for="@item.OrderTotal"></label><br />
+                        <label asp-for="@item.OrderTotal"></label><br/>
                         @Html.DisplayFor(model => item.OrderTotal)
                     </div>
                     <div class="col-sm-2 order-actions">
                         <a asp-action="Details" asp-route-orderId="@item.Id"
-                           class="btn btn-primary">Order Details</a>
+                           class="btn btn-primary">
+                            Order Details
+                        </a>
                     </div>
                 </div>
             </div>

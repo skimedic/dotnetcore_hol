@@ -1,14 +1,10 @@
-﻿#region copyright
-
-// Copyright Information
+﻿// Copyright Information
 // ==================================
 // SpyStore.Hol - SpyStore.Hol.Mvc - ProductsController.cs
 // All samples copyright Philip Japikse
-// http://www.skimedic.com 2019/10/04
+// http://www.skimedic.com 2020/03/07
 // See License.txt for more information
 // ==================================
-
-#endregion
 
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -22,9 +18,9 @@ namespace SpyStore.Hol.Mvc.Controllers
     [Route("[controller]/[action]")]
     public class ProductsController : BaseController
     {
+        private readonly ILogger<ProductsController> _logger;
         private readonly IProductRepo _productRepo;
         private readonly CustomSettings _settings;
-        private readonly ILogger<ProductsController> _logger;
 
         public ProductsController(
             ILogger<ProductsController> logger,
@@ -35,6 +31,18 @@ namespace SpyStore.Hol.Mvc.Controllers
             _logger = logger;
             _productRepo = productRepo;
         }
+
+        public ActionResult Details(int id)
+        {
+            return RedirectToAction(nameof(CartController.AddToCart),
+                nameof(CartController).Replace("Controller", ""),
+                new
+                {
+                    productId = id,
+                    cameFromProducts = true
+                });
+        }
+
         [HttpGet]
         public IActionResult Featured()
         {
@@ -54,18 +62,9 @@ namespace SpyStore.Hol.Mvc.Controllers
         {
             return RedirectToAction(nameof(Featured));
         }
-        public ActionResult Details(int id)
-        {
-            return RedirectToAction(nameof(CartController.AddToCart),
-                nameof(CartController).Replace("Controller", ""),
-                new
-                {
-                    productId = id,
-                    cameFromProducts = true
-                });
-        }
+
         [HttpGet]
-        public IActionResult ProductList([FromServices]ICategoryRepo categoryRepo, int id)
+        public IActionResult ProductList([FromServices] ICategoryRepo categoryRepo, int id)
         {
             var cat = categoryRepo.Find(id);
             ViewBag.Title = cat?.CategoryName;

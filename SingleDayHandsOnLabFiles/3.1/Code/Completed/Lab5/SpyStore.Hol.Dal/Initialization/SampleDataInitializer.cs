@@ -1,4 +1,12 @@
-﻿using System;
+﻿// Copyright Information
+// ==================================
+// SpyStore.Hol - SpyStore.Hol.Dal - SampleDataInitializer.cs
+// All samples copyright Philip Japikse
+// http://www.skimedic.com 2020/03/07
+// See License.txt for more information
+// ==================================
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
@@ -10,13 +18,11 @@ namespace SpyStore.Hol.Dal.Initialization
 {
     public static class SampleDataInitializer
     {
-        public static void InitializeData(StoreContext context)
+        public static void ClearData(StoreContext context)
         {
-            //Ensure the database exists and is up to date
-            //context.Database.EnsureDeleted();
-            context.Database.Migrate();
-            ClearData(context);
-            SeedData(context);
+            context.Database.ExecuteSqlRaw("Delete from Store.Categories");
+            context.Database.ExecuteSqlRaw("Delete from Store.Customers");
+            ResetIdentity(context);
         }
 
         public static void DropAndCreateDatabase(StoreContext context)
@@ -25,6 +31,15 @@ namespace SpyStore.Hol.Dal.Initialization
             //This doesn't run the migrations, so SQL objects will be missing
             //DON'T USE THIS => context.Database.EnsureCreated();
             context.Database.Migrate();
+        }
+
+        public static void InitializeData(StoreContext context)
+        {
+            //Ensure the database exists and is up to date
+            //context.Database.EnsureDeleted();
+            context.Database.Migrate();
+            ClearData(context);
+            SeedData(context);
         }
 
         internal static void ResetIdentity(StoreContext context)
@@ -39,13 +54,6 @@ namespace SpyStore.Hol.Dal.Initialization
                 var rawSqlString = $"DBCC CHECKIDENT (\"Store.{itm}\", RESEED, 0);";
                 context.Database.ExecuteSqlRaw(rawSqlString);
             }
-        }
-
-        public static void ClearData(StoreContext context)
-        {
-            context.Database.ExecuteSqlRaw("Delete from Store.Categories");
-            context.Database.ExecuteSqlRaw("Delete from Store.Customers");
-            ResetIdentity(context);
         }
 
         internal static void SeedData(StoreContext context)
@@ -178,7 +186,6 @@ namespace SpyStore.Hol.Dal.Initialization
                         }
                     });
                 }
-
             }
             catch (Exception ex)
             {
@@ -186,6 +193,5 @@ namespace SpyStore.Hol.Dal.Initialization
                 throw;
             }
         }
-
     }
 }

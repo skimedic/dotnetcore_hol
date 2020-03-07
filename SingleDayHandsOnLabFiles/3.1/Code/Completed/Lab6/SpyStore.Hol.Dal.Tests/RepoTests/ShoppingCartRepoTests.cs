@@ -1,4 +1,12 @@
-﻿using System;
+﻿// Copyright Information
+// ==================================
+// SpyStore.Hol - SpyStore.Hol.Dal.Tests - ShoppingCartRepoTests.cs
+// All samples copyright Philip Japikse
+// http://www.skimedic.com 2020/03/07
+// See License.txt for more information
+// ==================================
+
+using System;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using SpyStore.Hol.Dal.EfStructures;
@@ -15,14 +23,15 @@ namespace SpyStore.Hol.Dal.Tests.RepoTests
     [Collection("SpyStore.DAL")]
     public class ShoppingCartRepoTests : RepoTestsBase
     {
-        private readonly IShoppingCartRepo _repo;
-
         public ShoppingCartRepoTests()
         {
-            _repo = new ShoppingCartRepo(Db,new ProductRepo(Db),new CustomerRepo(Db));
+            _repo = new ShoppingCartRepo(Db, new ProductRepo(Db), new CustomerRepo(Db));
             Db.CustomerId = 1;
             LoadDatabase();
         }
+
+        private readonly IShoppingCartRepo _repo;
+
         public override void Dispose()
         {
             _repo.Dispose();
@@ -48,19 +57,12 @@ namespace SpyStore.Hol.Dal.Tests.RepoTests
         }
 
         [Fact]
-        public void ShouldUpdateQuantityOnAddIfAlreadyInCart()
+        public void ShouldDeleteCartRecord()
         {
-            var item = new ShoppingCartRecord()
-            {
-                ProductId = 33,
-                Quantity = 1,
-                DateCreated = DateTime.Now,
-                CustomerId = Db.CustomerId
-            };
-            _repo.Add(item);
-            var shoppingCartRecords = _repo.GetAll().ToList();
-            Assert.Single(shoppingCartRecords);
-            Assert.Equal(2, shoppingCartRecords[0].Quantity);
+            var item = _repo.Find(1);
+            _repo.Context.Entry(item).State = EntityState.Detached;
+            _repo.Delete(item);
+            Assert.Empty(_repo.GetAll());
         }
 
         [Fact]
@@ -93,18 +95,6 @@ namespace SpyStore.Hol.Dal.Tests.RepoTests
         }
 
         [Fact]
-        public void ShouldUpdateQuantity()
-        {
-            var item = _repo.Find(1);
-            item.Quantity = 5;
-            item.DateCreated = DateTime.Now;
-            _repo.Update(item);
-            var shoppingCartRecords = _repo.GetAll().ToList();
-            Assert.Single(shoppingCartRecords);
-            Assert.Equal(5, shoppingCartRecords[0].Quantity);
-        }
-
-        [Fact]
         public void ShouldDeleteOnUpdateIfQuantityEqualsZero()
         {
             var item = _repo.Find(1);
@@ -124,15 +114,6 @@ namespace SpyStore.Hol.Dal.Tests.RepoTests
             _repo.Update(item);
             var shoppingCartRecords = _repo.GetAll().ToList();
             Assert.Empty(shoppingCartRecords);
-        }
-
-        [Fact]
-        public void ShouldDeleteCartRecord()
-        {
-            var item = _repo.Find(1);
-            _repo.Context.Entry(item).State = EntityState.Detached;
-            _repo.Delete(item);
-            Assert.Empty(_repo.GetAll());
         }
 
         [Fact]
@@ -166,6 +147,34 @@ namespace SpyStore.Hol.Dal.Tests.RepoTests
             item.DateCreated = DateTime.Now;
             var ex = Assert.Throws<SpyStoreInvalidQuantityException>(() => _repo.Update(item));
             Assert.Equal("Can't add more product than available in stock", ex.Message);
+        }
+
+        [Fact]
+        public void ShouldUpdateQuantity()
+        {
+            var item = _repo.Find(1);
+            item.Quantity = 5;
+            item.DateCreated = DateTime.Now;
+            _repo.Update(item);
+            var shoppingCartRecords = _repo.GetAll().ToList();
+            Assert.Single(shoppingCartRecords);
+            Assert.Equal(5, shoppingCartRecords[0].Quantity);
+        }
+
+        [Fact]
+        public void ShouldUpdateQuantityOnAddIfAlreadyInCart()
+        {
+            var item = new ShoppingCartRecord()
+            {
+                ProductId = 33,
+                Quantity = 1,
+                DateCreated = DateTime.Now,
+                CustomerId = Db.CustomerId
+            };
+            _repo.Add(item);
+            var shoppingCartRecords = _repo.GetAll().ToList();
+            Assert.Single(shoppingCartRecords);
+            Assert.Equal(2, shoppingCartRecords[0].Quantity);
         }
     }
 }
