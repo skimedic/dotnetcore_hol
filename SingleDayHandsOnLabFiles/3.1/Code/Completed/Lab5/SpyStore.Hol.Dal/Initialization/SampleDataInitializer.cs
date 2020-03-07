@@ -10,6 +10,15 @@ namespace SpyStore.Hol.Dal.Initialization
 {
     public static class SampleDataInitializer
     {
+        public static void InitializeData(StoreContext context)
+        {
+            //Ensure the database exists and is up to date
+            //context.Database.EnsureDeleted();
+            context.Database.Migrate();
+            ClearData(context);
+            SeedData(context);
+        }
+
         public static void DropAndCreateDatabase(StoreContext context)
         {
             context.Database.EnsureDeleted();
@@ -34,12 +43,10 @@ namespace SpyStore.Hol.Dal.Initialization
 
         public static void ClearData(StoreContext context)
         {
-            context.Database.Migrate();
             context.Database.ExecuteSqlRaw("Delete from Store.Categories");
             context.Database.ExecuteSqlRaw("Delete from Store.Customers");
             ResetIdentity(context);
         }
-
 
         internal static void SeedData(StoreContext context)
         {
@@ -180,13 +187,5 @@ namespace SpyStore.Hol.Dal.Initialization
             }
         }
 
-        public static void InitializeData(StoreContext context)
-        {
-            //Ensure the database exists and is up to date
-            //context.Database.EnsureDeleted();
-            context.Database.Migrate();
-            ClearData(context);
-            SeedData(context);
-        }
     }
 }
