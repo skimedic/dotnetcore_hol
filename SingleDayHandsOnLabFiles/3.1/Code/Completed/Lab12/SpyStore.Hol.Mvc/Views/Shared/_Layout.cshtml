@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Hosting
+@using Microsoft.Extensions.Hosting
+@inject IWebHostEnvironment HostEnv
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8"/>
@@ -19,6 +22,12 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
 </head>
 <body>
+@{
+    if (HostEnv.IsDevelopment())
+    {
+        <h1>Development</h1>
+    }
+}
 <header class="navbar navbar-expand-sm navbar-light bg-primary navbar-static-top">
     <div class="container">
         <div class="navbar-header">
