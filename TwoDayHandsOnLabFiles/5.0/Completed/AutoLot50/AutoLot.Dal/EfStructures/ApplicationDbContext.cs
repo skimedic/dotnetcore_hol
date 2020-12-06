@@ -52,6 +52,7 @@ namespace AutoLot.Dal.EfStructures
                         default:
                             throw new ArgumentOutOfRangeException();
                     }
+
                     Console.WriteLine($"The object was {action}");
                     break;
                 case EntityState.Detached:
@@ -86,16 +87,13 @@ namespace AutoLot.Dal.EfStructures
                 entity.Property(e => e.TimeStamp).HasDefaultValueSql("GetDate()");
             });
 
-            modelBuilder.Entity<CustomerOrderViewModel>(entity =>
-            {
-                entity.HasNoKey().ToView("CustomerOrderView", "dbo");
-            });
-
-            modelBuilder.Entity<Car>(entity => { 
-                entity.HasQueryFilter(c => c.MakeId == MakeId); 
-            });
+            modelBuilder.Entity<Car>().HasQueryFilter(c => c.MakeId == MakeId);
             //New in EF Core 5 - bi-directional query filters
             modelBuilder.Entity<Order>().HasQueryFilter(e => e.CarNavigation!.MakeId == MakeId);
+
+            modelBuilder.Entity<CustomerOrderViewModel>().HasNoKey().ToView("CustomerOrderView", "dbo");
+
+
             modelBuilder.Entity<CreditRisk>(entity =>
             {
                 entity.HasOne(d => d.CustomerNavigation)
@@ -162,7 +160,6 @@ namespace AutoLot.Dal.EfStructures
                     .HasConstraintName("FK_Orders_Customers");
                 entity.HasIndex(cr => new {cr.CustomerId, cr.CarId}).IsUnique(true);
             });
-
             base.OnModelCreating(modelBuilder);
         }
 
