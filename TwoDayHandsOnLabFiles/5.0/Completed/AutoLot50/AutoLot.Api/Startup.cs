@@ -31,21 +31,22 @@ namespace AutoLot.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //services.AddControllers();
             services.AddControllers(
-                    config => config.Filters.Add(new CustomExceptionFilter(_env))
+                   config => config.Filters.Add(new CustomExceptionFilter(_env))
                 )
-                .ConfigureApiBehaviorOptions(options =>
-                {
-                    //options.SuppressConsumesConstraintForFormFileParameters = true;
-                    //options.SuppressInferBindingSourcesForParameters = true;
-                    options.SuppressModelStateInvalidFilter = true;
-                    //options.SuppressMapClientErrors = true;
-                    //options.ClientErrorMapping[StatusCodes.Status404NotFound].Link = "https://httpstatuses.com/404";
-                })
                 .AddJsonOptions(options =>
                 {
                     options.JsonSerializerOptions.PropertyNamingPolicy = null;
                     options.JsonSerializerOptions.WriteIndented = true;
+                })
+                .ConfigureApiBehaviorOptions(options =>
+                {
+                    //options.SuppressConsumesConstraintForFormFileParameters = true;
+                    //options.SuppressInferBindingSourcesForParameters = true;
+                    //options.SuppressModelStateInvalidFilter = true;
+                    //options.SuppressMapClientErrors = true;
+                    //options.ClientErrorMapping[StatusCodes.Status404NotFound].Link = "https://httpstatuses.com/404";
                 });
             services.AddCors(options =>
             {
@@ -122,11 +123,8 @@ namespace AutoLot.Api
             //enable authorization checks
             app.UseAuthorization();
             //opt-in to using endpoint routing
-            app.UseEndpoints(endpoints =>
-            {
-                //use attribute routing on controllers
-                endpoints.MapControllers();
-            });
+			//use attribute routing on controllers
+            app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
         }
     }
 }

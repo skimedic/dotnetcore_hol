@@ -37,6 +37,7 @@ dotnet add AutoLot.Services reference AutoLot.Models
 
 dotnet add AutoLot.Api reference AutoLot.Dal
 dotnet add AutoLot.Api reference AutoLot.Models
+dotnet add AutoLot.Api reference AutoLot.Services
 
 dotnet add AutoLot.Mvc reference AutoLot.Models
 dotnet add AutoLot.Mvc reference AutoLot.Dal
