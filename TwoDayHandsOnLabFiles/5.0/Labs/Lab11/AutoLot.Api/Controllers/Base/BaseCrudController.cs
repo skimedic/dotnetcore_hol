@@ -23,12 +23,29 @@ namespace AutoLot.Api.Controllers.Base
             Logger = logger;
         }
 
+        /// <summary>
+        /// Gets all records
+        /// </summary>
+        /// <returns>All records</returns>
+        /// <response code="200">Returns all items</response>
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [HttpGet]
         public ActionResult<IEnumerable<T>> GetAll()
         {
             return Ok(MainRepo.GetAllIgnoreQueryFilters());
         }
 
+        /// <summary>
+        /// Gets a single record
+        /// </summary>
+        /// <param name="id">Primary key of the record</param>
+        /// <returns>Single record</returns>
+        /// <response code="200">Found the record</response>
+        /// <response code="204">No content</response>
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         [HttpGet("{id}")]
         public ActionResult<T> GetOne(int id)
         {
@@ -42,6 +59,29 @@ namespace AutoLot.Api.Controllers.Base
             return Ok(entity);
         }
 
+        /// <summary>
+        /// Updates a single record
+        /// </summary>
+        /// <remarks>
+        /// Sample body:
+        /// <pre>
+        /// {
+        ///   "Id": 1,
+        ///   "TimeStamp": "AAAAAAAAB+E="
+        ///   "MakeId": 1,
+        ///   "Color": "Black",
+        ///   "PetName": "Zippy",
+        ///   "MakeColor": "VW (Black)",
+        /// }
+        /// </pre>
+        /// </remarks>
+        /// <param name="id">Primary key of the record to update</param>
+        /// <returns>Single record</returns>
+        /// <response code="200">Found and updated the record</response>
+        /// <response code="400">Bad request</response>
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [HttpPut("{id}")]
         public IActionResult UpdateOne(int id,T entity)
         {
@@ -69,6 +109,28 @@ namespace AutoLot.Api.Controllers.Base
             return Ok(entity);
         }
 
+        /// <summary>
+        /// Adds a single record
+        /// </summary>
+        /// <remarks>
+        /// Sample body:
+        /// <pre>
+        /// {
+        ///   "Id": 1,
+        ///   "TimeStamp": "AAAAAAAAB+E="
+        ///   "MakeId": 1,
+        ///   "Color": "Black",
+        ///   "PetName": "Zippy",
+        ///   "MakeColor": "VW (Black)",
+        /// }
+        /// </pre>
+        /// </remarks>
+        /// <returns>Added record</returns>
+        /// <response code="201">Found and updated the record</response>
+        /// <response code="400">Bad request</response>
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [HttpPost]
         public ActionResult<T> AddOne(T entity)
         {
@@ -84,6 +146,24 @@ namespace AutoLot.Api.Controllers.Base
             return CreatedAtAction(nameof(GetOne), new {id = entity.Id}, entity);
         }
 
+        /// <summary>
+        /// Deletes a single record
+        /// </summary>
+        /// <remarks>
+        /// Sample body:
+        /// <pre>
+        /// {
+        ///   "Id": 1,
+        ///   "TimeStamp": "AAAAAAAAB+E="
+        /// }
+        /// </pre>
+        /// </remarks>
+        /// <returns>Nothing</returns>
+        /// <response code="200">Found and deleted the record</response>
+        /// <response code="400">Bad request</response>
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [HttpDelete("{id}")]
         public ActionResult<T> DeleteOne(int id, T entity)
         {

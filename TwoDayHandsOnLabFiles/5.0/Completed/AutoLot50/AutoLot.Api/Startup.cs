@@ -84,8 +84,8 @@ namespace AutoLot.Api
                         Description = "Service to support the AutoLot dealer site",
                         License = new OpenApiLicense
                         {
-                            Name = "Apress Publishing",
-                            Url = new Uri("http://www.Apress.com")
+                            Name = "Skimedic Inc",
+                            Url = new Uri("http://www.skimedic.com")
                         }
                     });
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";

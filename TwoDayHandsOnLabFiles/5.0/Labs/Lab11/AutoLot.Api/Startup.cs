@@ -72,7 +72,21 @@ namespace AutoLot.Api
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo {Title = "AutoLot.Api", Version = "v1"});
+                c.SwaggerDoc("v1",
+                    new OpenApiInfo
+                    {
+                        Title = "AutoLot Service",
+                        Version = "v1",
+                        Description = "Service to support the AutoLot dealer site",
+                        License = new OpenApiLicense
+                        {
+                            Name = "Skimedic Inc",
+                            Url = new Uri("http://www.skimedic.com")
+                        }
+                    });
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                c.IncludeXmlComments(xmlPath);
             });
         }
 
@@ -83,14 +97,18 @@ namespace AutoLot.Api
             {
                 //If in development environment, display debug info
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "AutoLot.Api v1"));
+                //Original code
+                //app.UseSwagger();
+                //app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "AutoLot.Api v1"));
                 //Initialize the database
                 if (Configuration.GetValue<bool>("RebuildDataBase"))
                 {
                     SampleDataInitializer.InitializeData(context);
                 }
             }
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "AutoLot Service v1"); });
 
             //redirect http traffic to https
             app.UseHttpsRedirection();
