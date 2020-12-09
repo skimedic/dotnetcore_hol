@@ -3,8 +3,8 @@ using AutoLot.Api.Controllers.Base;
 using Microsoft.AspNetCore.Mvc;
 using AutoLot.Models.Entities;
 using AutoLot.Dal.Repos.Interfaces;
+using AutoLot.Services.Logging;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Logging;
 
 namespace AutoLot.Api.Controllers
 {
@@ -12,7 +12,7 @@ namespace AutoLot.Api.Controllers
     public class CarsController : BaseCrudController<Car, CarsController>
     {
 
-        public CarsController(ICarRepo carRepo, ILogger<CarsController> logger) : base(carRepo, logger)
+        public CarsController(ICarRepo carRepo, IAppLogging<CarsController> logger) : base(carRepo, logger)
         {
         }
 
