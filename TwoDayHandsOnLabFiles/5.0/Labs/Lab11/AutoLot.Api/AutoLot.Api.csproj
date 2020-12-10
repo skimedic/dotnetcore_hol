@@ -30,4 +30,17 @@
     <ProjectReference Include="..\AutoLot.Services\AutoLot.Services.csproj" />
   </ItemGroup>
 
+    <Target Name="PrepublishScript" BeforeTargets="PrepareForPublish">
+        <ItemGroup>
+            <DocFile Include="*.xml" />
+        </ItemGroup>
+        <Copy SourceFiles="@(DocFile)" DestinationFolder="$(PublishDir)" SkipUnchangedFiles="false" />
+    </Target>
+
+    <ItemGroup>
+        <None Update="AutoLot.Api.xml">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+    </ItemGroup>
+
 </Project>
