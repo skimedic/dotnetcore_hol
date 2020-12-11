@@ -5,7 +5,7 @@ using AutoLot.Mvc.Models;
 using AutoLot.Services.Utilities;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
+
 using Microsoft.Extensions.Options;
 using AutoLot.Services.Logging;
 

@@ -6,14 +6,14 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace AutoLot.Mvc.TagHelpers
 {
-    public class ItemCreateTagHelper : ItemLinkTagHelperBase
+    public class ItemDetailsTagHelper : ItemLinkTagHelperBase
     {
-        public ItemCreateTagHelper(IActionContextAccessor contextAccessor, IUrlHelperFactory urlHelperFactory) 
+        public ItemDetailsTagHelper(IActionContextAccessor contextAccessor, IUrlHelperFactory urlHelperFactory) 
             : base(contextAccessor, urlHelperFactory) { }
 
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
-            BuildContent(output,nameof(CarsController.Create),"text-success","Create New","plus");
+            BuildContent(output,nameof(CarsController.Details),"text-info","Details","info-circle");
         }
     }
 }

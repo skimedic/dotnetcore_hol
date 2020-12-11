@@ -1,20 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using AutoLot.Services.Utilities;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
+
 using AutoLot.Mvc.Models;
+using AutoLot.Services.Logging;
 
 namespace AutoLot.Mvc.Controllers
 {
     [Route("[controller]/[action]")]
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly IAppLogging<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(IAppLogging<HomeController> logger)
         {
             _logger = logger;
         }
@@ -37,6 +40,21 @@ namespace AutoLot.Mvc.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+        [HttpGet]
+        public IActionResult GrantConsent()
+        {
+            HttpContext.Features.Get<ITrackingConsentFeature>().GrantConsent();
+            return RedirectToAction(nameof(Index), nameof(HomeController).RemoveController(),
+                new {area = ""});
+        }
+
+        [HttpGet]
+        public IActionResult WithdrawConsent()
+        {
+            HttpContext.Features.Get<ITrackingConsentFeature>().WithdrawConsent();
+            return RedirectToAction(nameof(Index), nameof(HomeController).RemoveController(),
+                new {area = ""});
         }
     }
 }
