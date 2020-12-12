@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using AutoLot.Dal.Repos.Interfaces;
+using System.Threading.Tasks;
 using AutoLot.Models.Entities;
 using AutoLot.Services.ApiWrapper;
 using AutoLot.Services.Logging;
@@ -9,7 +8,6 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 namespace AutoLot.Mvc.Controllers
 {
     [Route("[controller]/[action]")]
-    //[Route("Cars/[action]")]
     public class CarsController : Controller
     {
         private readonly IApiServiceWrapper _serviceWrapper;
@@ -102,32 +100,6 @@ namespace AutoLot.Mvc.Controllers
             return View(car);
         }
 
-        [HttpPost("{id}")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit2([FromServices] IMakeRepo makeRepo, int id)
-        {
-            var vm = new Car();
-            if (await TryUpdateModelAsync(vm, "",
-                c => c.Id, c => c.MakeId, c => c.TimeStamp))
-            {
-                //Color doesn't get updated because it's not in the list
-                //c=>c.Color, 
-                //Petname from the forms is ignored but hard coded later
-                //c=>c.PetName, 
-            }
-
-            var valid0 = ModelState.IsValid;
-            ModelState.Clear();
-            vm.PetName = "Model T";
-            vm.Color = "Black";
-            var valid1 = TryValidateModel(vm);
-            var valid2 = ModelState.IsValid;
-            //ViewData["MakeId"] = GetMakes(makeRepo);
-            ViewData["MakeId"] = await GetMakesAsynce();
-            return View("Edit", vm);
-        }
-
-        // GET: Cars/Delete/5
         [HttpGet("{id?}")]
         public async Task<IActionResult> Delete(int? id)
         {
