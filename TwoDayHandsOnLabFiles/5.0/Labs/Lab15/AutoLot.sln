@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
-VisualStudioVersion = 16.0.30717.126
+VisualStudioVersion = 16.0.30804.86
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoLot.Models", "AutoLot.Models\AutoLot.Models.csproj", "{EFB5FDF3-A2CC-4A11-BEB8-E0EBAF5EB9B3}"
 EndProject
@@ -14,8 +14,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoLot.Api", "AutoLot.Api\AutoLot.Api.csproj", "{74FD6076-A4A3-42C4-8DA0-DFB5C5332F60}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoLot.Mvc", "AutoLot.Mvc\AutoLot.Mvc.csproj", "{352CDC60-3352-4915-9E8A-AEBA15E55F29}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoLot.Web", "AutoLot.Web\AutoLot.Web.csproj", "{89EC3936-8422-421E-919B-729D535D2D7B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{4804E089-958A-462A-A5C2-4B2EB589B63B}"
 	ProjectSection(SolutionItems) = preProject
@@ -108,18 +106,6 @@ Global
 		{352CDC60-3352-4915-9E8A-AEBA15E55F29}.Release|x64.Build.0 = Release|Any CPU
 		{352CDC60-3352-4915-9E8A-AEBA15E55F29}.Release|x86.ActiveCfg = Release|Any CPU
 		{352CDC60-3352-4915-9E8A-AEBA15E55F29}.Release|x86.Build.0 = Release|Any CPU
-		{89EC3936-8422-421E-919B-729D535D2D7B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{89EC3936-8422-421E-919B-729D535D2D7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{89EC3936-8422-421E-919B-729D535D2D7B}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{89EC3936-8422-421E-919B-729D535D2D7B}.Debug|x64.Build.0 = Debug|Any CPU
-		{89EC3936-8422-421E-919B-729D535D2D7B}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{89EC3936-8422-421E-919B-729D535D2D7B}.Debug|x86.Build.0 = Debug|Any CPU
-		{89EC3936-8422-421E-919B-729D535D2D7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{89EC3936-8422-421E-919B-729D535D2D7B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{89EC3936-8422-421E-919B-729D535D2D7B}.Release|x64.ActiveCfg = Release|Any CPU
-		{89EC3936-8422-421E-919B-729D535D2D7B}.Release|x64.Build.0 = Release|Any CPU
-		{89EC3936-8422-421E-919B-729D535D2D7B}.Release|x86.ActiveCfg = Release|Any CPU
-		{89EC3936-8422-421E-919B-729D535D2D7B}.Release|x86.Build.0 = Release|Any CPU
 		{18BAEAC3-8A1C-414F-8EFA-A441754EADAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{18BAEAC3-8A1C-414F-8EFA-A441754EADAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{18BAEAC3-8A1C-414F-8EFA-A441754EADAA}.Debug|x64.ActiveCfg = Debug|Any CPU
@@ -137,6 +123,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {E1DDEC5E-1B61-48C1-98BF-FD576D79659A}
+		SolutionGuid = {B099B576-A2FD-4384-BA74-1039E74EDBDE}
 	EndGlobalSection
 EndGlobal

@@ -23,9 +23,6 @@ dotnet sln AutoLot.sln add AutoLot.Api
 rem create the ASP.NET Core Web App (MVC) project and add it to the solution
 dotnet new mvc -lang c# -n AutoLot.Mvc -au none -o .\AutoLot.Mvc -f net5.0
 dotnet sln AutoLot.sln add AutoLot.Mvc
-rem create the ASP.NET Core Web App (Razor Pages) project and add it to the solution
-dotnet new webapp -lang c# -n AutoLot.Web -au none -o .\AutoLot.Web -f net5.0
-dotnet sln AutoLot.sln add AutoLot.Web
 
 rem add project references
 dotnet add AutoLot.Dal reference AutoLot.Models
@@ -42,10 +39,6 @@ dotnet add AutoLot.Api reference AutoLot.Services
 dotnet add AutoLot.Mvc reference AutoLot.Models
 dotnet add AutoLot.Mvc reference AutoLot.Dal
 dotnet add AutoLot.Mvc reference AutoLot.Services
-
-dotnet add AutoLot.Web reference AutoLot.Models
-dotnet add AutoLot.Web reference AutoLot.Dal
-dotnet add AutoLot.Web reference AutoLot.Services
 
 rem add packages
 dotnet add AutoLot.Models package Microsoft.EntityFrameworkCore.Abstractions
@@ -85,7 +78,6 @@ dotnet add AutoLot.Api package Microsoft.VisualStudio.Web.CodeGeneration.Design
 dotnet add AutoLot.Api package Microsoft.EntityFrameworkCore.SqlServer
 dotnet add AutoLot.Api package System.Text.Json
 
-
 dotnet add AutoLot.Mvc package AutoMapper
 dotnet add AutoLot.Mvc package System.Text.Json
 dotnet add AutoLot.Mvc package LigerShark.WebOptimizer.Core
@@ -93,11 +85,3 @@ dotnet add AutoLot.Mvc package Microsoft.Web.LibraryManager.Build
 dotnet add AutoLot.Mvc package Microsoft.EntityFrameworkCore
 dotnet add AutoLot.Mvc package Microsoft.EntityFrameworkCore.SqlServer
 dotnet add AutoLot.Mvc package Microsoft.VisualStudio.Web.CodeGeneration.Design
-
-dotnet add AutoLot.Web package AutoMapper
-dotnet add AutoLot.Web package System.Text.Json
-dotnet add AutoLot.Web package LigerShark.WebOptimizer.Core
-dotnet add AutoLot.Web package Microsoft.Web.LibraryManager.Build
-dotnet add AutoLot.Web package Microsoft.EntityFrameworkCore
-dotnet add AutoLot.Web package Microsoft.EntityFrameworkCore.SqlServer
-dotnet add AutoLot.Web package Microsoft.VisualStudio.Web.CodeGeneration.Design
