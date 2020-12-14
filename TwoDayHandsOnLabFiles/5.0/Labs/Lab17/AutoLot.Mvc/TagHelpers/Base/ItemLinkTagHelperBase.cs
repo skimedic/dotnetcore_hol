@@ -1,4 +1,11 @@
-﻿using AutoLot.Mvc.Controllers;
+﻿// Copyright Information
+// ==================================
+// AutoLot - AutoLot.Mvc - ItemLinkTagHelperBase.cs
+// All samples copyright Philip Japikse
+// http://www.skimedic.com 2020/12/13
+// ==================================
+
+using AutoLot.Mvc.Controllers;
 using AutoLot.Services.Utilities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;

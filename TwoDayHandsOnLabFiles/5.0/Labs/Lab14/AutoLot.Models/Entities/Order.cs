@@ -1,4 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿// Copyright Information
+// ==================================
+// AutoLot - AutoLot.Models - Order.cs
+// All samples copyright Philip Japikse
+// http://www.skimedic.com 2020/12/13
+// ==================================
+
+using System.ComponentModel.DataAnnotations.Schema;
 using AutoLot.Models.Entities.Base;
 
 namespace AutoLot.Models.Entities

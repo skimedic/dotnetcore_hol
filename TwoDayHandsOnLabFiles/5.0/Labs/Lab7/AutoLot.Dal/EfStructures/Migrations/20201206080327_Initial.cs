@@ -1,4 +1,11 @@
-﻿using System;
+﻿// Copyright Information
+// ==================================
+// AutoLot - AutoLot.Dal - 20201206080327_Initial.cs
+// All samples copyright Philip Japikse
+// http://www.skimedic.com 2020/12/13
+// ==================================
+
+using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace AutoLot.Dal.EfStructures.Migrations

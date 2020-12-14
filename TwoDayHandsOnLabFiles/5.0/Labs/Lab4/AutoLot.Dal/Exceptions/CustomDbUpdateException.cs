@@ -2,8 +2,7 @@
 // ==================================
 // AutoLot - AutoLot.Dal - CustomDbUpdateException.cs
 // All samples copyright Philip Japikse
-// http://www.skimedic.com 2020/08/08
-// See License.txt for more information
+// http://www.skimedic.com 2020/12/13
 // ==================================
 
 using Microsoft.EntityFrameworkCore;

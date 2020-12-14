@@ -1,4 +1,11 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿// Copyright Information
+// ==================================
+// AutoLot - AutoLot.Services - ServiceConfiguration.cs
+// All samples copyright Philip Japikse
+// http://www.skimedic.com 2020/12/13
+// ==================================
+
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace AutoLot.Services.ApiWrapper

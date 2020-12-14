@@ -1,4 +1,11 @@
-﻿namespace AutoLot.Models.ViewModels
+﻿// Copyright Information
+// ==================================
+// AutoLot - AutoLot.Models - DealerInfo.cs
+// All samples copyright Philip Japikse
+// http://www.skimedic.com 2020/12/13
+// ==================================
+
+namespace AutoLot.Models.ViewModels
 {
     public class DealerInfo
     {

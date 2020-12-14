@@ -1,4 +1,11 @@
-﻿using AutoLot.Mvc.Controllers;
+﻿// Copyright Information
+// ==================================
+// AutoLot - AutoLot.Mvc - ItemCreateTagHelper.cs
+// All samples copyright Philip Japikse
+// http://www.skimedic.com 2020/12/13
+// ==================================
+
+using AutoLot.Mvc.Controllers;
 using AutoLot.Mvc.TagHelpers.Base;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Mvc.Routing;

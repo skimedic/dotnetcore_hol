@@ -2,8 +2,7 @@
 // ==================================
 // AutoLot - AutoLot.Dal - SampleDataInitializer.cs
 // All samples copyright Philip Japikse
-// http://www.skimedic.com 2020/09/20
-// See License.txt for more information
+// http://www.skimedic.com 2020/12/13
 // ==================================
 
 using System;
@@ -102,6 +101,7 @@ namespace AutoLot.Dal.Initialization
 
         public static void ClearAndReseedDatabase(ApplicationDbContext context)
         {
+            context.Database.Migrate();
             ClearData(context);
             SeedData(context);
         }

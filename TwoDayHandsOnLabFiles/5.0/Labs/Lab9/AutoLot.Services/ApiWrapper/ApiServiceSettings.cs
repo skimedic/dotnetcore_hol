@@ -1,4 +1,11 @@
-﻿namespace AutoLot.Services.ApiWrapper
+﻿// Copyright Information
+// ==================================
+// AutoLot - AutoLot.Services - ApiServiceSettings.cs
+// All samples copyright Philip Japikse
+// http://www.skimedic.com 2020/12/13
+// ==================================
+
+namespace AutoLot.Services.ApiWrapper
 {
     public class ApiServiceSettings
     {

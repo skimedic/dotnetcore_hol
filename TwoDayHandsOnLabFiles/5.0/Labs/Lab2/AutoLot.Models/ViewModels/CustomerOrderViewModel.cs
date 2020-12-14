@@ -2,14 +2,15 @@
 // ==================================
 // AutoLot - AutoLot.Models - CustomerOrderViewModel.cs
 // All samples copyright Philip Japikse
-// http://www.skimedic.com 2020/08/08
-// See License.txt for more information
+// http://www.skimedic.com 2020/12/13
 // ==================================
 
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
 namespace AutoLot.Models.ViewModels
 {
+    [Keyless]
     public class CustomerOrderViewModel
     {
         public string? FirstName { get; set; }

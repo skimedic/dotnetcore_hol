@@ -1,4 +1,11 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿// Copyright Information
+// ==================================
+// AutoLot - AutoLot.Api - CustomExceptionFilter.cs
+// All samples copyright Philip Japikse
+// http://www.skimedic.com 2020/12/13
+// ==================================
+
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.EntityFrameworkCore;

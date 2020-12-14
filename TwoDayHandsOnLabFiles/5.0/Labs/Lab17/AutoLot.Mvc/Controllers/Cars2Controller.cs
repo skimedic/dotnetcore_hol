@@ -1,3 +1,10 @@
+// Copyright Information
+// ==================================
+// AutoLot - AutoLot.Mvc - Cars2Controller.cs
+// All samples copyright Philip Japikse
+// http://www.skimedic.com 2020/12/13
+// ==================================
+
 using AutoLot.Dal.Repos.Interfaces;
 using AutoLot.Models.Entities;
 using AutoLot.Services.Logging;

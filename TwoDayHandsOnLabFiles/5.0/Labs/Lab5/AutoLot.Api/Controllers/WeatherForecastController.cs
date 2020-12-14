@@ -1,4 +1,11 @@
-﻿using System;
+﻿// Copyright Information
+// ==================================
+// AutoLot - AutoLot.Api - WeatherForecastController.cs
+// All samples copyright Philip Japikse
+// http://www.skimedic.com 2020/12/13
+// ==================================
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;

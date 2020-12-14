@@ -1,4 +1,11 @@
-﻿using System;
+﻿// Copyright Information
+// ==================================
+// AutoLot - AutoLot.Dal - BaseRepo.cs
+// All samples copyright Philip Japikse
+// http://www.skimedic.com 2020/12/13
+// ==================================
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using AutoLot.Dal.EfStructures;
@@ -58,7 +65,8 @@ namespace AutoLot.Dal.Repos.Base
         }
 
         public virtual T? Find(int? id) => Table.Find(id);
-        public virtual T? FindAsNoTracking(int id) => Table.AsNoTracking().FirstOrDefault(x => x.Id == id);
+        public virtual T? FindAsNoTracking(int id) 
+            => Table.AsNoTracking().FirstOrDefault(x => x.Id == id);
 
         public T? FindIgnoreQueryFilters(int id)
             => Table.IgnoreQueryFilters().FirstOrDefault(x => x.Id == id);

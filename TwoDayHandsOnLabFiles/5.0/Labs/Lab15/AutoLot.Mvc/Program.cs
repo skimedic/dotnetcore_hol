@@ -1,3 +1,10 @@
+// Copyright Information
+// ==================================
+// AutoLot - AutoLot.Mvc - Program.cs
+// All samples copyright Philip Japikse
+// http://www.skimedic.com 2020/12/13
+// ==================================
+
 using AutoLot.Mvc;
 using AutoLot.Services.Logging;
 using Microsoft.AspNetCore.Hosting;

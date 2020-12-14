@@ -1,4 +1,11 @@
-﻿using System.Collections.Generic;
+﻿// Copyright Information
+// ==================================
+// AutoLot - AutoLot.Api - CarsController.cs
+// All samples copyright Philip Japikse
+// http://www.skimedic.com 2020/12/13
+// ==================================
+
+using System.Collections.Generic;
 using AutoLot.Api.Controllers.Base;
 using Microsoft.AspNetCore.Mvc;
 using AutoLot.Models.Entities;

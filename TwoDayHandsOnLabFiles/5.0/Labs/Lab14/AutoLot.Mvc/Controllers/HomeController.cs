@@ -1,4 +1,11 @@
-﻿using System.Diagnostics;
+﻿// Copyright Information
+// ==================================
+// AutoLot - AutoLot.Mvc - HomeController.cs
+// All samples copyright Philip Japikse
+// http://www.skimedic.com 2020/12/13
+// ==================================
+
+using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using AutoLot.Mvc.Models;

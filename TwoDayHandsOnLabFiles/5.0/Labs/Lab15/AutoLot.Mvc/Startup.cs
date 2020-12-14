@@ -1,3 +1,10 @@
+// Copyright Information
+// ==================================
+// AutoLot - AutoLot.Mvc - Startup.cs
+// All samples copyright Philip Japikse
+// http://www.skimedic.com 2020/12/13
+// ==================================
+
 using AutoLot.Dal.EfStructures;
 using AutoLot.Dal.Initialization;
 using AutoLot.Dal.Repos;
@@ -97,7 +104,7 @@ namespace AutoLot.Mvc
                 app.UseDeveloperExceptionPage();
                 if (Configuration.GetValue<bool>("RebuildDataBase"))
                 {
-                    SampleDataInitializer.InitializeData(context);
+                    SampleDataInitializer.ClearAndReseedDatabase(context);
                 }
             }
             else

@@ -1,4 +1,11 @@
-﻿using System;
+﻿// Copyright Information
+// ==================================
+// AutoLot - AutoLot.Services - LoggingConfiguration.cs
+// All samples copyright Philip Japikse
+// http://www.skimedic.com 2020/12/13
+// ==================================
+
+using System;
 using System.Collections.Generic;
 using System.Data;
 using Microsoft.Extensions.Configuration;
@@ -32,44 +39,44 @@ namespace AutoLot.Services.Logging
 
         public static IHostBuilder ConfigureSerilog(this IHostBuilder builder)
         {
-            builder.ConfigureLogging((context, logging) => { logging.ClearProviders(); })
+            builder
+                .ConfigureLogging((context, logging) => { logging.ClearProviders(); })
                 .UseSerilog((hostingContext, loggerConfiguration) =>
+            {
+                var config = hostingContext.Configuration;
+                var connectionString = config.GetConnectionString("AutoLot").ToString();
+                var tableName = config["Logging:MSSqlServer:tableName"].ToString();
+                var schema = config["Logging:MSSqlServer:schema"].ToString();
+                string restrictedToMinimumLevel =
+                    config["Logging:MSSqlServer:restrictedToMinimumLevel"].ToString();
+                //LogEventLevel logLevel = log;
+                if (!Enum.TryParse<LogEventLevel>(restrictedToMinimumLevel, out var logLevel))
                 {
-                    var config = hostingContext.Configuration;
-                    var connectionString = config.GetConnectionString("AutoLot").ToString();
-                    var tableName = config["Logging:MSSQLServer:tableName"].ToString();
-                    var schema = config["Logging:MSSQLServer:schema"].ToString();
-                    string restrictedToMinimumLevel =
-                        config["Logging:MSSQLServer:restrictedToMinimumLevel"].ToString();
-                    //LogEventLevel logLevel = log;
-                    if (!Enum.TryParse<LogEventLevel>(restrictedToMinimumLevel, out var logLevel))
-                    {
-                        logLevel = LogEventLevel.Debug;
-                    }
-
-                    LogEventLevel level = (LogEventLevel) Enum.Parse(typeof(LogEventLevel), restrictedToMinimumLevel);
-                    loggerConfiguration
-                        .Enrich.FromLogContext()
-                        .Enrich.WithMachineName()
-                        .ReadFrom.Configuration(hostingContext.Configuration)
-                        .WriteTo.File(
-                            path: "ErrorLog.txt",
-                            rollingInterval: RollingInterval.Day,
-                            restrictedToMinimumLevel: logLevel,
-                            outputTemplate: OutputTemplate)
-                        .WriteTo.Console(restrictedToMinimumLevel: logLevel)
-                        .WriteTo.MSSqlServer(
-                            connectionString: connectionString,
-                            new MSSqlServerSinkOptions
-                            {
-                                AutoCreateSqlTable = false,
-                                SchemaName = schema,
-                                TableName = tableName,
-                                BatchPeriod = new TimeSpan(0, 0, 0, 1)
-                            },
-                            restrictedToMinimumLevel: level,
-                            columnOptions: ColumnOptions);
-                });
+                    logLevel = LogEventLevel.Debug;
+                }
+                LogEventLevel level = (LogEventLevel)Enum.Parse(typeof(LogEventLevel), restrictedToMinimumLevel);
+                loggerConfiguration
+                    .Enrich.FromLogContext()
+                    .Enrich.WithMachineName()
+                    .ReadFrom.Configuration(hostingContext.Configuration)
+                    .WriteTo.File(
+                        path: "ErrorLog.txt",
+                        rollingInterval: RollingInterval.Day,
+                        restrictedToMinimumLevel: logLevel,
+                        outputTemplate: OutputTemplate)
+                    .WriteTo.Console(restrictedToMinimumLevel: logLevel)
+                    .WriteTo.MSSqlServer(
+                        connectionString: connectionString,
+                        new MSSqlServerSinkOptions
+                        {
+                            AutoCreateSqlTable = false,
+                            SchemaName = schema,
+                            TableName = tableName,
+                            BatchPeriod = new TimeSpan(0, 0, 0, 1)
+                        },
+                        restrictedToMinimumLevel: level,
+                        columnOptions: ColumnOptions);
+            });
             return builder;
         }
     }

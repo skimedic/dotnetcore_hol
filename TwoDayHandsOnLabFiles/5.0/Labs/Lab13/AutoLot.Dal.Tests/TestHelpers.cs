@@ -1,3 +1,10 @@
+// Copyright Information
+// ==================================
+// AutoLot - AutoLot.Dal.Tests - TestHelpers.cs
+// All samples copyright Philip Japikse
+// http://www.skimedic.com 2020/12/13
+// ==================================
+
 using System.IO;
 using AutoLot.Dal.EfStructures;
 using Microsoft.EntityFrameworkCore;

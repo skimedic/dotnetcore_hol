@@ -1,3 +1,10 @@
+// Copyright Information
+// ==================================
+// AutoLot - AutoLot.Mvc - CarsController.cs
+// All samples copyright Philip Japikse
+// http://www.skimedic.com 2020/12/13
+// ==================================
+
 using System.Threading.Tasks;
 using AutoLot.Models.Entities;
 using AutoLot.Services.ApiWrapper;

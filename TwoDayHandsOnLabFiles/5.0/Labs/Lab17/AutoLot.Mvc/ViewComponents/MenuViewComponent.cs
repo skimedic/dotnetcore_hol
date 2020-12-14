@@ -1,4 +1,11 @@
-﻿using System.Linq;
+﻿// Copyright Information
+// ==================================
+// AutoLot - AutoLot.Mvc - MenuViewComponent.cs
+// All samples copyright Philip Japikse
+// http://www.skimedic.com 2020/12/13
+// ==================================
+
+using System.Linq;
 using System.Threading.Tasks;
 using AutoLot.Dal.Repos.Interfaces;
 using AutoLot.Services.ApiWrapper;
