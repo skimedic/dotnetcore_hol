@@ -14,11 +14,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 namespace AutoLot.Mvc.Controllers
 {
     [Route("[controller]/[action]")]
-    public class Cars2Controller : Controller
+    public class CarsController1 : Controller
     {
         private readonly ICarRepo _repo;
-        private readonly IAppLogging<CarsController> _logging;
-        public Cars2Controller(ICarRepo repo, IAppLogging<CarsController> logging)
+        private readonly IAppLogging<CarsController1> _logging;
+        public CarsController1(ICarRepo repo, IAppLogging<CarsController1> logging)
         {
             _repo = repo;
             _logging = logging;
